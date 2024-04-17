@@ -1,15 +1,15 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { NotFound } from "../pages/404";
-import { CreateAccount } from "../pages/create-account";
-import { Login } from "../pages/login";
+import { Restaurants } from '../pages/client/restaurants';
+import { ConfirmEmail } from '../pages/user/confirm-email';
 
 export const LoggedInRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/create-account" element={<CreateAccount />} />
+        <Route path="/" element={<Restaurants />} />
+        <Route path="/confirm" element={<ConfirmEmail />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

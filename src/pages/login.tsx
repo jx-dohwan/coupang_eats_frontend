@@ -4,7 +4,7 @@ import coupangEatsLogo from "../images/coupang-eats-delivery-190910-04.png";
 import {
     LoginMutation,
     LoginMutationVariables,
-} from "../generated/graphql";
+} from "../__api__/graphql";
 import { LOCALSTORAGE_TOKEN } from "../constants";
 import { authTokenVar, isLoggedInVar } from "../apollo";
 import { gql, useMutation } from "@apollo/client";
@@ -43,6 +43,7 @@ export const Login = () => {
             login: { ok, token },
         } = data;
         if (ok && token) {
+            alert("로그인을 했습니다.");
             localStorage.setItem(LOCALSTORAGE_TOKEN, token);
             authTokenVar(token);
             isLoggedInVar(true);
@@ -77,8 +78,7 @@ export const Login = () => {
                 <title>로그인 | Coupang Eats</title>
             </Helmet>
             <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
-                <img src={coupangEatsLogo} className="w-52 mb-5" alt="Coupang Eats" />
-
+                <img src={coupangEatsLogo} className="w-100 mb-10" alt="Coupang Eats" />
                 <form
                     onSubmit={handleSubmit(onSubmit)}
                     className="grid gap-3 mb-3 mt-5 w-full"

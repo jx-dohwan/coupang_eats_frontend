@@ -1,8 +1,8 @@
 import { gql, useQuery } from "@apollo/client";
-import { Query } from "../generated/graphql";
+import { MeQuery } from "../__api__/graphql";
 
 export const ME_QUERY = gql`
-  query meQuery {
+  query me {
     me {
       id
       email
@@ -13,5 +13,5 @@ export const ME_QUERY = gql`
 `;
 
 export const useMe = () => {
-  return useQuery<Query>(ME_QUERY);
+  return useQuery<MeQuery>(ME_QUERY);
 };

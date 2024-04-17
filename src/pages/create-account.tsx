@@ -3,8 +3,8 @@ import coupangEatsLogo from "../images/coupang-eats-delivery-190910-04.png";
 import { Button } from "../components/button";
 import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
-import { CreateAccountMutation, CreateAccountMutationVariables } from "../generated/graphql";
-import { UserRole } from "../generated/graphql";
+import { CreateAccountMutation, CreateAccountMutationVariables } from "../__api__/graphql";
+import { UserRole } from "../__api__/graphql";
 
 import { Link, useNavigate } from "react-router-dom";
 import { FormError } from "../components/form-error";
