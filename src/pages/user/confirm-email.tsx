@@ -63,7 +63,7 @@ export const ConfirmEmail = () => {
     // 컴포넌트가 마운트될 때 실행될 useEffect 훅
     useEffect(() => {
         // URL에서 'code' 파라미터 값을 추출
-        const [_, code] = window.location.href.split("code=");
+        const [, code] = window.location.href.split("code=");
 
         // verifyEmail 함수를 호출하여 뮤테이션 실행
          verifyEmail({
