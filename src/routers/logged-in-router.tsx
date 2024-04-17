@@ -1,14 +1,16 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-// 가정하는 추가 컴포넌트들
-
+import { NotFound } from "../pages/404";
+import { CreateAccount } from "../pages/create-account";
+import { Login } from "../pages/login";
 
 export const LoggedInRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<React.Fragment />} />
-        <Route path="/signup" element={<React.Fragment />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/create-account" element={<CreateAccount />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
