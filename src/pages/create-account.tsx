@@ -3,14 +3,15 @@ import coupangEatsLogo from "../images/coupang-eats-delivery-190910-04.png";
 import { Button } from "../components/button";
 import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
-import { createAccountMutation, createAccountMutationVariables } from "../__generated__/createAccountMutation";
-import { UserRole } from "../__generated__/globalTypes";
-import { Link, useHistory } from "react-router-dom";
+import { CreateAccountMutation, CreateAccountMutationVariables } from "../generated/graphql";
+import { UserRole } from "../generated/graphql";
+
+import { Link, useNavigate } from "react-router-dom";
 import { FormError } from "../components/form-error";
 
 
 export const CREATE_ACCOUNT_MUTATION = gql`
-  mutation createAccountMutation($createAccountInput: CreateAccountInput!) {
+  mutation createAccount($createAccountInput: CreateAccountInput!) {
     createAccount(input: $createAccountInput) {
       ok
       error
@@ -19,56 +20,58 @@ export const CREATE_ACCOUNT_MUTATION = gql`
 `;
 
 interface ICreateAccountForm {
-    email: string;
-    password: string;
-    role: UserRole;
+  email: string;
+  password: string;
+  role: UserRole;
 }
 
 export const CreateAccount = () => {
+  const {
+    register,
+    getValues,
+    watch,
+    formState: { errors },
+    handleSubmit,
+    formState,
+  } = useForm<ICreateAccountForm>({
+    mode: "onChange",
+    defaultValues: {
+      role: UserRole.Client,
+    },
+  });
+
+  const navigate = useNavigate();
+
+  const onCompleted = (data: CreateAccountMutation) => {
     const {
-        register,
-        getValues,
-        watch,
-        formState: { errors },
-        handleSubmit,
-        formState,
-    } = useForm<ICreateAccountForm>({
-        mode: "onChange",
-        defaultValues: {
-            role: UserRole.Client,
+      createAccount: { ok },
+    } = data;
+    if (ok) {
+      alert("계정을 만들었습니다.");
+      navigate("/"); 
+    }
+  };
+
+  const [
+    createAccountMutation,
+    { loading, data: createAccountMutationResult },
+  ] = useMutation<CreateAccountMutation, CreateAccountMutationVariables>(
+    CREATE_ACCOUNT_MUTATION,
+    {
+      onCompleted,
+    }
+  );
+  const onSubmit = () => {
+    if (!loading) {
+      const { email, password, role } = getValues();
+      createAccountMutation({
+        variables: {
+          createAccountInput: { email, password, role },
         },
-    });
-
-    const history = useHistory();
-    const onCompleted = (data: createAccountMutation) => {
-        const {
-            createAccount: { ok },
-        } = data;
-        if (ok) {
-            alert("계정을 만들었습니다.");
-            history.push("/");
-        }
-    };
-    const [
-        createAccountMutation,
-        { loading, data: createAccountMutationResult },
-    ] = useMutation<createAccountMutation, createAccountMutationVariables>(
-        CREATE_ACCOUNT_MUTATION,
-        {
-            onCompleted,
-        }
-    );
-    const onSubmit = () => {
-        if (!loading) {
-            const { email, password, role } = getValues();
-            createAccountMutation({
-                variables: {
-                    createAccountInput: { email, password, role },
-                },
-            });
-        }
-    };
-
+      });
+    }
+  };
+  
     return (
         <div className="h-screen flex items-center flex-col mt-10 lg:mt-28">
             <Helmet>

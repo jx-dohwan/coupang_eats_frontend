@@ -3,45 +3,29 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@apollo/client": "^3.7.3",
-    "@fortawesome/fontawesome-svg-core": "^6.5.1",
-    "@fortawesome/free-brands-svg-icons": "^6.5.1",
-    "@fortawesome/free-regular-svg-icons": "^6.5.1",
-    "@fortawesome/free-solid-svg-icons": "^6.5.1",
-    "@fortawesome/react-fontawesome": "^0.2.0",
-    "@testing-library/jest-dom": "^5.16.5",
+    "@apollo/client": "^3.9.11",
+    "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.11",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.10",
+    "@types/node": "^16.18.96",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
     "@types/react-router-dom": "^5.3.3",
-    "apollo": "^2.34.0",
-    "autoprefixer": "^10.4.13",
-    "cypress": "^13.6.6",
-    "google-map-react": "^2.2.1",
-    "graphql": "^15.8.0",
-    "graphql-ws": "^5.15.0",
-    "postcss": "^8.4.20",
-    "react": "^18.0.0",
+    "graphql": "^16.8.1",
+    "graphql-ws": "^5.16.0",
+    "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
-    "react-helmet-async": "^2.0.4",
     "react-hook-form": "^7.51.3",
-    "react-icons": "^5.0.1",
-    "react-router-dom": "^5.3.4",
+    "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
-    "rimraf": "^5.0.5",
-    "tailwindcss": "^3.2.4",
-    "typescript": "^4.9.4",
-    "victory": "^36.9.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "tailwind:build": "npx tailwindcss-cli@latest build -i src/styles/tailwind.css -o src/styles/styles.css",
-    "start": "npm run apollo:codegen & npm run tailwind:build & react-scripts start",
-    "apollo:codegen": " rimraf src/__generated__ && apollo client:codegen src/__generated__ --target=typescript --outputFlat",
+    "start": "npm run generate & npm run tailwind:build & react-scripts start",
+    "generate": "graphql-codegen --config codegen.yml",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
@@ -65,37 +49,19 @@
       "last 1 safari version"
     ]
   },
-  "jest": {
-    "collectCoverageFrom": [
-      "./src/components/**/*.tsx",
-      "./src/pages/**/*.tsx",
-      "./src/routers/**/*.tsx"
-    ]
-  },
-  "overrides": {
-    "@apollo/client": {
-      "react": "$react"
-    },
-    "@apollographql/graphql-language-service-interface": {
-      "graphql": "$graphql"
-    },
-    "@apollographql/graphql-language-service-parser": {
-      "graphql": "$graphql"
-    },
-    "@apollographql/graphql-language-service-types": {
-      "graphql": "$graphql"
-    },
-    "@apollographql/graphql-language-service-utils": {
-      "graphql": "$graphql"
-    }
-  },
   "devDependencies": {
-    "@graphql-codegen/typescript": "^2.8.7",
-    "@graphql-codegen/typescript-operations": "^2.5.12",
-    "@testing-library/cypress": "^10.0.1",
-    "@types/google-map-react": "^2.1.10",
-    "@types/google.maps": "^3.55.4",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/client-preset": "^4.2.5",
+    "@graphql-codegen/typescript": "^4.0.6",
+    "@graphql-codegen/typescript-operations": "^4.2.0",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.0",
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "@parcel/watcher": "^2.4.1",
     "@types/react-helmet": "^6.1.11",
-    "mock-apollo-client": "^1.2.1"
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "ts-node": "^10.9.2",
+    "typescript": "4.9.5"
   }
 }
