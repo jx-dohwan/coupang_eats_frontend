@@ -6,7 +6,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 export const Header: React.FC = () => {
     const { data } = useMe();
-    console.log("data : ", data)
+    
     return (
       <>
         {!data?.me.verified && (
