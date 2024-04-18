@@ -7,6 +7,8 @@ import { EditProfile } from "../pages/user/edit-profile";
 import { NotFound } from "../pages/404";
 import { UserRole } from "../__api__/graphql";
 import { Restaurants } from "../pages/client/restaurants";
+import { AddRestaurant } from "../pages/owner/add-restaurants";
+import { MyRestaurants } from "../pages/owner/my-restaurants";
 
 const clientRoutes = [
   { path: "/", element: <Restaurants /> },
@@ -34,8 +36,8 @@ const commonRoutes = [
 
 const restaurantRoutes = [
   // 2024.04.19
-  { path: "/", element: <React.Fragment /> },
-  { path: "/add-restaurant", element: <React.Fragment /> },
+  { path: "/", element: <MyRestaurants /> },
+  { path: "/add-restaurant", element: <AddRestaurant /> },
   { path: "/restaurants/:id", element: <React.Fragment /> },
   { path: "/restaurants/:restaurantId/add-dish", element: <React.Fragment /> },
 ];

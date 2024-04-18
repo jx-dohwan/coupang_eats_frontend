@@ -7,68 +7,77 @@ import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 
+// GraphQL 쿼리 정의: 식당과 카테고리 데이터를 가져오는 쿼리
 const RESTAURANTS_QUERY = gql`
   query restaurantsPage($input: RestaurantsInput!) {
     allCategories {
       ok
       error
       categories {
-        ...CategoryParts
+        ...CategoryParts  // 카테고리 부분은 CategoryParts 프래그먼트를 사용하여 가져옴
       }
     }
-    restaurants(input: $input) {
+    restaurants(input: $input) { // 식당 데이터 요청
       ok
       error
-      totalPages
-      totalResults
+      totalPages   // 총 페이지 수
+      totalResults // 총 결과 수
       results {
-        ...RestaurantParts
+        ...RestaurantParts  // 식당 부분은 RestaurantParts 프래그먼트를 사용하여 가져옴
       }
     }
   }
-  ${RESTAURANT_FRAGMENT}
-  ${CATEGORY_FRAGMENT}
+  ${RESTAURANT_FRAGMENT} // 식당 데이터에 대한 프래그먼트
+  ${CATEGORY_FRAGMENT}   // 카테고리 데이터에 대한 프래그먼트
 `;
 
-
-
+// 폼 데이터의 인터페이스 정의
 interface IFormProps {
-    searchTerm: string;
+    searchTerm: string;  // 검색어
 }
 
-
+// 식당 페이지 컴포넌트
 export const Restaurants = () => {
-    const [page, setPage] = useState(1);
-    const { data, loading } = useQuery<
+    const [page, setPage] = useState(1);  // 현재 페이지 상태
+    const { data, loading } = useQuery<  // GraphQL 쿼리 사용
         RestaurantsPageQuery,
         RestaurantsPageQueryVariables
     >(RESTAURANTS_QUERY, {
         variables: {
             input: {
-                page,
+                page,  // 현재 페이지 번호
             },
         },
     });
 
-    console.log("data : ", data)
-    const onNextPageClick = () => setPage((current) => current + 1);
-    const onPrevPageClick = () => setPage((current) => current - 1);
-    const { register, handleSubmit, getValues } = useForm<IFormProps>();
+    console.log("data : ", data)  // 콘솔에 데이터 로그 출력
 
-    const navigate = useNavigate();
+    // 다음 페이지 이동 함수
+    const onNextPageClick = () => setPage((current) => current + 1);
+
+    // 이전 페이지 이동 함수
+    const onPrevPageClick = () => setPage((current) => current - 1);
+
+    const { register, handleSubmit, getValues } = useForm<IFormProps>();  // 폼 관리를 위한 훅
+
+    const navigate = useNavigate();  // 네비게이션 함수
+
+    // 검색 제출 함수
     const onSearchSubmit = () => {
-        // console.log(getValues());
-        const searchTerm = getValues().searchTerm;
-        navigate({
+        const searchTerm = getValues().searchTerm;  // 폼에서 검색어 가져오기
+        navigate({  // 검색어를 쿼리 파라미터로 넣어서 검색 페이지로 이동
             pathname: "/search",
             search: `?term=${searchTerm}`,
         });
     };
+
+    // 카테고리 갯수에 따라 그리드 컬럼을 결정하는 함수
     const getGridCol = (col: number) => {
         if (col in Object.keys(gridColMap)) return gridColMap[col]
-        return gridColMap[4]
+        return gridColMap[4]  // 기본값은 4컬럼
     }
 
+    // 그리드 컬럼 맵
     const gridColMap: Record<number, string> = {
         1: 'grid-cols-1',
         2: 'grid-cols-2',
@@ -83,8 +92,8 @@ export const Restaurants = () => {
         11: 'grid-cols-11',
         12: 'grid-cols-12',
     }
-    const categoriesCount = data?.allCategories.categories?.length ?? 0;
-    const roundedUp = Math.ceil(categoriesCount / 2);
+    const categoriesCount = data?.allCategories.categories?.length ?? 0;  // 카테고리 수
+    const roundedUp = Math.ceil(categoriesCount / 2);  // 카테고리 수를 2로 나눈 후 올림 처리
 
     return (
         <div>
@@ -97,7 +106,7 @@ export const Restaurants = () => {
             >
                 <div
                     className="flex items-center justify-stretch rounded-full border border-b-4 border-gray-300 p-2  w-3/4 md:w-3/4">
-                  
+
                     {/* 여기 input을 누를때 가로 테두리를 없애야 할것 같은데 일단 넘어가자*/}
                     <input
                         {...register("searchTerm", { required: true, minLength: 1 })}
@@ -127,7 +136,7 @@ export const Restaurants = () => {
                     </div>
                     <div className="bg-gray-50 h-4 my-6 border"></div>
                     <div className="grid mt-16 md:grid-cols-3 gap-x-5 gap-y-10">
-                      
+
                     </div>
                     <div className="grid grid-cols-3 text-center max-w-md items-center mx-auto mt-10">
                         {page > 1 ? (
