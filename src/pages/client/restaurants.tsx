@@ -14,21 +14,21 @@ const RESTAURANTS_QUERY = gql`
       ok
       error
       categories {
-        ...CategoryParts  // 카테고리 부분은 CategoryParts 프래그먼트를 사용하여 가져옴
+        ...CategoryParts  
       }
     }
-    restaurants(input: $input) { // 식당 데이터 요청
+    restaurants(input: $input) { 
       ok
       error
-      totalPages   // 총 페이지 수
-      totalResults // 총 결과 수
+      totalPages   
+      totalResults
       results {
-        ...RestaurantParts  // 식당 부분은 RestaurantParts 프래그먼트를 사용하여 가져옴
+        ...RestaurantParts 
       }
     }
   }
-  ${RESTAURANT_FRAGMENT} // 식당 데이터에 대한 프래그먼트
-  ${CATEGORY_FRAGMENT}   // 카테고리 데이터에 대한 프래그먼트
+  ${RESTAURANT_FRAGMENT} 
+  ${CATEGORY_FRAGMENT}  
 `;
 
 // 폼 데이터의 인터페이스 정의

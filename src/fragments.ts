@@ -41,31 +41,31 @@ export const CATEGORY_FRAGMENT = gql`
   }
 `;
 
-// export const DISH_FRAGMENT = gql`
-//   fragment DishParts on Dish {
-//     id
-//     name
-//     price
-//     photo
-//     description
-//     options {
-//       name
-//       extra
-//       choices {
-//         name
-//         extra
-//       }
-//     }
-//   }
-// `;
+export const DISH_FRAGMENT = gql`
+  fragment DishParts on Dish {
+    id
+    name
+    price
+    photo
+    description
+    options {
+      name
+      extra
+      choices {
+        name
+        extra
+      }
+    }
+  }
+`;
 
-// export const ORDERS_FRAGMENT = gql`
-//   fragment OrderParts on Order {
-//     id
-//     createdAt
-//     total
-//   }
-// `;
+export const ORDERS_FRAGMENT = gql`
+  fragment OrderParts on Order {
+    id
+    createdAt
+    total
+  }
+`;
 
 // export const FULL_ORDER_FRAGMENT = gql`
 //   fragment FullOrderParts on Order {
