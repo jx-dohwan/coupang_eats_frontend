@@ -10,25 +10,30 @@ import { Restaurants } from "../pages/client/restaurants";
 
 const clientRoutes = [
   { path: "/", element: <Restaurants /> },
+  // 2024.04.18
   { path: "/search", element: <React.Fragment /> },
   { path: "/category/:slug", element: <React.Fragment /> },
   { path: "/restaurant/:id", element: <React.Fragment /> },
-  
   { path: "/ordering/:id", element: <React.Fragment /> },
   { path: "/cart/:id", element: <React.Fragment /> },
-  { path: "/create-reviews/:id", element: <React.Fragment /> },
   { path: "/delivery-details/:id", element: <React.Fragment /> },
+  //2024.04.19
+  { path: "/create-reviews/:id", element: <React.Fragment /> },
+
 ];
 
 const commonRoutes = [
   { path: "/confirm", element: <ConfirmEmail /> },
   { path: "/edit-profile", element: <EditProfile /> },
+
+  //2024.04.19
   { path: "/order/:id", element: <React.Fragment /> },
   { path: "/reviews/:id", element: <React.Fragment /> },
 
 ];
 
 const restaurantRoutes = [
+  // 2024.04.19
   { path: "/", element: <React.Fragment /> },
   { path: "/add-restaurant", element: <React.Fragment /> },
   { path: "/restaurants/:id", element: <React.Fragment /> },

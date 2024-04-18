@@ -25,6 +25,13 @@ export type AllCategoriesOutput = {
   ok: Scalars['Boolean']['output'];
 };
 
+export type AllReviewsOutput = {
+  __typename?: 'AllReviewsOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+  reviews?: Maybe<Array<Reviews>>;
+};
+
 export type Category = {
   __typename?: 'Category';
   coverImg?: Maybe<Scalars['String']['output']>;
@@ -482,6 +489,7 @@ export type Payment = {
 export type Query = {
   __typename?: 'Query';
   allCategories: AllCategoriesOutput;
+  allReviews: AllReviewsOutput;
   category: CategoryOutput;
   getOrder: GetOrderOutput;
   getOrders: GetOrdersOutput;
@@ -672,10 +680,21 @@ export type ReviewImgInputType = {
   url: Scalars['String']['input'];
 };
 
+export type RestaurantPartsFragment = { __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, category?: { __typename?: 'Category', name: string } | null, reviews: Array<{ __typename?: 'Reviews', score: number, reviewText?: string | null, reviewImg?: Array<{ __typename?: 'ReviewImges', url: string }> | null }> };
+
+export type CategoryPartsFragment = { __typename?: 'Category', id: number, name: string, coverImg?: string | null, slug: string, restaurantCount: number };
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: number, email: string, role: UserRole, verified: boolean } };
+
+export type RestaurantsPageQueryVariables = Exact<{
+  input: RestaurantsInput;
+}>;
+
+
+export type RestaurantsPageQuery = { __typename?: 'Query', allCategories: { __typename?: 'AllCategoriesOutput', ok: boolean, error?: string | null, categories?: Array<{ __typename?: 'Category', id: number, name: string, coverImg?: string | null, slug: string, restaurantCount: number }> | null }, restaurants: { __typename?: 'RestaurantsOutput', ok: boolean, error?: string | null, totalPages?: number | null, totalResults?: number | null, results?: Array<{ __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, category?: { __typename?: 'Category', name: string } | null, reviews: Array<{ __typename?: 'Reviews', score: number, reviewText?: string | null, reviewImg?: Array<{ __typename?: 'ReviewImges', url: string }> | null }> }> | null } };
 
 export type CreateAccountMutationVariables = Exact<{
   createAccountInput: CreateAccountInput;
@@ -707,9 +726,45 @@ export type EditProfileMutationVariables = Exact<{
 
 export type EditProfileMutation = { __typename?: 'Mutation', editProfile: { __typename?: 'EditProfileOutput', ok: boolean, error?: string | null } };
 
+export type EditedUserFragment = { __typename?: 'User', verified: boolean, email: string };
+
+export const RestaurantPartsFragmentDoc = gql`
+    fragment RestaurantParts on Restaurant {
+  id
+  name
+  coverImg
+  category {
+    name
+  }
+  address
+  isPromoted
+  reviews {
+    score
+    reviewText
+    reviewImg {
+      url
+    }
+  }
+}
+    `;
+export const CategoryPartsFragmentDoc = gql`
+    fragment CategoryParts on Category {
+  id
+  name
+  coverImg
+  slug
+  restaurantCount
+}
+    `;
 export const VerifiedUserFragmentDoc = gql`
     fragment VerifiedUser on User {
   verified
+}
+    `;
+export const EditedUserFragmentDoc = gql`
+    fragment EditedUser on User {
+  verified
+  email
 }
     `;
 export const MeDocument = gql`
@@ -754,6 +809,60 @@ export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeSuspenseQueryHookResult = ReturnType<typeof useMeSuspenseQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const RestaurantsPageDocument = gql`
+    query restaurantsPage($input: RestaurantsInput!) {
+  allCategories {
+    ok
+    error
+    categories {
+      ...CategoryParts
+    }
+  }
+  restaurants(input: $input) {
+    ok
+    error
+    totalPages
+    totalResults
+    results {
+      ...RestaurantParts
+    }
+  }
+}
+    ${CategoryPartsFragmentDoc}
+${RestaurantPartsFragmentDoc}`;
+
+/**
+ * __useRestaurantsPageQuery__
+ *
+ * To run a query within a React component, call `useRestaurantsPageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRestaurantsPageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRestaurantsPageQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRestaurantsPageQuery(baseOptions: Apollo.QueryHookOptions<RestaurantsPageQuery, RestaurantsPageQueryVariables> & ({ variables: RestaurantsPageQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RestaurantsPageQuery, RestaurantsPageQueryVariables>(RestaurantsPageDocument, options);
+      }
+export function useRestaurantsPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RestaurantsPageQuery, RestaurantsPageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RestaurantsPageQuery, RestaurantsPageQueryVariables>(RestaurantsPageDocument, options);
+        }
+export function useRestaurantsPageSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<RestaurantsPageQuery, RestaurantsPageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<RestaurantsPageQuery, RestaurantsPageQueryVariables>(RestaurantsPageDocument, options);
+        }
+export type RestaurantsPageQueryHookResult = ReturnType<typeof useRestaurantsPageQuery>;
+export type RestaurantsPageLazyQueryHookResult = ReturnType<typeof useRestaurantsPageLazyQuery>;
+export type RestaurantsPageSuspenseQueryHookResult = ReturnType<typeof useRestaurantsPageSuspenseQuery>;
+export type RestaurantsPageQueryResult = Apollo.QueryResult<RestaurantsPageQuery, RestaurantsPageQueryVariables>;
 export const CreateAccountDocument = gql`
     mutation createAccount($createAccountInput: CreateAccountInput!) {
   createAccount(input: $createAccountInput) {
