@@ -27,7 +27,6 @@ export const RESTAURANT_FRAGMENT = gql`
         url
       }
     }
-  
   }
 `;
 

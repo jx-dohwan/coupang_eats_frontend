@@ -27,19 +27,17 @@ export const MY_RESTAURANT_QUERY = gql`
 `;
 
 interface IParams {
-    [key: string]: string | undefined;
     id: string;
 }
 
+export const MyRestaurant : React.FC<IParams> = ({ id }) => {
 
-export const MyRestaurant = () => {
-    const { id } = useParams<IParams>();
     const { data } = useQuery<MyRestaurantQuery, MyRestaurantQueryVariables>(
         MY_RESTAURANT_QUERY,
         {
             variables: {
                 input: {
-                    id: +id!
+                    id: +id
                 },
             },
         }
