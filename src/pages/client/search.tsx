@@ -35,7 +35,9 @@ export const Search = () => {
     const onPrevPageClick = () => setPage((current) => current - 1);
 
     useEffect(() => {
-        const [, query] = location.search.split("?term=");
+        const [, encodedQuery] = location.search.split("?term=");
+        const query = decodeURIComponent(encodedQuery || ''); // 인코딩된 query 디코딩
+        console.log('query : ', query)
         if (!query) {
             return navigate('/', { replace: true }) // true를 쓰면 이동할 주소로 이동한후 뒤로가기가 안됨, 뒤로가기를 누르면 메인페이지("/")로 돌아가게된다.
         }
@@ -57,15 +59,19 @@ export const Search = () => {
             {!loading && (
                 <div className="max-w-screen-2xl pb-20 mx-auto mt-8">
                     <div className="mx-5 mt-16 grid md:grid-cols-3 gap-x-5 gap-y-10">
-                        {data?.searchRestaurant.restaurants?.map((restaurant) => (
-                            <Restaurant
-                                key={restaurant.id}
-                                id={restaurant.id + ""}
-                                coverImg={restaurant.coverImg}
-                                name={restaurant.name}
-                                categoryName={restaurant.category?.name}
-                            />
-                        ))}
+                        {data?.searchRestaurant.restaurants?.length !== 0 ? (
+                            data?.searchRestaurant.restaurants?.map((restaurant) => (
+                                <Restaurant
+                                    key={restaurant.id}
+                                    id={restaurant.id + ""}
+                                    coverImg={restaurant.coverImg}
+                                    name={restaurant.name}
+                                    categoryName={restaurant.category?.name}
+                                />
+                            ))
+                        ) : (
+                            <div className="font-medium">해당 매장은 존재하지 않습니다.</div>
+                        )}
                     </div>
                     <div className="grid grid-cols-3 text-center max-w-md items-center mx-auto mt-10">
                         {page > 1 ? (

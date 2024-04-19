@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { Restaurant } from "./restaurant";
+import { FaSearch } from "react-icons/fa";
 
 // GraphQL 쿼리 정의: 식당과 카테고리 데이터를 가져오는 쿼리
 const RESTAURANTS_QUERY = gql`
@@ -65,6 +66,7 @@ export const Restaurants = () => {
 
     // 검색 제출 함수
     const onSearchSubmit = () => {
+    
         const searchTerm = getValues().searchTerm;  // 폼에서 검색어 가져오기
         navigate({  // 검색어를 쿼리 파라미터로 넣어서 검색 페이지로 이동
             pathname: "/search",
@@ -107,7 +109,7 @@ export const Restaurants = () => {
             >
                 <div
                     className="flex items-center justify-stretch rounded-full border border-b-4 border-gray-300 p-2  w-3/4 md:w-3/4">
-
+                    <FaSearch />
                     {/* 여기 input을 누를때 가로 테두리를 없애야 할것 같은데 일단 넘어가자*/}
                     <input
                         {...register("searchTerm", { required: true, minLength: 1 })}
