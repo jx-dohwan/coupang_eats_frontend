@@ -9,11 +9,12 @@ import { UserRole } from "../__api__/graphql";
 import { Restaurants } from "../pages/client/restaurants";
 import { AddRestaurant } from "../pages/owner/add-restaurants";
 import { MyRestaurants } from "../pages/owner/my-restaurants";
+import { Search } from "../pages/client/search";
 
 const clientRoutes = [
   { path: "/", element: <Restaurants /> },
   // 2024.04.18
-  { path: "/search", element: <React.Fragment /> },
+  { path: "/search", element: <Search /> },
   { path: "/category/:slug", element: <React.Fragment /> },
   { path: "/restaurant/:id", element: <React.Fragment /> },
   { path: "/ordering/:id", element: <React.Fragment /> },
