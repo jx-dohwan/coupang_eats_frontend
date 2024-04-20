@@ -30,7 +30,6 @@ type RestaurantProps = {
 };
 
 export const Restaurant: React.FC<RestaurantProps> = ({ id, coverImg, name, categoryName }) => {
-
   const { loading, data } = useQuery<RestaurantQuery, RestaurantQueryVariables>(
 
     RESTAURANT_QUERY,
