@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import { CATEGORY_FRAGMENT, RESTAURANT_FRAGMENT } from "../../fragments";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CategoryQuery, CategoryQueryVariables } from "../../__api__/graphql";
 import { Helmet } from "react-helmet";
@@ -27,7 +27,7 @@ const CATEGORY_QUERY = gql`
 export const Category = () => {
     const [page, setPage] = useState(1);
     const params = useParams<{ slug: string }>();
-
+ 
     const { data, loading } = useQuery<CategoryQuery, CategoryQueryVariables>(
         CATEGORY_QUERY,
         {

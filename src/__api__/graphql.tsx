@@ -680,6 +680,10 @@ export type DishPartsFragment = { __typename?: 'Dish', id: number, name: string,
 
 export type OrderPartsFragment = { __typename?: 'Order', id: number, createdAt: any, total?: number | null };
 
+export type VerifiedUserFragment = { __typename?: 'User', verified: boolean };
+
+export type EditedUserFragment = { __typename?: 'User', verified: boolean, email: string };
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -753,8 +757,6 @@ export type VerifyEmailMutationVariables = Exact<{
 
 export type VerifyEmailMutation = { __typename?: 'Mutation', verifyEmail: { __typename?: 'VerifyEmailOutput', ok: boolean, error?: string | null } };
 
-export type VerifiedUserFragment = { __typename?: 'User', verified: boolean };
-
 export type EditProfileMutationVariables = Exact<{
   input: EditProfileInput;
 }>;
@@ -762,7 +764,12 @@ export type EditProfileMutationVariables = Exact<{
 
 export type EditProfileMutation = { __typename?: 'Mutation', editProfile: { __typename?: 'EditProfileOutput', ok: boolean, error?: string | null } };
 
-export type EditedUserFragment = { __typename?: 'User', verified: boolean, email: string };
+export type CreateDishMutationVariables = Exact<{
+  input: CreateDishInput;
+}>;
+
+
+export type CreateDishMutation = { __typename?: 'Mutation', createDish: { __typename?: 'CreateDishOutput', ok: boolean, error?: string | null } };
 
 export const RestaurantPartsFragmentDoc = gql`
     fragment RestaurantParts on Restaurant {
@@ -1334,3 +1341,37 @@ export function useEditProfileMutation(baseOptions?: Apollo.MutationHookOptions<
 export type EditProfileMutationHookResult = ReturnType<typeof useEditProfileMutation>;
 export type EditProfileMutationResult = Apollo.MutationResult<EditProfileMutation>;
 export type EditProfileMutationOptions = Apollo.BaseMutationOptions<EditProfileMutation, EditProfileMutationVariables>;
+export const CreateDishDocument = gql`
+    mutation createDish($input: CreateDishInput!) {
+  createDish(input: $input) {
+    ok
+    error
+  }
+}
+    `;
+export type CreateDishMutationFn = Apollo.MutationFunction<CreateDishMutation, CreateDishMutationVariables>;
+
+/**
+ * __useCreateDishMutation__
+ *
+ * To run a mutation, you first call `useCreateDishMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateDishMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createDishMutation, { data, loading, error }] = useCreateDishMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateDishMutation(baseOptions?: Apollo.MutationHookOptions<CreateDishMutation, CreateDishMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateDishMutation, CreateDishMutationVariables>(CreateDishDocument, options);
+      }
+export type CreateDishMutationHookResult = ReturnType<typeof useCreateDishMutation>;
+export type CreateDishMutationResult = Apollo.MutationResult<CreateDishMutation>;
+export type CreateDishMutationOptions = Apollo.BaseMutationOptions<CreateDishMutation, CreateDishMutationVariables>;

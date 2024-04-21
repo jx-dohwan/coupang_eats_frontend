@@ -10,12 +10,14 @@ import { Restaurants } from "../pages/client/restaurants";
 import { AddRestaurant } from "../pages/owner/add-restaurants";
 import { MyRestaurants } from "../pages/owner/my-restaurants";
 import { Search } from "../pages/client/search";
+import { Category } from "../pages/client/category";
+import { AddDish } from "../pages/owner/add-dish";
 
 const clientRoutes = [
   { path: "/", element: <Restaurants /> },
   // 2024.04.18
   { path: "/search", element: <Search /> },
-  { path: "/category/:slug", element: <React.Fragment /> },
+  { path: "/category/:slug", element: <Category /> },
   { path: "/restaurant/:id", element: <React.Fragment /> },
   { path: "/ordering/:id", element: <React.Fragment /> },
   { path: "/cart/:id", element: <React.Fragment /> },
@@ -40,7 +42,7 @@ const restaurantRoutes = [
   { path: "/", element: <MyRestaurants /> },
   { path: "/add-restaurant", element: <AddRestaurant /> },
   { path: "/restaurants/:id", element: <React.Fragment /> },
-  { path: "/restaurants/:restaurantId/add-dish", element: <React.Fragment /> },
+  { path: "/restaurants/:restaurantId/add-dish", element: <AddDish /> },
 ];
 
 const driverRoutes = [{ path: "/", element: <React.Fragment /> }];
