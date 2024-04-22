@@ -5,6 +5,7 @@ import { MyRestaurantQuery, MyRestaurantQueryVariables } from "../../__api__/gra
 import { useMe } from "../../hooks/useMe";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
+import { Dish } from "../../components/dish";
 export const MY_RESTAURANT_QUERY = gql`
   query myRestaurant($input: MyRestaurantInput!) {
     myRestaurant(input: $input) {
@@ -30,7 +31,7 @@ type IParams = {
     id: string;
 }
 
-export const MyRestaurant = () =>{
+export const MyRestaurant = () => {
     const { id } = useParams() as unknown as IParams;
     const { data } = useQuery<MyRestaurantQuery, MyRestaurantQueryVariables>(
         MY_RESTAURANT_QUERY,
@@ -84,7 +85,14 @@ export const MyRestaurant = () =>{
                         <h4 className="text-xl mb-5">음식을 추가해주세요.</h4>
                     ) : (
                         <div className="grid mt-16 md:grid-cols-3 gap-x-5 gap-y-10">
-                            {/* 여기에 dish 추가 */}
+                            {data?.myRestaurant.restaurant?.menu.map((dish, index) => (
+                                <Dish
+                                    key={index}
+                                    name={dish.name}
+                                    description={dish.description}
+                                    price={dish.price}
+                                />
+                            ))}
                         </div>
                     )}
                 </div>
