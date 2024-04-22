@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CategoryQuery, CategoryQueryVariables } from "../../__api__/graphql";
 import { Helmet } from "react-helmet";
-import { Restaurant } from "./restaurant";
+import { RestaurantView } from "../../components/restaurant-view";
 const CATEGORY_QUERY = gql`
   query category($input: CategoryInput!) {
     category(input: $input) {
@@ -52,7 +52,7 @@ export const Category = () => {
                 <div className="max-w-screen-2xl pb-20 mx-auto mt-8">
                     <div className="grid mt-16 md:grid-cols-3 gap-x-5 gap-y-10">
                         {data?.category.restaurants?.map((restaurant) => (
-                            <Restaurant
+                            <RestaurantView
                                 key={restaurant.id}
                                 id={restaurant.id + ""}
                                 coverImg={restaurant.coverImg}

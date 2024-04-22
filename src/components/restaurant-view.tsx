@@ -1,0 +1,37 @@
+import { Link } from "react-router-dom";
+import { StarsAndReviews } from "./stars-and-reviews";
+
+interface IRestaurantProps {
+    id: string;
+    coverImg: string;
+    name: string;
+    categoryName?: string;
+  }
+
+  export const RestaurantView:React.FC<IRestaurantProps> = ( {
+    id,
+    coverImg,
+    name,
+    categoryName,
+  }) => (
+    <Link to={`/restaurants/${id}`}>
+        <div className="flex flex-col">
+            <div
+                style={{backgroundImage: `url(${coverImg})`}}
+                className="bg-cover bg-center rounded-l-xl rounded-r-xl mb-3 py-28"
+            />
+            <h3 className="text-xl font-semibold">{name}</h3>
+            <div className="flex gap-2 text-sm">
+                <div className="flex gap-2 text-sm">
+                    <div className="flex gap-2 text-sm">
+                        <StarsAndReviews
+                            rating={4}
+                            reviewCount={50}
+                        />
+                        <span className="text-gray-500">배달비 3,500</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </Link>
+  )

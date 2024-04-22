@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { SearchRestaurantQuery, SearchRestaurantQueryVariables } from "../../__api__/graphql";
 import { Helmet } from "react-helmet";
-import { Restaurant } from "./restaurant";
+import { RestaurantView } from "../../components/restaurant-view";
 
 const SEARCH_RESTAURANT = gql`
   query searchRestaurant($input: SearchRestaurantInput!) {
@@ -61,7 +61,7 @@ export const Search = () => {
                     <div className="mx-5 mt-16 grid md:grid-cols-3 gap-x-5 gap-y-10">
                         {data?.searchRestaurant.restaurants?.length !== 0 ? (
                             data?.searchRestaurant.restaurants?.map((restaurant) => (
-                                <Restaurant
+                                <RestaurantView
                                     key={restaurant.id}
                                     id={restaurant.id + ""}
                                     coverImg={restaurant.coverImg}

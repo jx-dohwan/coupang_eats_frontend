@@ -3,7 +3,7 @@ import { RESTAURANT_FRAGMENT } from "../../fragments";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { MyRestaurantsQuery } from "../../__api__/graphql";
-import { Restaurant } from "../client/restaurant";
+import { RestaurantView } from "../../components/restaurant-view";
 
 export const MY_RESTAURANTS_QUERY = gql`
   query myRestaurants {
@@ -41,7 +41,7 @@ export const MyRestaurants = () => {
                 ) : (
                     <div className="grid mt-16 md:grid-cols-3 gap-x-5 gap-y-10">
                         {data?.myRestaurants.restaurants.map((restaurant) => (
-                            <Restaurant
+                            <RestaurantView
                                 key={restaurant.id}
                                 id={restaurant.id + ""}
                                 coverImg={restaurant.coverImg}

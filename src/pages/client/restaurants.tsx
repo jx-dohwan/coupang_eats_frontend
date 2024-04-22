@@ -6,8 +6,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-import { Restaurant } from "./restaurant";
 import { FaSearch } from "react-icons/fa";
+import { RestaurantView } from "../../components/restaurant-view";
 
 // GraphQL 쿼리 정의: 식당과 카테고리 데이터를 가져오는 쿼리
 const RESTAURANTS_QUERY = gql`
@@ -140,7 +140,7 @@ export const Restaurants = () => {
                     <div className="bg-gray-50 h-4 my-6 border"></div>
                     <div className="grid mt-16 md:grid-cols-3 gap-x-5 gap-y-10">
                         {data?.restaurants.results?.map((restaurant) => (
-                            <Restaurant
+                            <RestaurantView
                                 key={restaurant.id}
                                 id={restaurant.id+""}
                                 coverImg={restaurant.coverImg}

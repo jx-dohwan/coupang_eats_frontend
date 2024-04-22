@@ -22,23 +22,17 @@ const RESTAURANT_QUERY = gql`
   ${DISH_FRAGMENT}
 `;
 
-type RestaurantProps = {
-  id?: string;
-  coverImg?: string;
-  name?: string;
-  categoryName?: string;
-};
 
-export const Restaurant = ({ id, coverImg, name, categoryName }: RestaurantProps) => {
-  const params = useParams<{ id: string }>();
+
+export const Restaurant = () => {
+  const id = useParams<{ id: string }>();
   // 사용 가능한 ID는 props의 ID 또는 URL 파라미터에서 추출한 ID
-  const effectiveId = id || params.id;
 
   const { loading, data } = useQuery<RestaurantQuery, RestaurantQueryVariables>(
     RESTAURANT_QUERY, {
       variables: {
         input: {
-          restaurantId: +effectiveId!,  // 숫자형 ID가 필요하다면 변환
+          restaurantId: +id,  // 숫자형 ID가 필요하다면 변환
         },
       },
     }
