@@ -23,24 +23,27 @@ const RESTAURANT_QUERY = gql`
 `;
 
 type RestaurantProps = {
-  id: string;
-  coverImg: string;
-  name: string;
+  id?: string;
+  coverImg?: string;
+  name?: string;
   categoryName?: string;
 };
 
-export const Restaurant: React.FC<RestaurantProps> = ({ id, coverImg, name, categoryName }) => {
-  const { loading, data } = useQuery<RestaurantQuery, RestaurantQueryVariables>(
+export const Restaurant = ({ id, coverImg, name, categoryName }: RestaurantProps) => {
+  const params = useParams<{ id: string }>();
+  // 사용 가능한 ID는 props의 ID 또는 URL 파라미터에서 추출한 ID
+  const effectiveId = id || params.id;
 
-    RESTAURANT_QUERY,
-    {
+  const { loading, data } = useQuery<RestaurantQuery, RestaurantQueryVariables>(
+    RESTAURANT_QUERY, {
       variables: {
         input: {
-          restaurantId: +id,
+          restaurantId: +effectiveId!,  // 숫자형 ID가 필요하다면 변환
         },
       },
     }
   );
+
   return (
     <div>
       <Helmet>

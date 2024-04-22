@@ -12,13 +12,15 @@ import { MyRestaurants } from "../pages/owner/my-restaurants";
 import { Search } from "../pages/client/search";
 import { Category } from "../pages/client/category";
 import { AddDish } from "../pages/owner/add-dish";
+import { MyRestaurant } from "../pages/owner/my-restaurant";
+import { Restaurant } from "../pages/client/restaurant";
 
 const clientRoutes = [
   { path: "/", element: <Restaurants /> },
   // 2024.04.18
   { path: "/search", element: <Search /> },
   { path: "/category/:slug", element: <Category /> },
-  { path: "/restaurant/:id", element: <React.Fragment /> },
+  { path: "/restaurant/:id", element: <Restaurant /> },
   { path: "/ordering/:id", element: <React.Fragment /> },
   { path: "/cart/:id", element: <React.Fragment /> },
   { path: "/delivery-details/:id", element: <React.Fragment /> },
@@ -41,7 +43,7 @@ const restaurantRoutes = [
   // 2024.04.19
   { path: "/", element: <MyRestaurants /> },
   { path: "/add-restaurant", element: <AddRestaurant /> },
-  { path: "/restaurants/:id", element: <React.Fragment /> },
+  { path: "/restaurants/:id", element: <MyRestaurant /> },
   { path: "/restaurants/:restaurantId/add-dish", element: <AddDish /> },
 ];
 

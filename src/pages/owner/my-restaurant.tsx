@@ -26,12 +26,12 @@ export const MY_RESTAURANT_QUERY = gql`
   ${ORDERS_FRAGMENT}
 `;
 
-interface IParams {
+type IParams = {
     id: string;
 }
 
-export const MyRestaurant : React.FC<IParams> = ({ id }) => {
-
+export const MyRestaurant = () =>{
+    const { id } = useParams() as unknown as IParams;
     const { data } = useQuery<MyRestaurantQuery, MyRestaurantQueryVariables>(
         MY_RESTAURANT_QUERY,
         {
