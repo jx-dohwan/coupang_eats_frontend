@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { MY_RESTAURANT_QUERY } from "./my-restaurant";
 import { useState } from "react";
 import { Helmet } from "react-helmet";
+import { Button } from "../../components/button";
 
 
 const CREATE_DISH_MUTATION = gql`
@@ -122,11 +123,41 @@ export const AddDish = () => {
                     </h4>
                     <span
                         onClick={onAddOptionClick}
+                        className="cursor-pointer text-white bg-sky-500 hover:bg-sky-600 py-1 px-2 mt-5"
                     >
-
+                        옵션 추가하기
                     </span>
-
+                    {optionsNumber.length !== 0 &&
+                        optionsNumber.map((id) => (
+                            <div key={id} className="mt-5">
+                                <input
+                                    {...register(`${id}-optionName`)}
+                                    className="py-2 px-4 focus:outline-none mr-3 focus:border-gray-600 border-2"
+                                    type="text"
+                                    placeholder="옵션 이름"
+                                />
+                                <input
+                                    {...register(`${id}-optionExtra`)}
+                                    className="py-2 px-4 focus:outline-none focus:border-gray-600 border-2"
+                                    type="number"
+                                    min={0}
+                                    placeholder="추가"
+                                />
+                                <span
+                                    className="cursor-pointer text-white bg-red-700 ml-3 py-3 px-4 mt-5 bg-"
+                                    onClick={() => onDeleteClick(id)}
+                                >
+                                    옵션 삭제하기
+                                </span>
+                            </div>
+                        ))}
                 </div>
+                <Button
+                    loading={loading}
+                    canClick={formState.isValid}
+                    actionText="음식 만들기"
+                />
+
             </form>
 
         </div>
