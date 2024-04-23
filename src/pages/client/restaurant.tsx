@@ -8,6 +8,7 @@ import { Fragment } from "react/jsx-runtime";
 import { Link } from "react-router-dom";
 import { BiCartAdd } from 'react-icons/bi'
 import { useEffect } from "react";
+import KRW from "../../components/currency-formatter";
 
 const RESTAURANT_QUERY = gql`
   query restaurant($input: RestaurantInput!) {
@@ -107,16 +108,18 @@ export const Restaurant = () => {
           <div className="grid gap-4">
             {data?.restaurant.restaurant?.menu.map((menu) => (
               <div className="relative">
-                <Link className="grid grid-cols-3" key={menu.id} to={`/menu/${menu.id}`}> 
+                <Link className="grid grid-cols-3" key={menu.id} to={`/menu/${menu.id}`}>
                   <div className="col-span-2">
                     <h3 className="text-lg font-bold">{menu.name}</h3>
-                    <h4 className="text-lg">{menu.price}</h4>
+                    <h4 className="text-lg">
+                      <KRW price={menu.price} />
+                    </h4>
                     <p className="text-sm">{menu.description}</p>
                   </div>
                 </Link>
 
                 <div className="absolute right-0 top-0 flex h-full items-center">
-                  
+                  { }
                   <BiCartAdd />
                 </div>
               </div>
