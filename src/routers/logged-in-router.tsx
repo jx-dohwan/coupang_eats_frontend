@@ -14,17 +14,18 @@ import { Category } from "../pages/client/category";
 import { AddDish } from "../pages/owner/add-dish";
 import { MyRestaurant } from "../pages/owner/my-restaurant";
 import { Restaurant } from "../pages/client/restaurant";
+import { Menu } from "../pages/client/menu";
 
 const clientRoutes = [
   { path: "/", element: <Restaurants /> },
-  // 2024.04.18
   { path: "/search", element: <Search /> },
   { path: "/category/:slug", element: <Category /> },
-  { path: "/restaurant/:id", element: <Restaurant /> },
+  { path: "/restaurants/:id", element: <Restaurant /> },
+  { path: "/menu/:id", element: <Menu /> },
+
   { path: "/ordering/:id", element: <React.Fragment /> },
   { path: "/cart/:id", element: <React.Fragment /> },
   { path: "/delivery-details/:id", element: <React.Fragment /> },
-  //2024.04.19
   { path: "/create-reviews/:id", element: <React.Fragment /> },
 
 ];

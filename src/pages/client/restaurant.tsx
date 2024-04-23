@@ -4,6 +4,10 @@ import { useParams } from "react-router-dom";
 import { RestaurantQuery, RestaurantQueryVariables } from "../../__api__/graphql";
 import { Helmet } from "react-helmet";
 import { StarsAndReviews } from "../../components/stars-and-reviews";
+import { Fragment } from "react/jsx-runtime";
+import { Link } from "react-router-dom";
+import { BiCartAdd } from 'react-icons/bi'
+import { useEffect } from "react";
 
 const RESTAURANT_QUERY = gql`
   query restaurant($input: RestaurantInput!) {
@@ -22,22 +26,29 @@ const RESTAURANT_QUERY = gql`
   ${DISH_FRAGMENT}
 `;
 
+type TRestaurantParams = {
+  id: string;
+};
 
 
 export const Restaurant = () => {
-  const id = useParams<{ id: string }>();
+  const { id } = useParams() as unknown as TRestaurantParams;
   // 사용 가능한 ID는 props의 ID 또는 URL 파라미터에서 추출한 ID
 
   const { loading, data } = useQuery<RestaurantQuery, RestaurantQueryVariables>(
     RESTAURANT_QUERY, {
-      variables: {
-        input: {
-          restaurantId: +id,  // 숫자형 ID가 필요하다면 변환
-        },
+    variables: {
+      input: {
+        restaurantId: +id,  // 숫자형 ID가 필요하다면 변환
       },
-    }
+    },
+  }
   );
 
+  useEffect(() => {
+    console.log("data", data)
+    console.log("menu", data?.restaurant.restaurant?.menu)
+  }, [data])
   return (
     <div>
       <Helmet>
@@ -86,6 +97,39 @@ export const Restaurant = () => {
           </div>
         </div>
       </div>
+
+
+      {/* 2024.04.23 구현 */}
+      {/* 1. 메뉴리스트 보여주기 */}
+      {/* MenuList-> MenuInCategory -> MenuItem */}
+      <div className="grid gap-4 px-4">
+        <Fragment>
+          <div className="grid gap-4">
+            {data?.restaurant.restaurant?.menu.map((menu) => (
+              <div className="relative">
+                <Link className="grid grid-cols-3" key={menu.id} to={`/menu/${menu.id}`}> 
+                  <div className="col-span-2">
+                    <h3 className="text-lg font-bold">{menu.name}</h3>
+                    <h4 className="text-lg">{menu.price}</h4>
+                    <p className="text-sm">{menu.description}</p>
+                  </div>
+                </Link>
+
+                <div className="absolute right-0 top-0 flex h-full items-center">
+                  
+                  <BiCartAdd />
+                </div>
+              </div>
+            ))}
+
+          </div>
+        </Fragment>
+
+      </div>
+      {/* 2.메뉴주문하기 */}
+      {/* MenuTitle + MenuOrder */}
+
+
     </div>
   );
 };
