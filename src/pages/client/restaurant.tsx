@@ -99,39 +99,29 @@ export const Restaurant = () => {
         </div>
       </div>
 
-
-      {/* 2024.04.23 구현 */}
-      {/* 1. 메뉴리스트 보여주기 */}
-      {/* MenuList-> MenuInCategory -> MenuItem */}
       <div className="grid gap-4 px-4">
-        <Fragment>
-          <div className="grid gap-4">
-            {data?.restaurant.restaurant?.menu.map((menu) => (
-              <div className="relative">
-                <Link className="grid grid-cols-3" key={menu.id} to={`/menu/${menu.id}`}>
-                  <div className="col-span-2">
-                    <h3 className="text-lg font-bold">{menu.name}</h3>
-                    <h4 className="text-lg">
-                      <KRW price={menu.price} />
-                    </h4>
-                    <p className="text-sm">{menu.description}</p>
-                  </div>
-                </Link>
-
-                <div className="absolute right-0 top-0 flex h-full items-center">
-                  { }
-                  <BiCartAdd />
+        <div className="grid gap-4">
+          {data?.restaurant.restaurant?.menu.map((menu) => (
+            <div className="relative">
+              <Link className="grid grid-cols-3" key={menu.id} to={`/menu/${menu.id}`}>
+                <div className="col-span-2">
+                  <h3 className="text-lg font-bold">{menu.name}</h3>
+                  <h4 className="text-lg">
+                    <KRW price={menu.price} />
+                  </h4>
+                  <p className="text-sm">{menu.description}</p>
                 </div>
+              </Link>
+
+              <div className="absolute right-0 top-0 flex h-full items-center">
+                { }
+                <BiCartAdd />
               </div>
-            ))}
+            </div>
+          ))}
 
-          </div>
-        </Fragment>
-
+        </div>
       </div>
-      {/* 2.메뉴주문하기 */}
-      {/* MenuTitle + MenuOrder */}
-
 
     </div>
   );

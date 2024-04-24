@@ -19,7 +19,7 @@ export const Menu = () => {
                     </div>
                     <div className="flex justify-between">
                         <div className="flex items-center">
-                            <p className="text-lg font-semibold">수량</p>
+                            <p className="text-lg font-semibold">수량</p> {/*수량 올리면 extra도 자동으로 올라가고, 해당 추가 옵션이 선택되어야 함*/}
                         </div>
                         <div className="flex items-center gap-2">
                             <CiCircleMinus
@@ -40,7 +40,7 @@ export const Menu = () => {
                 className="fixed bottom-0 flex h-20 w-screen items-center justify-center bg-sky-500 pb-4 text-lg text-white"
             //   onClick={addToCart}
             >
-                배달 카트에 담기
+                결제하기
             </button>
         </>
     );
