@@ -3,7 +3,7 @@ import { RESTAURANT_FRAGMENT } from "../../fragments";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { MyRestaurantsQuery } from "../../__api__/graphql";
-import { RestaurantView } from "../../components/restaurant-view";
+import { RestaurantView } from "../../components/restaurant_view";
 
 export const MY_RESTAURANTS_QUERY = gql`
   query myRestaurants {

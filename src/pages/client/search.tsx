@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { SearchRestaurantQuery, SearchRestaurantQueryVariables } from "../../__api__/graphql";
 import { Helmet } from "react-helmet";
-import { RestaurantView } from "../../components/restaurant-view";
+import { RestaurantView } from "../../components/restaurant_view";
 
 const SEARCH_RESTAURANT = gql`
   query searchRestaurant($input: SearchRestaurantInput!) {

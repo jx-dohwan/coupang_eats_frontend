@@ -7,7 +7,7 @@ import { CreateAccountMutation, CreateAccountMutationVariables } from "../__api_
 import { UserRole } from "../__api__/graphql";
 
 import { Link, useNavigate } from "react-router-dom";
-import { FormError } from "../components/form-error";
+import { FormError } from "../components/form_error";
 
 
 // GraphQL mutation 정의: 새 계정 생성, 입력 타입은 CreateAccountInput이며, 결과로는 성공 여부(ok)와 에러 메시지(error)를 반환함

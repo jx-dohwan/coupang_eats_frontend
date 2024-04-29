@@ -7,15 +7,15 @@ import { EditProfile } from "../pages/user/edit-profile";
 import { NotFound } from "../pages/404";
 import { UserRole } from "../__api__/graphql";
 import { Restaurants } from "../pages/client/restaurants";
-import { AddRestaurant } from "../pages/owner/add-restaurants";
-import { MyRestaurants } from "../pages/owner/my-restaurants";
+import { AddRestaurant } from "../pages/owner/add_restaurants";
+import { MyRestaurants } from "../pages/owner/my_restaurants";
 import { Search } from "../pages/client/search";
 import { Category } from "../pages/client/category";
-import { AddDish } from "../pages/owner/add-dish";
-import { MyRestaurant } from "../pages/owner/my-restaurant";
+import { AddDish } from "../pages/owner/add_dish";
+import { MyRestaurant } from "../pages/owner/my_restaurant";
 import { Restaurant } from "../pages/client/restaurant";
 import { Menu } from "../pages/client/menu";
-import { OrderHistory } from "../pages/client/order-history";
+import { OrderHistory } from "../pages/client/order_history";
 
 const clientRoutes = [
   { path: "/", element: <Restaurants /> },

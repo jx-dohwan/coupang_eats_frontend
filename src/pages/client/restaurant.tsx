@@ -3,12 +3,13 @@ import { DISH_FRAGMENT, RESTAURANT_FRAGMENT } from "../../fragments";
 import { useParams } from "react-router-dom";
 import { RestaurantQuery, RestaurantQueryVariables } from "../../__api__/graphql";
 import { Helmet } from "react-helmet";
-import { StarsAndReviews } from "../../components/stars-and-reviews";
+import { StarsAndReviews } from "../../components/stars_and_reviews";
 import { Fragment } from "react/jsx-runtime";
 import { Link } from "react-router-dom";
 import { BiCartAdd } from 'react-icons/bi'
 import { useEffect } from "react";
-import KRW from "../../components/currency-formatter";
+import KRW from "../../components/currency_formatter";
+import { MenuList } from "../../components/menu_list";
 
 const RESTAURANT_QUERY = gql`
   query restaurant($input: RestaurantInput!) {
@@ -102,22 +103,13 @@ export const Restaurant = () => {
       <div className="grid gap-4 px-4">
         <div className="grid gap-4">
           {data?.restaurant.restaurant?.menu.map((menu) => (
-            <div className="relative">
-              <Link className="grid grid-cols-3" key={menu.id} to={`/menu/${menu.id}`}>
-                <div className="col-span-2">
-                  <h3 className="text-lg font-bold">{menu.name}</h3>
-                  <h4 className="text-lg">
-                    <KRW price={menu.price} />
-                  </h4>
-                  <p className="text-sm">{menu.description}</p>
-                </div>
-              </Link>
-
-              <div className="absolute right-0 top-0 flex h-full items-center">
-                { }
-                <BiCartAdd />
-              </div>
-            </div>
+            <MenuList
+              key={menu.id}
+              id={menu.id}
+              name={menu.name}
+              price={menu.price}
+              description={menu.description}
+            />
           ))}
 
         </div>

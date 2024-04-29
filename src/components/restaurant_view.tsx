@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { StarsAndReviews } from "./stars-and-reviews";
+import { StarsAndReviews } from "./stars_and_reviews";
 
 interface IRestaurantProps {
     id: string;

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CategoryQuery, CategoryQueryVariables } from "../../__api__/graphql";
 import { Helmet } from "react-helmet";
-import { RestaurantView } from "../../components/restaurant-view";
+import { RestaurantView } from "../../components/restaurant_view";
 const CATEGORY_QUERY = gql`
   query category($input: CategoryInput!) {
     category(input: $input) {

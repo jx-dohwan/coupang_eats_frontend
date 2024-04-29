@@ -9,7 +9,7 @@ import { LOCALSTORAGE_TOKEN } from "../constants";
 import { authTokenVar, isLoggedInVar } from "../apollo";
 import { gql, useMutation } from "@apollo/client";
 import { Helmet } from "react-helmet";
-import { FormError } from "../components/form-error";
+import { FormError } from "../components/form_error";
 import { Button } from "../components/button";
 import { Link } from "react-router-dom";
 

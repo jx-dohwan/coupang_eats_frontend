@@ -1,12 +1,12 @@
 import { gql, useApolloClient, useMutation } from "@apollo/client";
 import { Button } from "../../components/button";
-import { FormError } from "../../components/form-error";
+import { FormError } from "../../components/form_error";
 import { Helmet } from "react-helmet";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { CreateRestaurantMutation, CreateRestaurantMutationVariables } from "../../__api__/graphql";
 import { useNavigate } from "react-router-dom";
-import { MY_RESTAURANTS_QUERY } from "./my-restaurants";
+import { MY_RESTAURANTS_QUERY } from "./my_restaurants";
 
 
 // 식당 생성을 위한 GraphQL 뮤테이션 정의, CreateRestaurantInput 타입을 받아 처리하고 에러 메시지, 성공 여부, 생성된 식당의 ID를 반환

@@ -13,6 +13,7 @@ export const OrderHistory = () => {
                 </input>
                 <BiSearch className="m-2 text-2xl" />
             </div>
+            {/* map으로 감싸줘야함 */}
             <div className="grid gap-2 p-4">
                 <div className="rounded-lg border border-gray-200 g-4">
                     <div className="flex flex-row pb-2">
@@ -49,7 +50,6 @@ export const OrderHistory = () => {
                     </div>
             </div>
         </div>
-        // map으로 감싸줘야함
 
     )
 }

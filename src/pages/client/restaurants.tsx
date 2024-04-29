@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
-import { RestaurantView } from "../../components/restaurant-view";
+import { RestaurantView } from "../../components/restaurant_view";
 
 // GraphQL 쿼리 정의: 식당과 카테고리 데이터를 가져오는 쿼리
 const RESTAURANTS_QUERY = gql`
@@ -52,7 +52,7 @@ export const Restaurants = () => {
         },
     });
 
-    console.log("data : ", data)  // 콘솔에 데이터 로그 출력
+    console.log("data review 찾기: ", data)  // 콘솔에 데이터 로그 출력
 
     // 다음 페이지 이동 함수
     const onNextPageClick = () => setPage((current) => current + 1);

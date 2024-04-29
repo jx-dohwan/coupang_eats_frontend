@@ -1,9 +1,9 @@
 import { gql, useMutation } from "@apollo/client";
 import { useNavigate, useParams } from "react-router-dom";
 import { CreateDishMutation, CreateDishMutationVariables } from "../../__api__/graphql";
-import { MY_RESTAURANTS_QUERY } from "./my-restaurants";
+import { MY_RESTAURANTS_QUERY } from "./my_restaurants";
 import { useForm } from "react-hook-form";
-import { MY_RESTAURANT_QUERY } from "./my-restaurant";
+import { MY_RESTAURANT_QUERY } from "./my_restaurant";
 import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Button } from "../../components/button";

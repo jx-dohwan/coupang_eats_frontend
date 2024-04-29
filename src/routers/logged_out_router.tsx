@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { CreateAccount } from "../pages/create-account";
+import { CreateAccount } from "../pages/create_account";
 import { Login } from "../pages/login"; 
 import { NotFound } from "../pages/404";
 
