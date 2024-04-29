@@ -3,8 +3,9 @@ import { CiCircleMinus, CiCirclePlus } from 'react-icons/ci'
 import { DISH_FRAGMENT, RESTAURANT_FRAGMENT } from '../../fragments';
 import { RestaurantQuery, RestaurantQueryVariables } from '../../__api__/graphql';
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
+import KRW from '../../components/currency_formatter';
 
 // 백엔드에 해당 코드를 구행할  코드를 추가해야한다. 아니면 컴포넌트로 넘기던가 dish처럼 그게 나을듯 
 // 
@@ -26,27 +27,27 @@ const RESTAURANT_QUERY = gql`
 `;
 
 type TMenuParams = {
-    id: string;
+    restaurantId: string;
+    menuId: string;
 };
 
 export const Menu = () => {
-    const { id } = useParams() as unknown as TMenuParams;
-    console.log("여기에서 id를 불러오나?", id)
+    const { restaurantId, menuId } = useParams() as unknown as TMenuParams;
+    const [foundMenu, setFoundMenu] = useState<any>(null);
     const { loading, data } = useQuery<RestaurantQuery, RestaurantQueryVariables>(
+
         RESTAURANT_QUERY, {
         variables: {
             input: {
-                restaurantId: +id,  // 숫자형 ID가 필요하다면 변환
+                restaurantId: +restaurantId,  // 숫자형 ID가 필요하다면 변환
             },
         },
     }
     );
 
-    useEffect(() => {
-        console.log("dataMenu", data)
-        console.log("menuMenu", data?.restaurant.restaurant?.menu)
-    }, [data])
 
+    const menu = data?.restaurant?.restaurant?.menu.find((m) => m.id === parseInt(menuId, 10));
+    console.log('menu다 : ', menu)
     return (
         <>
             <div>
@@ -57,7 +58,7 @@ export const Menu = () => {
                 </Helmet>
 
                 <div className="border-b border-b-gray-100 p-4 pb-8">
-                    <h1 className="text-2xl font-bold">제목</h1>
+                    <h1 className="text-2xl font-bold">{menu?.name}</h1>
                     {/* {description && <p className="text-sm text-gray-700">설명</p>} */}
                 </div>
                 <div className="pb-20">
@@ -67,7 +68,7 @@ export const Menu = () => {
                                 <p className="text-lg font-semibold">가격</p>
                             </div>
                             <div className="flex items-center">
-                                <p className="text-lg">가격 입력</p>
+                                <p className="text-lg">  <KRW price={menu?.price} /></p>
                             </div>
                         </div>
                         <div className="flex justify-between">

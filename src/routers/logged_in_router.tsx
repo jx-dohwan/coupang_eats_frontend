@@ -22,7 +22,7 @@ const clientRoutes = [
   { path: "/search", element: <Search /> },
   { path: "/category/:slug", element: <Category /> },
   { path: "/restaurants/:id", element: <Restaurant /> },
-  { path: "/menu/:id", element: <Menu /> },
+  { path: "/restaurants/:restaurantId/menu/:menuId", element: <Menu /> },
   { path: "/order-history", element: <OrderHistory /> },
 
   { path: "/ordering/:id", element: <React.Fragment /> },

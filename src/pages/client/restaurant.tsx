@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import { BiCartAdd } from 'react-icons/bi'
 import { useEffect } from "react";
 import KRW from "../../components/currency_formatter";
-import { MenuList } from "../../components/menu_list";
 
 const RESTAURANT_QUERY = gql`
   query restaurant($input: RestaurantInput!) {
@@ -103,13 +102,23 @@ export const Restaurant = () => {
       <div className="grid gap-4 px-4">
         <div className="grid gap-4">
           {data?.restaurant.restaurant?.menu.map((menu) => (
-            <MenuList
-              key={menu.id}
-              id={menu.id}
-              name={menu.name}
-              price={menu.price}
-              description={menu.description}
-            />
+            // 여기에 MenuList를 만들기 -> MenuList에서 해당 메뉴를 클릭하면 menu.tsx로 이동할 수 있도록 해줘라
+            <div className="relative">
+                  <Link className="grid grid-cols-3" to={`/restaurants/${id}/menu/${menu.id}`}>
+                <div className="col-span-2">
+                  <h3 className="text-lg font-bold">{menu.name}</h3>
+                  <h4 className="text-lg">
+                    <KRW price={menu.price} />
+                  </h4>
+                  <p className="text-sm">{menu.description}</p>
+                </div>
+              </Link>
+
+              <div className="absolute right-0 top-0 flex h-full items-center">
+                { }
+                <BiCartAdd />
+              </div>
+            </div>
           ))}
 
         </div>

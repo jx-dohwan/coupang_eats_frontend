@@ -1,9 +1,11 @@
 import { BiCartAdd } from "react-icons/bi";
 import KRW from "./currency_formatter";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 interface IMenuProps {
-    id?: number;
+    id: number;
+    restaurantId: number;
     name: string;
     price: number;
     description: string;
@@ -12,14 +14,20 @@ interface IMenuProps {
 export const MenuList: React.FC<IMenuProps> = ({
     id,
     name,
+    restaurantId,
     price,
     description
 }) => {
+    useEffect(() => {
+        console.log("Link to:", `/restaurants/${restaurantId}/menu/${id}`);
+    }, [restaurantId, id]);
+
+
     return (
         <div>
             <div className="relative" key={id}>
-            
-                <Link className="grid grid-cols-3" to={`/menu/${id}`} >
+
+                <Link className="grid grid-cols-3" to={`/restaurants/${restaurantId}/menu/${id}`}>
                     <div className="col-span-2">
                         <h3 className="text-lg font-bold">{name}</h3>
                         <h4 className="text-lg">
