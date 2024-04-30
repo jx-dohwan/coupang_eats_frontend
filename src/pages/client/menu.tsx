@@ -1,8 +1,8 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import { CiCircleMinus, CiCirclePlus } from 'react-icons/ci'
 import { DISH_FRAGMENT, RESTAURANT_FRAGMENT } from '../../fragments';
-import { RestaurantQuery, RestaurantQueryVariables } from '../../__api__/graphql';
-import { useParams } from 'react-router-dom';
+import { CreateOrderMutation, CreateOrderMutationVariables, RestaurantQuery, RestaurantQueryVariables } from '../../__api__/graphql';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import KRW from '../../components/currency_formatter';
@@ -27,6 +27,17 @@ const RESTAURANT_QUERY = gql`
   ${DISH_FRAGMENT}
 `;
 
+const CREATE_ORDER_MUTATION = gql`
+  mutation createOrder($input: CreateOrderInput!) {
+    createOrder(input: $input) {
+      ok
+      error
+      orderId
+    }
+  }
+`;
+
+
 type TMenuParams = {
     restaurantId: string;
     menuId: string;
@@ -36,6 +47,10 @@ type SelectedOptions = {
     [key: string]: number;
 };
 
+type OptionAccumulator = {
+    [key: string]: any[];  // 이렇게 문자열 키에 대한 인덱스 시그니처를 추가합니다.
+  };
+  
 export const Menu = () => {
     const { restaurantId, menuId } = useParams() as unknown as TMenuParams;
 
@@ -56,7 +71,11 @@ export const Menu = () => {
     const [orderCount, setOrderCount] = useState(1)
     const [selectedOptions, setSelectedOptions] = useState<SelectedOptions>({});
     const [totalPrice, setTotalPrice] = useState<number>(menu?.price! * orderCount || 0);
+    const [orderStarted, setOrderStarted] = useState(false);
+    const [menuOptions, setMenuOptions] = useState<Record<string, any[]>>({});
 
+    console.log('menu.option?',menu?.options)
+    // 갯수 증감 및 옵션 추가에 의한 가격 변동
     const handleOptionChange = (optionName: string, extra: number, isChecked: boolean) => {
         setSelectedOptions(prev => ({
             ...prev,
@@ -69,12 +88,71 @@ export const Menu = () => {
         setTotalPrice((menu?.price || 0) * orderCount + extraTotal);
     }, [orderCount, menu?.price, selectedOptions]);
 
+
     const decrementCount = () => {
         if (orderCount > 1) setOrderCount((prev) => prev - 1)
     }
     const incrementCount = () => {
         setOrderCount((prev) => prev + 1)
     }
+
+    // 메뉴 관리
+    useEffect(() => {
+        if (menu?.options) {
+          const groupedOptions = menu.options.reduce((acc: OptionAccumulator, option) => {
+            // option.choices가 배열인지 확인합니다.
+            if (Array.isArray(option.choices)) {
+              // acc[option.name]이 배열인지 확인하고, 아니면 새 배열을 할당합니다.
+              acc[option.name] = acc[option.name] || [];
+              // 배열의 항목을 acc[option.name] 배열에 추가합니다.
+              acc[option.name].push(...option.choices);
+            }
+            return acc;
+          }, {} as OptionAccumulator); // 초기값을 OptionAccumulator 타입으로 명시합니다.
+      
+          setMenuOptions(groupedOptions);
+        }
+      }, [menu]);
+      
+      console.log('menuOptions' , menuOptions)
+
+
+
+    // 주문 상태 관리
+    const addMenuToOrder = (dishId: number) => {
+
+    }
+    // 주문하기
+    const navigate = useNavigate();
+    const onCompleted = (data: CreateOrderMutation) => {
+        const {
+            createOrder: { ok, orderId },
+        } = data;
+        if (data.createOrder.ok) {
+            navigate(`/order/${orderId}`)
+        }
+    }
+    const [createOrderMutation, { loading: placingOrder }] = useMutation<
+        CreateOrderMutation, CreateOrderMutationVariables
+    >(CREATE_ORDER_MUTATION, {
+        onCompleted
+    });
+    // const ConfirmOrder = () => {
+    //     if(placingOrder) {
+    //         return;
+    //     }
+    //     const ok = window.confirm("주문하시겠습니까?")
+    //     if(ok) {
+    //         createOrderMutation({
+    //             variables: {
+    //                 input:{
+    //                     restaurantId: +restaurantId,
+    //                     items: orderItems,
+    //                 }
+    //             }
+    //         })
+    //     }
+    // }
 
 
     return (
@@ -124,21 +202,24 @@ export const Menu = () => {
 
                 </div>
 
-                <div>
-                    <h3 className='flex items-center justify-between bg-gray-100 p4 font-bold'>
-                        <div>기본</div>
-                        <div className='text-sm font-normal text-orange-600'>
-                            필수 선택
-                        </div>
-                    </h3>
-                    <fieldset>
-                        {menu?.options ? (
-                            menu?.options?.map((option, index) => (
+
+
+                {menu?.options ? (
+                    menu?.options?.map((option, index) => (
+                        <div>
+                            <h3 className='flex items-center justify-between bg-gray-100 p4 font-bold'>
+                                <div>{option?.name}</div>
+                                <div className='text-sm font-normal text-orange-600'>
+                                    필수 선택
+                                </div>
+                            </h3>
+                            <fieldset>
+
                                 <div
                                     key={option.name}
                                     className='flex items-center gap-2 p-4'
                                 >
-                                                                       <input
+                                    <input
                                         id={`${menu.name}-${option.name}`}
                                         type='checkbox'
                                         name={option.name}
@@ -155,14 +236,14 @@ export const Menu = () => {
                                         )}
                                     </label>
                                 </div>
-                            ))
-                        ) : (
-                            <NotFound />
-                        )}
-                    </fieldset>
 
-                </div>
+                            </fieldset>
 
+                        </div>
+                    ))
+                ) : (
+                    <NotFound />
+                )}
 
                 <button
                     className="fixed bottom-0 flex h-20 w-screen items-center justify-center bg-sky-500 pb-4 text-lg text-white"
