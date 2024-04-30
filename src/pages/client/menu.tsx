@@ -49,8 +49,8 @@ type SelectedOptions = {
 
 type OptionAccumulator = {
     [key: string]: any[];  // 이렇게 문자열 키에 대한 인덱스 시그니처를 추가합니다.
-  };
-  
+};
+
 export const Menu = () => {
     const { restaurantId, menuId } = useParams() as unknown as TMenuParams;
 
@@ -67,14 +67,12 @@ export const Menu = () => {
 
     const menu = data?.restaurant?.restaurant?.menu.find((m) => m.id === parseInt(menuId, 10));
 
-    const [foundMenu, setFoundMenu] = useState<any>(null);
     const [orderCount, setOrderCount] = useState(1)
     const [selectedOptions, setSelectedOptions] = useState<SelectedOptions>({});
     const [totalPrice, setTotalPrice] = useState<number>(menu?.price! * orderCount || 0);
     const [orderStarted, setOrderStarted] = useState(false);
-    const [menuOptions, setMenuOptions] = useState<Record<string, any[]>>({});
 
-    console.log('menu.option?',menu?.options)
+    console.log('menu.option?', menu?.options)
     // 갯수 증감 및 옵션 추가에 의한 가격 변동
     const handleOptionChange = (optionName: string, extra: number, isChecked: boolean) => {
         setSelectedOptions(prev => ({
@@ -95,28 +93,6 @@ export const Menu = () => {
     const incrementCount = () => {
         setOrderCount((prev) => prev + 1)
     }
-
-    // 메뉴 관리
-    useEffect(() => {
-        if (menu?.options) {
-          const groupedOptions = menu.options.reduce((acc: OptionAccumulator, option) => {
-            // option.choices가 배열인지 확인합니다.
-            if (Array.isArray(option.choices)) {
-              // acc[option.name]이 배열인지 확인하고, 아니면 새 배열을 할당합니다.
-              acc[option.name] = acc[option.name] || [];
-              // 배열의 항목을 acc[option.name] 배열에 추가합니다.
-              acc[option.name].push(...option.choices);
-            }
-            return acc;
-          }, {} as OptionAccumulator); // 초기값을 OptionAccumulator 타입으로 명시합니다.
-      
-          setMenuOptions(groupedOptions);
-        }
-      }, [menu]);
-      
-      console.log('menuOptions' , menuOptions)
-
-
 
     // 주문 상태 관리
     const addMenuToOrder = (dishId: number) => {
@@ -202,42 +178,48 @@ export const Menu = () => {
 
                 </div>
 
-
-
                 {menu?.options ? (
                     menu?.options?.map((option, index) => (
-                        <div>
-                            <h3 className='flex items-center justify-between bg-gray-100 p4 font-bold'>
-                                <div>{option?.name}</div>
+                        <div key={option.name}>
+                            <h3
+                                id={option.name}
+                                className='flex items-center justify-between bg-gray-100 p4 font-bold'>
+                                <div>{option.name}</div>
                                 <div className='text-sm font-normal text-orange-600'>
-                                    필수 선택
+                                    선택 사항
                                 </div>
                             </h3>
-                            <fieldset>
 
-                                <div
-                                    key={option.name}
-                                    className='flex items-center gap-2 p-4'
-                                >
-                                    <input
-                                        id={`${menu.name}-${option.name}`}
-                                        type='checkbox'
-                                        name={option.name}
-                                        className='p-3 focus:outline-none focus:ring-0'
-                                        checked={selectedOptions[option.name] > 0}
-                                        onChange={(e) => handleOptionChange(option.name, option.extra || 0, e.target.checked)}
-                                    />
-                                    <label htmlFor={`${menu.name}-${option.name}`}>
-                                        {option.name}
-                                        {option.extra && (
-                                            <span className='text-gray-400'>
-                                                <KRW price={option.extra} />
-                                            </span>
-                                        )}
-                                    </label>
+                            {option.choices?.map((choice, index) => (
+                                <div>
+                                    <fieldset>
+
+                                        <div
+                                            key={choice.name}
+                                            className='flex items-center gap-2 p-4'
+                                        >
+                                            <input
+                                                id={`${option.name}-${choice.name}`}
+                                                type='checkbox'
+                                                name={choice.name}
+                                                className='p-3 focus:outline-none focus:ring-0'
+                                                checked={selectedOptions[choice.name] > 0}
+                                                onChange={(e) => handleOptionChange(choice.name, choice.extra || 0, e.target.checked)}
+                                            />
+                                            <label htmlFor={`${option.name}-${choice.name}`}>
+                                                {choice.name}
+                                                {choice.extra && (
+                                                    <span className='text-gray-400'>
+                                                        <KRW price={choice.extra} />
+                                                    </span>
+                                                )}
+                                            </label>
+                                        </div>
+
+                                    </fieldset>
+
                                 </div>
-
-                            </fieldset>
+                            ))}
 
                         </div>
                     ))
