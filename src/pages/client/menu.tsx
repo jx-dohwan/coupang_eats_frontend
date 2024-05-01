@@ -1,7 +1,7 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { CiCircleMinus, CiCirclePlus } from 'react-icons/ci'
 import { DISH_FRAGMENT, RESTAURANT_FRAGMENT } from '../../fragments';
-import { CreateOrderMutation, CreateOrderMutationVariables, RestaurantQuery, RestaurantQueryVariables } from '../../__api__/graphql';
+import { CreateOrderItemInput, CreateOrderMutation, CreateOrderMutationVariables, RestaurantQuery, RestaurantQueryVariables } from '../../__api__/graphql';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
@@ -43,8 +43,11 @@ type TMenuParams = {
     menuId: string;
 };
 
+// type SelectedOptions = {
+//     [key: string]: number;
+// };
 type SelectedOptions = {
-    [key: string]: number;
+    [optionName: string]: string | null;
 };
 
 type OptionAccumulator = {
@@ -71,20 +74,41 @@ export const Menu = () => {
     const [selectedOptions, setSelectedOptions] = useState<SelectedOptions>({});
     const [totalPrice, setTotalPrice] = useState<number>(menu?.price! * orderCount || 0);
     const [orderStarted, setOrderStarted] = useState(false);
+    const [orderItems, setOrderItems] = useState<CreateOrderItemInput[]>([]);
 
     console.log('menu.option?', menu?.options)
+    console.log('menu?', menu)
     // 갯수 증감 및 옵션 추가에 의한 가격 변동
-    const handleOptionChange = (optionName: string, extra: number, isChecked: boolean) => {
+    // const handleOptionChange = (optionName: string, extra: number, isChecked: boolean) => {
+    //     setSelectedOptions(prev => ({
+    //         ...prev,
+    //         [optionName]: isChecked ? extra : 0  // 선택되면 가격을 저장, 아니면 0
+    //     }));
+    // };
+
+    const handleOptionChange = (optionName: string, choiceName: string, isChecked: boolean) => {
         setSelectedOptions(prev => ({
             ...prev,
-            [optionName]: isChecked ? extra : 0  // 선택되면 가격을 저장, 아니면 0
+            [optionName]: isChecked ? choiceName : null  // 선택되면 choiceName을 저장, 아니면 null
         }));
     };
 
+    // 가격 계산 부분도 업데이트
     useEffect(() => {
-        const extraTotal = Object.values(selectedOptions).reduce((acc: number, value: number) => acc + value, 0);
+        let extraTotal = 0;
+        for (const [optionName, choiceName] of Object.entries(selectedOptions)) {
+            const option = menu?.options?.find(o => o.name === optionName);
+            const choice = option?.choices?.find(c => c.name === choiceName);
+            if (choice) {
+                extraTotal += choice.extra || 0;
+            }
+        }
         setTotalPrice((menu?.price || 0) * orderCount + extraTotal);
     }, [orderCount, menu?.price, selectedOptions]);
+    // useEffect(() => {
+    //     const extraTotal = Object.values(selectedOptions).reduce((acc: number, value: number) => acc + value, 0);
+    //     setTotalPrice((menu?.price || 0) * orderCount + extraTotal);
+    // }, [orderCount, menu?.price, selectedOptions]);
 
 
     const decrementCount = () => {
@@ -95,9 +119,77 @@ export const Menu = () => {
     }
 
     // 주문 상태 관리
-    const addMenuToOrder = (dishId: number) => {
 
+    const getItem = (dishId: number) => {
+        console.log('dishId',dishId)
+        console.log("orderItems.dishId", orderItems.find((order) => order.dishId))
+        return orderItems.find((order) => order.dishId === dishId)
     }
+    useEffect(() => {
+        const dishId = parseInt(menuId, 10);
+        if (menu) { // `menu` 데이터가 로드된 후에 함수를 실행
+            addItemToOrder(dishId);
+        }
+        return () => {
+            if (menu) {
+                removeFromOrder(dishId);
+            }
+        };
+    }, [menuId, menu]); // `menu`를 의존성 배열에 추가
+
+
+    const addItemToOrder = (dishId: number) => {
+        if (!getItem(dishId)) {
+            setOrderItems(current => [{ dishId, options: [] }, ...current]);
+        }
+    };
+
+    const removeFromOrder = (dishId: number) => {
+        setOrderItems((current) =>
+            current.filter((dish) => dish.dishId !== dishId)
+        );
+    };
+
+
+    const addOptionToItem = (dishId: number, optionName: string, choice: string) => {
+        console.log('id : , optionName : , choice : ', dishId, optionName, choice)
+        // 해당 위치에서 getIte의 order.dishId와 해당 함수의 인자인 dishId가 같은데 oldItem이 undefined로 뜬다 무엇이 문제인가?
+        const oldItem = getItem(dishId);
+        console.log('oldItem', oldItem)
+        if (oldItem) {
+            const optionsToUpdate = oldItem.options ? [...oldItem.options] : [];
+            const existingOptionIndex = optionsToUpdate.findIndex(option => option.name === optionName);
+            if (existingOptionIndex > -1) {
+                // 옵션의 선택 업데이트
+                optionsToUpdate[existingOptionIndex] = { ...optionsToUpdate[existingOptionIndex], choice: choice };
+            } else {
+                // 새 옵션 추가
+                optionsToUpdate.push({ name: optionName, choice });
+            }
+            // 주문 항목 업데이트
+            removeFromOrder(dishId);
+            setOrderItems(current => [
+                { dishId, options: optionsToUpdate },
+                ...current.filter(item => item.dishId !== dishId)
+            ]);
+            console.log("OrderItems", orderItems)
+        }
+    };
+
+
+    const removeOptionFromItem = (dishId: number, optionName: string) => {
+
+        const oldItem = getItem(dishId);
+        if (oldItem) {
+            const updatedOptions = oldItem.options?.filter(option => option.name !== optionName) || [];
+            removeFromOrder(dishId);
+            setOrderItems(current => [
+                { dishId, options: updatedOptions },
+                ...current.filter(item => item.dishId !== dishId)
+            ]);
+        }
+    };
+
     // 주문하기
     const navigate = useNavigate();
     const onCompleted = (data: CreateOrderMutation) => {
@@ -108,28 +200,29 @@ export const Menu = () => {
             navigate(`/order/${orderId}`)
         }
     }
+
     const [createOrderMutation, { loading: placingOrder }] = useMutation<
         CreateOrderMutation, CreateOrderMutationVariables
     >(CREATE_ORDER_MUTATION, {
         onCompleted
     });
-    // const ConfirmOrder = () => {
-    //     if(placingOrder) {
-    //         return;
-    //     }
-    //     const ok = window.confirm("주문하시겠습니까?")
-    //     if(ok) {
-    //         createOrderMutation({
-    //             variables: {
-    //                 input:{
-    //                     restaurantId: +restaurantId,
-    //                     items: orderItems,
-    //                 }
-    //             }
-    //         })
-    //     }
-    // }
 
+    const ConfirmOrder = () => {
+        if(placingOrder) {
+            return;
+        }
+        const ok = window.confirm("주문하시겠습니까?")
+        if(ok) {
+            createOrderMutation({
+                variables: {
+                    input:{
+                        restaurantId: +restaurantId,
+                        items: orderItems,
+                    }
+                }
+            })
+        }
+    }
 
     return (
         <>
@@ -139,10 +232,6 @@ export const Menu = () => {
                         {data?.restaurant.restaurant?.name || ""} | Coupang Eats
                     </title>
                 </Helmet>
-                {/* 내 생각에는 수량을 0을 1이상으로 만들면 주문 가능하도록 만들면 될 것 같고
-                아래의 옵션을 추가하는 버튼을 누르면 해당 옵션이 선택되도록 하고
-                결제하면 될 것 같은데 */}
-
                 <div className="border-b border-b-gray-100 p-4 pb-8">
                     <h1 className="text-2xl font-bold">{menu?.name}</h1>
                     {/* {description && <p className="text-sm text-gray-700">설명</p>} */}
@@ -193,7 +282,6 @@ export const Menu = () => {
                             {option.choices?.map((choice, index) => (
                                 <div>
                                     <fieldset>
-
                                         <div
                                             key={choice.name}
                                             className='flex items-center gap-2 p-4'
@@ -203,8 +291,23 @@ export const Menu = () => {
                                                 type='checkbox'
                                                 name={choice.name}
                                                 className='p-3 focus:outline-none focus:ring-0'
-                                                checked={selectedOptions[choice.name] > 0}
-                                                onChange={(e) => handleOptionChange(choice.name, choice.extra || 0, e.target.checked)}
+                                                checked={selectedOptions[option.name] === choice.name}
+                                                onChange={(e) => {
+                                                    // 기존 옵션 변경 처리
+                                                    handleOptionChange(option.name, choice.name, e.target.checked);
+
+                                                    // 옵션 추가 또는 제거 로직
+                                                    if (e.target.checked) {
+                                                        // 옵션을 주문 항목에 추가
+                                                        addOptionToItem(parseInt(menuId, 10), option.name, choice.name);
+                                                    } else {
+                                                        // 옵션에서 선택 해제
+                                                        removeOptionFromItem(parseInt(menuId, 10), option.name);
+                                                    }
+                                                }}
+
+                                            // checked={selectedOptions[choice.name] > 0}
+                                            // onChange={(e) => handleOptionChange(choice.name, choice.extra || 0, e.target.checked)}
                                             />
                                             <label htmlFor={`${option.name}-${choice.name}`}>
                                                 {choice.name}
@@ -229,7 +332,7 @@ export const Menu = () => {
 
                 <button
                     className="fixed bottom-0 flex h-20 w-screen items-center justify-center bg-sky-500 pb-4 text-lg text-white"
-                //   onClick={addToCart}
+                  onClick={ConfirmOrder}
                 >
                     결제하기
                 </button>

@@ -190,7 +190,7 @@ export const AddDish = () => {
                                         {...register(`${categoryId}-${detailId}-optionChoiceName`)}
                                         className="py-2 px-3 focus:outline-none mr-3 focus:border-gray-600 border-2"
                                         type="text"
-                                        placeholder="옵션 이름"
+                                        placeholder="옵션 이름(필수 사항만)"
                                     />
                                     <input
                                         {...register(`${categoryId}-${detailId}-optionChoiceExtra`)}
