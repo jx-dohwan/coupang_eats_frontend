@@ -16,6 +16,7 @@ import { MyRestaurant } from "../pages/owner/my_restaurant";
 import { Restaurant } from "../pages/client/restaurant";
 import { Menu } from "../pages/client/menu";
 import { OrderHistory } from "../pages/client/order_history";
+import { Order } from "../pages/order";
 
 const clientRoutes = [
   { path: "/", element: <Restaurants /> },
@@ -35,9 +36,7 @@ const clientRoutes = [
 const commonRoutes = [
   { path: "/confirm", element: <ConfirmEmail /> },
   { path: "/edit-profile", element: <EditProfile /> },
-
-  //2024.04.19
-  { path: "/order/:id", element: <React.Fragment /> },
+  { path: "/order/:id", element: <Order /> },
   { path: "/reviews/:id", element: <React.Fragment /> },
 
 ];
