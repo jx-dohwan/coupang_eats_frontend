@@ -47,8 +47,6 @@ export const Restaurant = () => {
   );
 
   useEffect(() => {
-    console.log("data", data)
-    console.log("menu", data?.restaurant.restaurant?.menu)
   }, [data])
   return (
     <div>

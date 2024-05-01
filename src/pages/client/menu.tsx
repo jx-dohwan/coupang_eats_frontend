@@ -43,7 +43,7 @@ type TMenuParams = {
     menuId: string;
 };
 
-// type SelectedOptions = {
+// type SelectedOptions = { 추후 다중 choice를 위해 남겨둠
 //     [key: string]: number;
 // };
 type SelectedOptions = {
@@ -76,16 +76,14 @@ export const Menu = () => {
     const [orderStarted, setOrderStarted] = useState(false);
     const [orderItems, setOrderItems] = useState<CreateOrderItemInput[]>([]);
 
-    console.log('menu.option?', menu?.options)
-    console.log('menu?', menu)
-    // 갯수 증감 및 옵션 추가에 의한 가격 변동
-    // const handleOptionChange = (optionName: string, extra: number, isChecked: boolean) => {
+    
+    // const handleOptionChange = (optionName: string, extra: number, isChecked: boolean) => { 추후 다중 choice를 위해 남겨둠
     //     setSelectedOptions(prev => ({
     //         ...prev,
     //         [optionName]: isChecked ? extra : 0  // 선택되면 가격을 저장, 아니면 0
     //     }));
     // };
-
+// 갯수 증감 및 옵션 추가에 의한 가격 변동
     const handleOptionChange = (optionName: string, choiceName: string, isChecked: boolean) => {
         setSelectedOptions(prev => ({
             ...prev,
@@ -105,7 +103,7 @@ export const Menu = () => {
         }
         setTotalPrice((menu?.price || 0) * orderCount + extraTotal);
     }, [orderCount, menu?.price, selectedOptions]);
-    // useEffect(() => {
+    // useEffect(() => { 추후 다중 choice를 위해 남겨둠
     //     const extraTotal = Object.values(selectedOptions).reduce((acc: number, value: number) => acc + value, 0);
     //     setTotalPrice((menu?.price || 0) * orderCount + extraTotal);
     // }, [orderCount, menu?.price, selectedOptions]);
@@ -121,8 +119,6 @@ export const Menu = () => {
     // 주문 상태 관리
 
     const getItem = (dishId: number) => {
-        console.log('dishId',dishId)
-        console.log("orderItems.dishId", orderItems.find((order) => order.dishId))
         return orderItems.find((order) => order.dishId === dishId)
     }
     useEffect(() => {
@@ -152,10 +148,8 @@ export const Menu = () => {
 
 
     const addOptionToItem = (dishId: number, optionName: string, choice: string) => {
-        console.log('id : , optionName : , choice : ', dishId, optionName, choice)
         // 해당 위치에서 getIte의 order.dishId와 해당 함수의 인자인 dishId가 같은데 oldItem이 undefined로 뜬다 무엇이 문제인가?
         const oldItem = getItem(dishId);
-        console.log('oldItem', oldItem)
         if (oldItem) {
             const optionsToUpdate = oldItem.options ? [...oldItem.options] : [];
             const existingOptionIndex = optionsToUpdate.findIndex(option => option.name === optionName);
@@ -172,7 +166,6 @@ export const Menu = () => {
                 { dishId, options: optionsToUpdate },
                 ...current.filter(item => item.dishId !== dishId)
             ]);
-            console.log("OrderItems", orderItems)
         }
     };
 
@@ -306,7 +299,7 @@ export const Menu = () => {
                                                     }
                                                 }}
 
-                                            // checked={selectedOptions[choice.name] > 0}
+                                            // checked={selectedOptions[choice.name] > 0} 추후 다중 choice를 위해 남겨둠
                                             // onChange={(e) => handleOptionChange(choice.name, choice.extra || 0, e.target.checked)}
                                             />
                                             <label htmlFor={`${option.name}-${choice.name}`}>

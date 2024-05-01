@@ -30,14 +30,12 @@ export const Search = () => {
         SearchRestaurantQuery, SearchRestaurantQueryVariables
     >(SEARCH_RESTAURANT);
 
-    console.log(data)
     const onNextPageClick = () => setPage((current) => current + 1);
     const onPrevPageClick = () => setPage((current) => current - 1);
 
     useEffect(() => {
         const [, encodedQuery] = location.search.split("?term=");
         const query = decodeURIComponent(encodedQuery || ''); // 인코딩된 query 디코딩
-        console.log('query : ', query)
         if (!query) {
             return navigate('/', { replace: true }) // true를 쓰면 이동할 주소로 이동한후 뒤로가기가 안됨, 뒤로가기를 누르면 메인페이지("/")로 돌아가게된다.
         }

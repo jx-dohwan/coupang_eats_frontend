@@ -52,7 +52,6 @@ export const Restaurants = () => {
         },
     });
 
-    console.log("data review 찾기: ", data)  // 콘솔에 데이터 로그 출력
 
     // 다음 페이지 이동 함수
     const onNextPageClick = () => setPage((current) => current + 1);
