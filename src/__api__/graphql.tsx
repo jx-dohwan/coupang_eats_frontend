@@ -699,6 +699,10 @@ export type OrderPartsFragment = { __typename?: 'Order', id: number, createdAt: 
 
 export type FullOrderPartsFragment = { __typename?: 'Order', id: number, status: OrderStatus, total?: number | null, driver?: { __typename?: 'User', email: string } | null, customer?: { __typename?: 'User', email: string } | null, restaurant?: { __typename?: 'Restaurant', name: string } | null };
 
+export type VerifiedUserFragment = { __typename?: 'User', verified: boolean };
+
+export type EditedUserFragment = { __typename?: 'User', verified: boolean, email: string };
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -745,6 +749,18 @@ export type CreateAccountMutationVariables = Exact<{
 
 
 export type CreateAccountMutation = { __typename?: 'Mutation', createAccount: { __typename?: 'CreateAccountOutput', ok: boolean, error?: string | null } };
+
+export type CoockedOrdersSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CoockedOrdersSubscription = { __typename?: 'Subscription', cookedOrders: { __typename?: 'Order', id: number, status: OrderStatus, total?: number | null, driver?: { __typename?: 'User', email: string } | null, customer?: { __typename?: 'User', email: string } | null, restaurant?: { __typename?: 'Restaurant', name: string } | null } };
+
+export type TakeOrderMutationVariables = Exact<{
+  input: TakeOrderInput;
+}>;
+
+
+export type TakeOrderMutation = { __typename?: 'Mutation', takeOrder: { __typename?: 'TakeOrderOutput', ok: boolean, error?: string | null } };
 
 export type LoginMutationVariables = Exact<{
   loginInput: LoginInput;
@@ -807,16 +823,12 @@ export type VerifyEmailMutationVariables = Exact<{
 
 export type VerifyEmailMutation = { __typename?: 'Mutation', verifyEmail: { __typename?: 'VerifyEmailOutput', ok: boolean, error?: string | null } };
 
-export type VerifiedUserFragment = { __typename?: 'User', verified: boolean };
-
 export type EditProfileMutationVariables = Exact<{
   input: EditProfileInput;
 }>;
 
 
 export type EditProfileMutation = { __typename?: 'Mutation', editProfile: { __typename?: 'EditProfileOutput', ok: boolean, error?: string | null } };
-
-export type EditedUserFragment = { __typename?: 'User', verified: boolean, email: string };
 
 export const RestaurantPartsFragmentDoc = gql`
     fragment RestaurantParts on Restaurant {
@@ -1206,6 +1218,69 @@ export function useCreateAccountMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateAccountMutationHookResult = ReturnType<typeof useCreateAccountMutation>;
 export type CreateAccountMutationResult = Apollo.MutationResult<CreateAccountMutation>;
 export type CreateAccountMutationOptions = Apollo.BaseMutationOptions<CreateAccountMutation, CreateAccountMutationVariables>;
+export const CoockedOrdersDocument = gql`
+    subscription coockedOrders {
+  cookedOrders {
+    ...FullOrderParts
+  }
+}
+    ${FullOrderPartsFragmentDoc}`;
+
+/**
+ * __useCoockedOrdersSubscription__
+ *
+ * To run a query within a React component, call `useCoockedOrdersSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useCoockedOrdersSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCoockedOrdersSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCoockedOrdersSubscription(baseOptions?: Apollo.SubscriptionHookOptions<CoockedOrdersSubscription, CoockedOrdersSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<CoockedOrdersSubscription, CoockedOrdersSubscriptionVariables>(CoockedOrdersDocument, options);
+      }
+export type CoockedOrdersSubscriptionHookResult = ReturnType<typeof useCoockedOrdersSubscription>;
+export type CoockedOrdersSubscriptionResult = Apollo.SubscriptionResult<CoockedOrdersSubscription>;
+export const TakeOrderDocument = gql`
+    mutation takeOrder($input: TakeOrderInput!) {
+  takeOrder(input: $input) {
+    ok
+    error
+  }
+}
+    `;
+export type TakeOrderMutationFn = Apollo.MutationFunction<TakeOrderMutation, TakeOrderMutationVariables>;
+
+/**
+ * __useTakeOrderMutation__
+ *
+ * To run a mutation, you first call `useTakeOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useTakeOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [takeOrderMutation, { data, loading, error }] = useTakeOrderMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useTakeOrderMutation(baseOptions?: Apollo.MutationHookOptions<TakeOrderMutation, TakeOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<TakeOrderMutation, TakeOrderMutationVariables>(TakeOrderDocument, options);
+      }
+export type TakeOrderMutationHookResult = ReturnType<typeof useTakeOrderMutation>;
+export type TakeOrderMutationResult = Apollo.MutationResult<TakeOrderMutation>;
+export type TakeOrderMutationOptions = Apollo.BaseMutationOptions<TakeOrderMutation, TakeOrderMutationVariables>;
 export const LoginDocument = gql`
     mutation login($loginInput: LoginInput!) {
   login(input: $loginInput) {

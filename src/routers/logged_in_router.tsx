@@ -17,6 +17,7 @@ import { Restaurant } from "../pages/client/restaurant";
 import { Menu } from "../pages/client/menu";
 import { OrderHistory } from "../pages/client/order_history";
 import { Order } from "../pages/order";
+import { DriverDashboard } from "../pages/driver/driver_dashboard";
 
 const clientRoutes = [
   { path: "/", element: <Restaurants /> },
@@ -49,7 +50,7 @@ const restaurantRoutes = [
   { path: "/restaurants/:restaurantId/add-dish", element: <AddDish /> },
 ];
 
-const driverRoutes = [{ path: "/", element: <React.Fragment /> }];
+const driverRoutes = [{ path: "/", element: <DriverDashboard /> }];
 
 export const LoggedInRouter = () => {
   const { data, loading, error } = useMe();

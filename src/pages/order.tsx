@@ -60,8 +60,8 @@ function getStatusDisplay(status: OrderStatusCheck | undefined): string {
 }
 
 
-  const defaultStatusMessage = '상태 확인 중';
-  export const Order = () => {
+const defaultStatusMessage = '상태 확인 중';
+export const Order = () => {
     const params = useParams() as unknown as IParams;
     const { data: userData } = useMe();
     const [editOrderMutation] = useMutation<
@@ -121,15 +121,15 @@ function getStatusDisplay(status: OrderStatusCheck | undefined): string {
                 <title>주문 #{params.id} | Coupang Eats</title>
             </Helmet>
             <div className="border border-gray-800 w-full max-w-screen-sm flex flex-col justify-center">
-                <h4 className="bg-gray-800 w-full py-5 text-white text-center text-xl">
-                    주문 #{params.id}
+                <h4 className="bg-sky-600 w-full py-5 text-white text-center text-xl">
+                    주문 번호 #{params.id}
                 </h4>
                 <h5 className="p-5 pt-10 text-3xl text-center">
                     <KRW price={data?.getOrder.order?.total!} />
                 </h5>
                 <div className="p-5 text-xl grid gap-6">
                     <div className="border-t pt-5 borderogray-700">
-                        준비됨 : {" "}
+                        매장 : {" "}
                         <span className="font-medium">
                             {data?.getOrder.order?.restaurant?.name}
                         </span>
@@ -141,7 +141,7 @@ function getStatusDisplay(status: OrderStatusCheck | undefined): string {
                         </span>
                     </div>
                     <div className="border-t border-b py-5 border-gray-700">
-                        배달 : {" "}
+                        배달 상태 : {" "}
                         <span className="font-medium">
                             {data?.getOrder.order?.driver?.email || "배달중"}
                         </span>
@@ -161,12 +161,12 @@ function getStatusDisplay(status: OrderStatusCheck | undefined): string {
                                     주문 수락
                                 </button>
                             )}
-                            {data?.getOrder.order?.status === OrderStatus.Cooked && (
+                            {data?.getOrder.order?.status === OrderStatus.Cooking && (
                                 <button
                                     onClick={() => onButtonClick(OrderStatus.Cooked)}
                                     className="btn bg-sky-500 hover:bg-sky-600"
                                 >
-                                    음식 주문
+                                    요리 시작
                                 </button>
                             )}
                             {data?.getOrder.order?.status !== OrderStatus.Cooking &&
