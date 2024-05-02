@@ -18,6 +18,7 @@ import { Menu } from "../pages/client/menu";
 import { OrderHistory } from "../pages/client/order_history";
 import { Order } from "../pages/order";
 import { DriverDashboard } from "../pages/driver/driver_dashboard";
+import { CreateReview } from "../pages/review/create-review";
 
 const clientRoutes = [
   { path: "/", element: <Restaurants /> },
@@ -26,6 +27,7 @@ const clientRoutes = [
   { path: "/restaurants/:id", element: <Restaurant /> },
   { path: "/restaurants/:restaurantId/menu/:menuId", element: <Menu /> },
   { path: "/order-history", element: <OrderHistory /> },
+  { path: "/create-review", element: <CreateReview /> },
 
   { path: "/ordering/:id", element: <React.Fragment /> },
   { path: "/cart/:id", element: <React.Fragment /> },

@@ -324,7 +324,7 @@ export const Menu = () => {
                 )}
 
                 <button
-                    className="fixed bottom-0 flex h-20 w-screen items-center justify-center bg-sky-500 pb-4 text-lg text-white"
+                    className="fixed bottom-0 flex h-20 w-screen items-center justify-center bg-sky-500 hover:bg-sky-600 pb-4 text-lg text-white"
                   onClick={ConfirmOrder}
                 >
                     결제하기
