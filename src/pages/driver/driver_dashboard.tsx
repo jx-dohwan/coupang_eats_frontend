@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import { gql, useMutation, useSubscription } from '@apollo/client';
 import { FULL_ORDER_FRAGMENT } from '../../fragments';
 import GoogleMapReact from "google-map-react";
-import { Map, MapMarker, MapTypeId } from "react-kakao-maps-sdk"
-import useKakaoLoader from "./useKakaoLoader"
 import { CoockedOrdersSubscription, CoockedOrdersSubscriptionVariables, TakeOrderMutation, TakeOrderMutationVariables } from '../../__api__/graphql';
 import { useNavigate } from 'react-router-dom';
 

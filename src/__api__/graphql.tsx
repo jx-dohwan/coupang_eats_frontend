@@ -439,6 +439,7 @@ export type Order = {
   __typename?: 'Order';
   createdAt: Scalars['DateTime']['output'];
   customer?: Maybe<User>;
+  customerId: Scalars['Float']['output'];
   driver?: Maybe<User>;
   id: Scalars['Float']['output'];
   items: Array<OrderItem>;
@@ -451,7 +452,8 @@ export type Order = {
 export type OrderItem = {
   __typename?: 'OrderItem';
   createdAt: Scalars['DateTime']['output'];
-  dish: Dish;
+  dish?: Maybe<Dish>;
+  dishName?: Maybe<Scalars['String']['output']>;
   id: Scalars['Float']['output'];
   options?: Maybe<Array<OrderItemOption>>;
   updatedAt: Scalars['DateTime']['output'];
@@ -699,10 +701,6 @@ export type OrderPartsFragment = { __typename?: 'Order', id: number, createdAt: 
 
 export type FullOrderPartsFragment = { __typename?: 'Order', id: number, status: OrderStatus, total?: number | null, driver?: { __typename?: 'User', email: string } | null, customer?: { __typename?: 'User', email: string } | null, restaurant?: { __typename?: 'Restaurant', name: string } | null };
 
-export type VerifiedUserFragment = { __typename?: 'User', verified: boolean };
-
-export type EditedUserFragment = { __typename?: 'User', verified: boolean, email: string };
-
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -728,6 +726,13 @@ export type CreateOrderMutationVariables = Exact<{
 
 
 export type CreateOrderMutation = { __typename?: 'Mutation', createOrder: { __typename?: 'CreateOrderOutput', ok: boolean, error?: string | null, orderId?: number | null } };
+
+export type GetOrdersQueryVariables = Exact<{
+  input: GetOrdersInput;
+}>;
+
+
+export type GetOrdersQuery = { __typename?: 'Query', getOrders: { __typename?: 'GetOrdersOutput', ok: boolean, error?: string | null, orders?: Array<{ __typename?: 'Order', id: number, customerId: number, status: OrderStatus, total?: number | null, createdAt: any, restaurant?: { __typename?: 'Restaurant', id: number, name: string } | null, items: Array<{ __typename?: 'OrderItem', dishName?: string | null, options?: Array<{ __typename?: 'OrderItemOption', name: string, choice?: string | null }> | null }> }> | null } };
 
 export type RestaurantsPageQueryVariables = Exact<{
   input: RestaurantsInput;
@@ -823,12 +828,16 @@ export type VerifyEmailMutationVariables = Exact<{
 
 export type VerifyEmailMutation = { __typename?: 'Mutation', verifyEmail: { __typename?: 'VerifyEmailOutput', ok: boolean, error?: string | null } };
 
+export type VerifiedUserFragment = { __typename?: 'User', verified: boolean };
+
 export type EditProfileMutationVariables = Exact<{
   input: EditProfileInput;
 }>;
 
 
 export type EditProfileMutation = { __typename?: 'Mutation', editProfile: { __typename?: 'EditProfileOutput', ok: boolean, error?: string | null } };
+
+export type EditedUserFragment = { __typename?: 'User', verified: boolean, email: string };
 
 export const RestaurantPartsFragmentDoc = gql`
     fragment RestaurantParts on Restaurant {
@@ -1084,6 +1093,65 @@ export function useCreateOrderMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateOrderMutationHookResult = ReturnType<typeof useCreateOrderMutation>;
 export type CreateOrderMutationResult = Apollo.MutationResult<CreateOrderMutation>;
 export type CreateOrderMutationOptions = Apollo.BaseMutationOptions<CreateOrderMutation, CreateOrderMutationVariables>;
+export const GetOrdersDocument = gql`
+    query getOrders($input: GetOrdersInput!) {
+  getOrders(input: $input) {
+    ok
+    error
+    orders {
+      id
+      customerId
+      status
+      total
+      createdAt
+      restaurant {
+        id
+        name
+      }
+      items {
+        options {
+          name
+          choice
+        }
+        dishName
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOrdersQuery__
+ *
+ * To run a query within a React component, call `useGetOrdersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOrdersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOrdersQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useGetOrdersQuery(baseOptions: Apollo.QueryHookOptions<GetOrdersQuery, GetOrdersQueryVariables> & ({ variables: GetOrdersQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetOrdersQuery, GetOrdersQueryVariables>(GetOrdersDocument, options);
+      }
+export function useGetOrdersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOrdersQuery, GetOrdersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetOrdersQuery, GetOrdersQueryVariables>(GetOrdersDocument, options);
+        }
+export function useGetOrdersSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetOrdersQuery, GetOrdersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetOrdersQuery, GetOrdersQueryVariables>(GetOrdersDocument, options);
+        }
+export type GetOrdersQueryHookResult = ReturnType<typeof useGetOrdersQuery>;
+export type GetOrdersLazyQueryHookResult = ReturnType<typeof useGetOrdersLazyQuery>;
+export type GetOrdersSuspenseQueryHookResult = ReturnType<typeof useGetOrdersSuspenseQuery>;
+export type GetOrdersQueryResult = Apollo.QueryResult<GetOrdersQuery, GetOrdersQueryVariables>;
 export const RestaurantsPageDocument = gql`
     query restaurantsPage($input: RestaurantsInput!) {
   allCategories {

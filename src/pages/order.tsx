@@ -147,7 +147,7 @@ export const Order = () => {
                         </span>
                     </div>
                     {userData?.me.role === UserRole.Client && (
-                        <span className="text-center mt-5 mb-3 text-2xl text-sky-500">
+                        <span className="text-center mt-5 mb-3 text-2xl text-sky-600">
                             현재 상태 :  {getStatusDisplay(data?.getOrder.order?.status)}
                         </span>
                     )}
@@ -171,7 +171,7 @@ export const Order = () => {
                             )}
                             {data?.getOrder.order?.status !== OrderStatus.Cooking &&
                                 data?.getOrder.order?.status !== OrderStatus.Pending && (
-                                    <span className="text-center mt-5 mb-3 text-2xl text-sky-500">
+                                    <span className="text-center mt-5 mb-3 text-2xl text-sky-600">
                                         현재 상태 :  {getStatusDisplay(data?.getOrder.order?.status)}
                                     </span>
                                 )}
@@ -198,7 +198,7 @@ export const Order = () => {
                         </>
                     )}
                     {data?.getOrder.order?.status === OrderStatus.Delivered && (
-                        <span className="text-center mt-5 mb-3 text-2xl text-sky-500">
+                        <span className="text-center mt-5 mb-3 text-2xl text-sky-600">
                             쿠팡이츠를 이용해 주셔서 감사합니다.
                         </span>
                     )}

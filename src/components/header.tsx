@@ -7,7 +7,6 @@ import { UserRole } from "../__api__/graphql";
 
 export const Header: React.FC = () => {
   const { data } = useMe();
-
   return (
     <>
       {!data?.me.verified && (
