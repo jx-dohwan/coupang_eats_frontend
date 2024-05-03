@@ -7,6 +7,8 @@ interface IRestaurantProps {
     coverImg: string;
     name: string;
     categoryName?: string;
+    averageScore?:number;
+    reviewCount?:number;
 }
 
 export const RestaurantView: React.FC<IRestaurantProps> = ({
@@ -14,6 +16,8 @@ export const RestaurantView: React.FC<IRestaurantProps> = ({
     coverImg,
     name,
     categoryName,
+    averageScore,
+    reviewCount
 }) => (
     <Link to={`/restaurants/${id}`}>
         <div className="flex flex-col">
@@ -26,8 +30,8 @@ export const RestaurantView: React.FC<IRestaurantProps> = ({
             <div className="flex gap-2 text-sm">
                 <div className="flex gap-2 text-sm">
                     <StarsAndReviews
-                        rating={4}
-                        reviewCount={50}
+                        rating={averageScore}
+                        reviewCount={reviewCount}
                     />
                     <span className="text-gray-500">배달비 3,500원</span>
                 </div>

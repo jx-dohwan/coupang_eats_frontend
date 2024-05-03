@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { RestaurantQuery, RestaurantQueryVariables } from "../../__api__/graphql";
 import { useEffect, useState } from "react";
 import { StarRating } from "../../components/star_rating";
+import { calculateAverageScore } from "../../lib/calculate_average_score";
+import { countReviews } from "../../lib/count_reviews";
 
 
 const RESTAURANT_QUERY = gql`
@@ -44,13 +46,13 @@ export const Reviews = () => {
 
     useEffect(() => {
         if (data && data.restaurant && data.restaurant.restaurant && data.restaurant.restaurant.reviews) {
-            const reviews = data.restaurant.restaurant.reviews;
-            const totalScore = reviews.reduce((acc, review) => acc + review.score, 0);
-            const average = reviews.length > 0 ? totalScore / reviews.length : 0;
-            setAverageScore(average);
-            setReviewCount(reviews.length);
+          const averageScore = calculateAverageScore(data.restaurant.restaurant.reviews);
+          const reviewCount = countReviews(data.restaurant.restaurant.reviews)
+            setAverageScore(averageScore);
+            setReviewCount(reviewCount);
         }
     }, [data]);
+    
     return (
         <>
             <div className="relative grid place-items-center p-4 text-lg font-bold">

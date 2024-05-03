@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CATEGORY_FRAGMENT, RESTAURANT_FRAGMENT } from "../../fragments";
 import { RestaurantsPageQuery, RestaurantsPageQueryVariables } from "../../__api__/graphql";
 import { useForm } from "react-hook-form";
@@ -8,6 +8,8 @@ import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { RestaurantView } from "../../components/restaurant_view";
+import { calculateAverageScore } from "../../lib/calculate_average_score";
+import { countReviews } from "../../lib/count_reviews";
 
 // GraphQL 쿼리 정의: 식당과 카테고리 데이터를 가져오는 쿼리
 export const RESTAURANTS_QUERY = gql`
@@ -38,6 +40,10 @@ interface IFormProps {
     searchTerm: string;  // 검색어
 }
 
+export interface Review {
+    score: number;
+}
+
 // 식당 페이지 컴포넌트
 export const Restaurants = () => {
     const [page, setPage] = useState(1);  // 현재 페이지 상태
@@ -52,7 +58,7 @@ export const Restaurants = () => {
         },
     });
 
-
+    console.log("data", data)
     // 다음 페이지 이동 함수
     const onNextPageClick = () => setPage((current) => current + 1);
 
@@ -65,7 +71,7 @@ export const Restaurants = () => {
 
     // 검색 제출 함수
     const onSearchSubmit = () => {
-    
+
         const searchTerm = getValues().searchTerm;  // 폼에서 검색어 가져오기
         navigate({  // 검색어를 쿼리 파라미터로 넣어서 검색 페이지로 이동
             pathname: "/search",
@@ -96,6 +102,8 @@ export const Restaurants = () => {
     }
     const categoriesCount = data?.allCategories.categories?.length ?? 0;  // 카테고리 수
     const roundedUp = Math.ceil(categoriesCount / 2);  // 카테고리 수를 2로 나눈 후 올림 처리
+
+  
 
     return (
         <div>
@@ -138,15 +146,23 @@ export const Restaurants = () => {
                     </div>
                     <div className="bg-gray-50 h-4 my-6 border"></div>
                     <div className="grid mt-16 md:grid-cols-3 gap-x-5 gap-y-10">
-                        {data?.restaurants.results?.map((restaurant) => (
-                            <RestaurantView
-                                key={restaurant.id}
-                                id={restaurant.id+""}
-                                coverImg={restaurant.coverImg}
-                                name={restaurant.name}
-                                categoryName={restaurant.category?.name}
-                            />
-                        ))}
+                        {data?.restaurants.results?.map((restaurant) => {
+                            // 리뷰 관련 데이터 직접 처리
+                            const averageScore = calculateAverageScore(restaurant.reviews);
+                            const reviewCount = countReviews(restaurant.reviews);
+                            console.log(averageScore)
+                            return (
+                                <RestaurantView
+                                    key={restaurant.id}
+                                    id={restaurant.id.toString()}
+                                    coverImg={restaurant.coverImg}
+                                    name={restaurant.name}
+                                    categoryName={restaurant.category?.name}
+                                    averageScore={averageScore} // 평균 점수 문자열 형태로 변환
+                                    reviewCount={reviewCount} // 리뷰 수 직접 전달
+                                />
+                            );
+                        })}
                     </div>
                     <div className="grid grid-cols-3 text-center max-w-md items-center mx-auto mt-10">
                         {page > 1 ? (

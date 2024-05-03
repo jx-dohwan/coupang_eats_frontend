@@ -7,8 +7,10 @@ import { StarsAndReviews } from "../../components/stars_and_reviews";
 import { Fragment } from "react/jsx-runtime";
 import { Link } from "react-router-dom";
 import { BiCartAdd } from 'react-icons/bi'
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import KRW from "../../components/currency_formatter";
+import { calculateAverageScore } from "../../lib/calculate_average_score";
+import { countReviews } from "../../lib/count_reviews";
 
 const RESTAURANT_QUERY = gql`
   query restaurant($input: RestaurantInput!) {
@@ -46,8 +48,19 @@ export const Restaurant = () => {
   }
   );
 
+  const [averageScore, setAverageScore] = useState<number>(0);
+  const [reviewCount, setReviewCount] = useState<number>(0);
+
+
   useEffect(() => {
-  }, [data])
+    if (data && data.restaurant && data.restaurant.restaurant && data.restaurant.restaurant.reviews) {
+      const averageScore = calculateAverageScore(data.restaurant.restaurant.reviews);
+      const reviewCount = countReviews(data.restaurant.restaurant.reviews)
+        setAverageScore(averageScore);
+        setReviewCount(reviewCount);
+    }
+}, [data]);
+
   return (
     <div>
       <Helmet>
@@ -70,8 +83,8 @@ export const Restaurant = () => {
               <div className="flex items-center justify-center text-sm">
                 <StarsAndReviews
                   // 여기에 실제 Review데이터 가져와야함
-                  rating={4}
-                  reviewCount={50}
+                  rating={averageScore}
+                  reviewCount={reviewCount}
                 />
               </div>
             </div>
