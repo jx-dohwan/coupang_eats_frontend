@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 import { StarsAndReviews } from "../../components/stars_and_reviews";
 import { Fragment } from "react/jsx-runtime";
 import { Link } from "react-router-dom";
-import { BiCartAdd } from 'react-icons/bi'
+import { BiCartAdd, BiChevronRight } from 'react-icons/bi'
 import { useEffect, useState } from "react";
 import KRW from "../../components/currency_formatter";
 import { calculateAverageScore } from "../../lib/calculate_average_score";
@@ -56,10 +56,10 @@ export const Restaurant = () => {
     if (data && data.restaurant && data.restaurant.restaurant && data.restaurant.restaurant.reviews) {
       const averageScore = calculateAverageScore(data.restaurant.restaurant.reviews);
       const reviewCount = countReviews(data.restaurant.restaurant.reviews)
-        setAverageScore(averageScore);
-        setReviewCount(reviewCount);
+      setAverageScore(averageScore);
+      setReviewCount(reviewCount);
     }
-}, [data]);
+  }, [data]);
 
   return (
     <div>
@@ -80,13 +80,16 @@ export const Restaurant = () => {
 
             <div className="z-50 grid gap-2 border border-gray-300 bg-white md:px-30 px-10 py-5 shadow-md">
               <h1 className="text-4xl py-5 px-10">{data?.restaurant.restaurant?.name}</h1>
-              <div className="flex items-center justify-center text-sm">
+              <Link
+                to={`/reviews/${id}`}
+                className="flex items-center justify-center text-sm">
                 <StarsAndReviews
                   // 여기에 실제 Review데이터 가져와야함
                   rating={averageScore}
                   reviewCount={reviewCount}
                 />
-              </div>
+                <BiChevronRight className="text-xl" />
+              </Link>
             </div>
 
           </div>
@@ -115,7 +118,7 @@ export const Restaurant = () => {
           {data?.restaurant.restaurant?.menu.map((menu) => (
             // 여기에 MenuList를 만들기 -> MenuList에서 해당 메뉴를 클릭하면 menu.tsx로 이동할 수 있도록 해줘라
             <div className="relative">
-                  <Link className="grid grid-cols-3" to={`/restaurants/${id}/menu/${menu.id}`}>
+              <Link className="grid grid-cols-3" to={`/restaurants/${id}/menu/${menu.id}`}>
                 <div className="col-span-2">
                   <h3 className="text-lg font-bold">{menu.name}</h3>
                   <h4 className="text-lg">
