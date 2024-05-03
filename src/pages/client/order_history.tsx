@@ -101,7 +101,9 @@ export const OrderHistory = () => {
                                     </div>
                                     <div className="pb-4 pt-2"><KRW price={order.total!} /></div>
                                     <div className="grid place-items-center rounded-lg border border-sky-500 hover:border-sky-600 py-2 font-bold text-sky-500">
-                                        리뷰 작성
+                                        <Link to={`/create-review/${order.restaurant?.id}`}>
+                                            리뷰 작성
+                                        </Link>
                                     </div>
 
                                 </div>
