@@ -42,7 +42,7 @@ export const CreateReview = () => {
     const { id } = useParams() as unknown as TCreateReviewProps;;
     const [rating, setRating] = useState(5)
     const [uploading, setUploading] = useState(false);
-    const [imageUrl, setImageUrl] = useState("");
+    const [imageUrlTemp, setImageUrlTemp] = useState("");  // For preview only
 
 
     const [createReviewMutation, { loading }] = useMutation<
@@ -75,37 +75,36 @@ export const CreateReview = () => {
         }
     })
 
-
     const { data } = useMe();
     const onSubmit = async () => {
         setUploading(true);
         const { score, reviewText, file } = getValues();
         const reviewImgs: ReviewImges[] = []; // 타입 명시적으로 선언
-    
+
         try {
             if (file.length > 0) {
                 const uploadedImages = await Promise.all(
                     Array.from(file).map(async (fileItem) => {
                         const formData = new FormData();
                         formData.append("file", fileItem);
-    
+
                         const response = await fetch("http://localhost:4000/uploads/", {
                             method: "POST",
                             body: formData,
                         });
-    
+
                         if (!response.ok) {
                             throw new Error(`Failed to upload image. Status: ${response.status}`);
                         }
-    
+
                         const imageData = await response.json();
                         return imageData.url;
                     })
                 );
-    
+
                 uploadedImages.forEach(url => reviewImgs.push({ url })); // 객체 배열 생성
             }
-    
+
             await createReviewMutation({
                 variables: {
                     input: {
@@ -117,7 +116,7 @@ export const CreateReview = () => {
                     },
                 },
             });
-    
+
             navigate(-1);
             alert('리뷰를 등록했습니다.');
         } catch (error) {
@@ -126,11 +125,6 @@ export const CreateReview = () => {
             setUploading(false);
         }
     };
-    
-    
-
-
-
 
     return (
         <>
@@ -172,6 +166,7 @@ export const CreateReview = () => {
                                     type="file"
                                     id="file"
                                     name="file"
+                                    accept="image/*"
                                     className='hidden'
                                 />
                                 <label
@@ -181,6 +176,7 @@ export const CreateReview = () => {
                                     <BsCamera className='text-3xl' />
                                     사진 추가
                                 </label>
+                            
                             </div>
                         </div>
                     </div>

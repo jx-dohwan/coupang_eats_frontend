@@ -701,6 +701,10 @@ export type OrderPartsFragment = { __typename?: 'Order', id: number, createdAt: 
 
 export type FullOrderPartsFragment = { __typename?: 'Order', id: number, status: OrderStatus, total?: number | null, driver?: { __typename?: 'User', email: string } | null, customer?: { __typename?: 'User', email: string } | null, restaurant?: { __typename?: 'Restaurant', name: string } | null };
 
+export type VerifiedUserFragment = { __typename?: 'User', verified: boolean };
+
+export type EditedUserFragment = { __typename?: 'User', verified: boolean, email: string };
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -835,16 +839,12 @@ export type VerifyEmailMutationVariables = Exact<{
 
 export type VerifyEmailMutation = { __typename?: 'Mutation', verifyEmail: { __typename?: 'VerifyEmailOutput', ok: boolean, error?: string | null } };
 
-export type VerifiedUserFragment = { __typename?: 'User', verified: boolean };
-
 export type EditProfileMutationVariables = Exact<{
   input: EditProfileInput;
 }>;
 
 
 export type EditProfileMutation = { __typename?: 'Mutation', editProfile: { __typename?: 'EditProfileOutput', ok: boolean, error?: string | null } };
-
-export type EditedUserFragment = { __typename?: 'User', verified: boolean, email: string };
 
 export const RestaurantPartsFragmentDoc = gql`
     fragment RestaurantParts on Restaurant {

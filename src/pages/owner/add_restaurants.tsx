@@ -166,13 +166,13 @@ export const AddRestaurant = () => {
                         name="file"
                         accept="image/*"
                     />
-                    <label
+                    {/* <label
                         htmlFor='file' // 수정된 부분
                         className='flex flex-col items-center justify-center border border-gray-400 p-2 text-sm'
                     >
                         <BsCamera className='text-3xl' />
                         사진 추가
-                    </label>
+                    </label> */}
                 </div>
                 <Button
                     loading={uploading}

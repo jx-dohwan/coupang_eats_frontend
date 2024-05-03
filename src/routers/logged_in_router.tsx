@@ -19,6 +19,7 @@ import { OrderHistory } from "../pages/client/order_history";
 import { Order } from "../pages/order";
 import { DriverDashboard } from "../pages/driver/driver_dashboard";
 import { CreateReview } from "../pages/review/create-review";
+import { Reviews } from "../pages/review/reviews";
 
 const clientRoutes = [
   { path: "/", element: <Restaurants /> },
@@ -39,7 +40,7 @@ const commonRoutes = [
   { path: "/confirm", element: <ConfirmEmail /> },
   { path: "/edit-profile", element: <EditProfile /> },
   { path: "/order/:id", element: <Order /> },
-  { path: "/reviews/:id", element: <React.Fragment /> },
+  { path: "/reviews/:id", element: <Reviews /> },
 
 ];
 
