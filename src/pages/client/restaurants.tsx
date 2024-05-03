@@ -10,7 +10,7 @@ import { FaSearch } from "react-icons/fa";
 import { RestaurantView } from "../../components/restaurant_view";
 
 // GraphQL 쿼리 정의: 식당과 카테고리 데이터를 가져오는 쿼리
-const RESTAURANTS_QUERY = gql`
+export const RESTAURANTS_QUERY = gql`
   query restaurantsPage($input: RestaurantsInput!) {
     allCategories {
       ok

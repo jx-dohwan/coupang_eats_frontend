@@ -76,14 +76,14 @@ export const Menu = () => {
     const [orderStarted, setOrderStarted] = useState(false);
     const [orderItems, setOrderItems] = useState<CreateOrderItemInput[]>([]);
 
-    
+
     // const handleOptionChange = (optionName: string, extra: number, isChecked: boolean) => { 추후 다중 choice를 위해 남겨둠
     //     setSelectedOptions(prev => ({
     //         ...prev,
     //         [optionName]: isChecked ? extra : 0  // 선택되면 가격을 저장, 아니면 0
     //     }));
     // };
-// 갯수 증감 및 옵션 추가에 의한 가격 변동
+    // 갯수 증감 및 옵션 추가에 의한 가격 변동
     const handleOptionChange = (optionName: string, choiceName: string, isChecked: boolean) => {
         setSelectedOptions(prev => ({
             ...prev,
@@ -201,14 +201,14 @@ export const Menu = () => {
     });
 
     const ConfirmOrder = () => {
-        if(placingOrder) {
+        if (placingOrder) {
             return;
         }
         const ok = window.confirm("주문하시겠습니까?")
-        if(ok) {
+        if (ok) {
             createOrderMutation({
                 variables: {
-                    input:{
+                    input: {
                         restaurantId: +restaurantId,
                         items: orderItems,
                     }
@@ -325,7 +325,7 @@ export const Menu = () => {
 
                 <button
                     className="fixed bottom-0 flex h-20 w-screen items-center justify-center bg-sky-500 hover:bg-sky-600 pb-4 text-lg text-white"
-                  onClick={ConfirmOrder}
+                    onClick={ConfirmOrder}
                 >
                     결제하기
                 </button>

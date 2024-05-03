@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { CreateRestaurantMutation, CreateRestaurantMutationVariables } from "../../__api__/graphql";
 import { useNavigate } from "react-router-dom";
 import { MY_RESTAURANTS_QUERY } from "./my_restaurants";
+import { BsCamera } from "react-icons/bs";
 
 
 // 식당 생성을 위한 GraphQL 뮤테이션 정의, CreateRestaurantInput 타입을 받아 처리하고 에러 메시지, 성공 여부, 생성된 식당의 ID를 반환
@@ -165,6 +166,13 @@ export const AddRestaurant = () => {
                         name="file"
                         accept="image/*"
                     />
+                    <label
+                        htmlFor='file' // 수정된 부분
+                        className='flex flex-col items-center justify-center border border-gray-400 p-2 text-sm'
+                    >
+                        <BsCamera className='text-3xl' />
+                        사진 추가
+                    </label>
                 </div>
                 <Button
                     loading={uploading}
