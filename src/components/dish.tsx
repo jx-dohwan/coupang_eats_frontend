@@ -43,7 +43,7 @@ export const Dish: React.FC<IDishProps> = ({
             <span><KRW price={price} /></span>
             {isCustomer && options && options?.length !== 0 && (
                 <div>
-                    <h5 className="mt-8 mb-3 font-medium">음식 옵션:</h5>
+                    <h3 className="mt-8 mb-3 font-medium">음식 옵션</h3>
 
                     {options.map((option, optionIndex) => (
                         <div key={optionIndex}>

@@ -156,7 +156,6 @@ export const AddDish = () => {
                 />
                 <div className="my-10">
                     <h4 className="font-medium mb-3 text-lg">
-                        음식 옵션
                     </h4>
                     <span
                         onClick={onAddOptionClick}
@@ -174,7 +173,7 @@ export const AddDish = () => {
                             />
                             <span
                                 onClick={() => onAddOptionDetailClick(categoryId)}
-                                className="cursor-pointer text-white bg-sky-500 hover:bg-sky-600 py-1 px-2 mt-5"
+                                className="cursor-pointer text-white bg-sky-500 hover:bg-sky-600 py-3 px-4 mt-5"
                             >
                                 옵션 추가
                             </span>
