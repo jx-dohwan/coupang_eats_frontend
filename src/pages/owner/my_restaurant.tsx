@@ -43,10 +43,12 @@ export const MyRestaurant = () => {
             },
         }
     );
+    console.log('data', data)
 
     const { data: userData } = useMe()
 
     const navigate = useNavigate();
+
 
 
     return (
@@ -91,6 +93,8 @@ export const MyRestaurant = () => {
                                     name={dish.name}
                                     description={dish.description}
                                     price={dish.price}
+                                    isCustomer={true}
+                                    options={dish.options}
                                 />
                             ))}
                         </div>

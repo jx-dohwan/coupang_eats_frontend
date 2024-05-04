@@ -1,4 +1,5 @@
 import { DishOption } from "../__api__/graphql";
+import KRW from "./currency_formatter";
 
 interface IDishProps {
     id?: number;
@@ -39,11 +40,21 @@ export const Dish: React.FC<IDishProps> = ({
                 </h3>
                 <h4 className="font-medium">{description}</h4>
             </div>
-            <span>${price}</span>
+            <span><KRW price={price} /></span>
             {isCustomer && options && options?.length !== 0 && (
                 <div>
                     <h5 className="mt-8 mb-3 font-medium">음식 옵션:</h5>
-                    <div className="grid gap-2 justify-start">{dishOptions}</div>
+
+                    {options.map((option, optionIndex) => (
+                        <div key={optionIndex}>
+                            <strong>{option.name}</strong>
+                            {option.choices && option.choices.map((choice, choiceIndex) => (
+                                <div key={choiceIndex} style={{ marginLeft: '20px' }}>
+                                    - {choice.name} (추가 비용: {choice.extra ? `${choice.extra}원` : "무료"})
+                                </div>
+                            ))}
+                        </div>
+                    ))}
                 </div>
             )}
         </div>

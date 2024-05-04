@@ -83,8 +83,8 @@ export const Reviews = () => {
                                     </div>
                                     {review.reviewImg && review.reviewImg.map((img) => (
                                         <div className="md:h-85">
-                                        <img src={img.url} alt="Review Image" key={img.url} className="mb-2" />
-                                    </div>
+                                            <img src={img.url} alt="Review Image" key={img.url} className="mb-2" />
+                                        </div>
                                     ))}
                                     {review.reviewText && <p>{review.reviewText}</p>}
                                 </div>
