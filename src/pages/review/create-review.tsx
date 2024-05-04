@@ -8,6 +8,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { MY_RESTAURANT_QUERY } from '../owner/my_restaurant';
 import { useMe } from '../../hooks/useMe';
 import { RESTAURANTS_QUERY } from '../client/restaurants';
+import { Helmet } from 'react-helmet';
 
 // 매장 번호르 id를 보내기,
 // 매장 번호에 맞는 review를 생성하기 
@@ -128,6 +129,11 @@ export const CreateReview = () => {
 
     return (
         <>
+            <Helmet>
+                <title>
+                    리뷰 등록 | Coupang Eats
+                </title>
+            </Helmet>
             <div className="pb-16 p-4">
                 <div className="rounded-lg border border-gray-200 g-4 p-4">
                     <div className="relative grid place-items-center p-4 text-lg font-bold">
@@ -176,7 +182,7 @@ export const CreateReview = () => {
                                     <BsCamera className='text-3xl' />
                                     사진 추가
                                 </label>
-                            
+
                             </div>
                         </div>
                     </div>
