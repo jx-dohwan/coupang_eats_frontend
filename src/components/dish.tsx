@@ -28,28 +28,49 @@ export const Dish: React.FC<IDishProps> = ({
     removeFromOrder,
     children: dishOptions,
 }) => {
+    const handleToggleOrder = () => {
+        if (isSelected) {
+            removeFromOrder?.(id);
+        } else {
+            addItemToOrder?.(id);
+        }
+    };
+
 
     return (
         <div
-            className={`px-8 py-4 border cursor-pointer transition-all ${isSelected ? "border-gray-800" : "hover:border-gray-800"}`}
+            onClick={handleToggleOrder}
+            className={`p-6 border rounded-lg cursor-pointer transition-all shadow-sm hover:shadow-md ${
+                isSelected ? "border-gray-800 bg-gray-50" : "border-gray-300 hover:border-gray-800"
+            }`}
         >
-            <div className="mb-5">
-                <h3 className="text-lg font-medium flex items-center">
-                    {name}{" "}
-
-                </h3>
-                <h4 className="font-medium">{description}</h4>
-            </div>
-            <span><KRW price={price} /></span>
-            {isCustomer && options && options?.length !== 0 && (
+            <div className="mb-4 flex justify-between items-start">
                 <div>
-                    <h3 className="mt-8 mb-3 font-medium">음식 옵션</h3>
-
+                    <h3 className="text-xl font-semibold">{name}</h3>
+                    <h4 className="text-sm text-gray-600">{description}</h4>
+                </div>
+                {orderStarted && (
+                    <span
+                        className={`text-sm px-2 py-1 border rounded-full ${
+                            isSelected ? "bg-red-600 text-white" : "bg-green-600 text-white"
+                        }`}
+                    >
+                        {isSelected ? "Remove" : "Add"}
+                    </span>
+                )}
+            </div>
+            <span className="text-lg font-medium text-gray-800"><KRW price={price} /></span>
+            {isCustomer && options && options.length !== 0 && (
+                <div className="mt-6">
+                    <h3 className="mb-3 text-md font-semibold text-gray-800">음식 옵션</h3>
                     {options.map((option, optionIndex) => (
-                        <div key={optionIndex}>
-                            <strong>{option.name}</strong>
+                        <div key={optionIndex} className="mb-3">
+                            <strong className="block font-medium text-gray-700">{option.name}</strong>
                             {option.choices && option.choices.map((choice, choiceIndex) => (
-                                <div key={choiceIndex} style={{ marginLeft: '20px' }}>
+                                <div
+                                    key={choiceIndex}
+                                    className="ml-4 text-sm text-gray-600 flex items-center"
+                                >
                                     - {choice.name} (추가 비용: {choice.extra ? `${choice.extra}원` : "무료"})
                                 </div>
                             ))}
@@ -57,6 +78,7 @@ export const Dish: React.FC<IDishProps> = ({
                     ))}
                 </div>
             )}
+            {dishOptions && <div className="mt-4">{dishOptions}</div>}
         </div>
     )
 }

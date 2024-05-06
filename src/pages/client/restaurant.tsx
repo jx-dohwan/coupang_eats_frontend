@@ -127,10 +127,8 @@ export const Restaurant = () => {
                   <p className="text-sm">{menu.description}</p>
                 </div>
               </Link>
-
               <div className="absolute right-0 top-0 flex h-full items-center">
                 { }
-                <BiCartAdd />
               </div>
             </div>
           ))}

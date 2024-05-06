@@ -268,7 +268,7 @@ export const Menu = () => {
                                 className='flex items-center justify-between bg-gray-100 p4 font-bold'>
                                 <div>{option.name}</div>
                                 <div className='text-sm font-normal text-orange-600'>
-                                    선택 사항
+                                    필수 사항
                                 </div>
                             </h3>
 
