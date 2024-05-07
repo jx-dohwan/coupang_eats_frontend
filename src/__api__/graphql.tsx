@@ -65,7 +65,9 @@ export type CreateAccountOutput = {
 };
 
 export type CreateDishInput = {
+  deliveryFee?: InputMaybe<Scalars['Int']['input']>;
   description: Scalars['String']['input'];
+  minimumPrice?: InputMaybe<Scalars['Int']['input']>;
   name: Scalars['String']['input'];
   options?: InputMaybe<Array<DishOptionInputType>>;
   photo?: InputMaybe<Scalars['String']['input']>;
@@ -163,8 +165,10 @@ export type DeleteReviewOutput = {
 export type Dish = {
   __typename?: 'Dish';
   createdAt: Scalars['DateTime']['output'];
+  deliveryFee?: Maybe<Scalars['Int']['output']>;
   description: Scalars['String']['output'];
   id: Scalars['Float']['output'];
+  minimumPrice?: Maybe<Scalars['Int']['output']>;
   name: Scalars['String']['output'];
   options?: Maybe<Array<DishOption>>;
   photo?: Maybe<Scalars['String']['output']>;
