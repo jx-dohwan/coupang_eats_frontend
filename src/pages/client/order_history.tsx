@@ -56,14 +56,9 @@ export const OrderHistory = () => {
     const matchingOrders = data?.getOrders?.orders?.filter(order => order.customerId === myData.data?.me.id);
 
     return (
-        <div className="pb-16">
+        <div className="max-w-screen-2xl pb-20 mx-auto mt-8">
             <div className="flex flex-row border-b-8 border-b-gray-100 p-4">
-                {/* <input
-                    className="flex-grow rounded-lg bg-gray-200 px-3"
-                    placeholder="주문한 메뉴 혹은 매장 찾아보기"
-                >
-                </input>
-                <BiSearch className="m-2 text-2xl" /> */}
+                
             </div>
             {/* map으로 감싸줘야함 */}
             <div className="grid gap-2 p-4">
@@ -99,7 +94,7 @@ export const OrderHistory = () => {
                                         ))}
 
                                     </div>
-                                    <div className="pb-4 pt-2"><KRW price={order.total!} /></div>
+                                    <div className="pb-4 pt-2">합계 : <KRW price={order.total!} /></div>
                                     <div className="grid place-items-center rounded-lg border border-sky-500 hover:border-sky-600 py-2 font-bold text-sky-500">
                                         <Link to={`/create-review/${order.restaurant?.id}`}>
                                             리뷰 작성

@@ -144,7 +144,7 @@ export const Restaurants = () => {
                         ))}
 
                     </div>
-                    <div className="bg-gray-50 h-4 my-6 border"></div>
+                    <div className="border-b-8 border-b-gray-100 p-4"/>
                     <div className="grid mt-16 md:grid-cols-3 gap-x-5 gap-y-10">
                         {data?.restaurants.results?.map((restaurant) => {
                             // 리뷰 관련 데이터 직접 처리
