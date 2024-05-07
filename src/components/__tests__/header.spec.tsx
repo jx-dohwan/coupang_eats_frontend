@@ -72,7 +72,7 @@ describe("<Header />", () => {
 
         await waitFor(async () => {// 아래의 해당 텍스트가 화면에 없는지 확인
             await new Promise((resolve) => setTimeout(resolve, 5)); // 모킹된 응답을 기다리기 위해 잠시 지연
-            expect(screen.queryByText("이메일을 확인해 주세요.")).toBeNull();
+            expect(screen.queryByText("이메일을 확인해 주세요.")).toBeNull(); // get...없으면 오류지만 query...은 HTMLElement 또는 null을 return한다. 해당 문구가 존재하지 않는다는 것을 테스트 한다
         })
     })
 });

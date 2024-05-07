@@ -225,104 +225,105 @@ export const Menu = () => {
                         {data?.restaurant.restaurant?.name || ""} | Coupang Eats
                     </title>
                 </Helmet>
-                <div className="border-b border-b-gray-100 p-4 pb-8">
-                    <h1 className="text-2xl font-bold">{menu?.name}</h1>
-                    {/* {description && <p className="text-sm text-gray-700">설명</p>} */}
-                </div>
-                <div className="pb-20">
-                    <div className="p-4">
-                        <div className="flex justify-between pb-4">
-                            <div className="flex items-center">
-                                <p className="text-lg font-semibold">가격</p>
+                <div className='max-w-screen-2xl pb-20 mx-auto mt-8 '>
+                    <div className="border-b border-b-gray-100 p-4 pb-8">
+                        <h1 className="text-2xl font-bold">{menu?.name}</h1>
+                        {/* {description && <p className="text-sm text-gray-700">설명</p>} */}
+                    </div>
+                    <div className="pb-20">
+                        <div className="p-4">
+                            <div className="flex justify-between pb-4">
+                                <div className="flex items-center">
+                                    <p className="text-lg font-semibold">가격</p>
+                                </div>
+                                <div className="flex items-center">
+                                    <p className="text-lg">  <KRW price={totalPrice} /></p>
+                                </div>
                             </div>
-                            <div className="flex items-center">
-                                <p className="text-lg">  <KRW price={totalPrice} /></p>
+                            <div className="flex justify-between">
+                                <div className="flex items-center">
+                                    <p className="text-lg font-semibold">수량</p>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <CiCircleMinus
+                                        className="text-4xl text-gray-400"
+                                        onClick={decrementCount}
+                                    />
+                                    <p className="text-lg">{orderCount}</p>
+                                    <CiCirclePlus
+                                        className="text-4xl text-gray-400"
+                                        onClick={incrementCount}
+                                    />
+                                </div>
                             </div>
                         </div>
-                        <div className="flex justify-between">
-                            <div className="flex items-center">
-                                <p className="text-lg font-semibold">수량</p>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <CiCircleMinus
-                                    className="text-4xl text-gray-400"
-                                    onClick={decrementCount}
-                                />
-                                <p className="text-lg">{orderCount}</p>
-                                <CiCirclePlus
-                                    className="text-4xl text-gray-400"
-                                    onClick={incrementCount}
-                                />
-                            </div>
-                        </div>
+
+
                     </div>
 
+                    {menu?.options ? (
+                        menu?.options?.map((option, index) => (
+                            <div key={option.name}>
+                                <h3
+                                    id={option.name}
+                                    className='flex items-center justify-between bg-gray-100 p4 font-bold'>
+                                    <div>{option.name}</div>
+                                    <div className='text-sm font-normal text-orange-600'>
+                                        필수 사항
+                                    </div>
+                                </h3>
 
+                                {option.choices?.map((choice, index) => (
+                                    <div>
+                                        <fieldset>
+                                            <div
+                                                key={choice.name}
+                                                className='flex items-center gap-2 p-4'
+                                            >
+                                                <input
+                                                    id={`${option.name}-${choice.name}`}
+                                                    type='checkbox'
+                                                    name={choice.name}
+                                                    className='p-3 focus:outline-none focus:ring-0'
+                                                    checked={selectedOptions[option.name] === choice.name}
+                                                    onChange={(e) => {
+                                                        // 기존 옵션 변경 처리
+                                                        handleOptionChange(option.name, choice.name, e.target.checked);
+
+                                                        // 옵션 추가 또는 제거 로직
+                                                        if (e.target.checked) {
+                                                            // 옵션을 주문 항목에 추가
+                                                            addOptionToItem(parseInt(menuId, 10), option.name, choice.name);
+                                                        } else {
+                                                            // 옵션에서 선택 해제
+                                                            removeOptionFromItem(parseInt(menuId, 10), option.name);
+                                                        }
+                                                    }}
+
+                                                // checked={selectedOptions[choice.name] > 0} 추후 다중 choice를 위해 남겨둠
+                                                // onChange={(e) => handleOptionChange(choice.name, choice.extra || 0, e.target.checked)}
+                                                />
+                                                <label htmlFor={`${option.name}-${choice.name}`}>
+                                                    {choice.name}
+                                                    {choice.extra && (
+                                                        <span className='text-gray-400'>
+                                                            <KRW price={choice.extra} />
+                                                        </span>
+                                                    )}
+                                                </label>
+                                            </div>
+
+                                        </fieldset>
+
+                                    </div>
+                                ))}
+
+                            </div>
+                        ))
+                    ) : (
+                        <NotFound />
+                    )}
                 </div>
-
-                {menu?.options ? (
-                    menu?.options?.map((option, index) => (
-                        <div key={option.name}>
-                            <h3
-                                id={option.name}
-                                className='flex items-center justify-between bg-gray-100 p4 font-bold'>
-                                <div>{option.name}</div>
-                                <div className='text-sm font-normal text-orange-600'>
-                                    필수 사항
-                                </div>
-                            </h3>
-
-                            {option.choices?.map((choice, index) => (
-                                <div>
-                                    <fieldset>
-                                        <div
-                                            key={choice.name}
-                                            className='flex items-center gap-2 p-4'
-                                        >
-                                            <input
-                                                id={`${option.name}-${choice.name}`}
-                                                type='checkbox'
-                                                name={choice.name}
-                                                className='p-3 focus:outline-none focus:ring-0'
-                                                checked={selectedOptions[option.name] === choice.name}
-                                                onChange={(e) => {
-                                                    // 기존 옵션 변경 처리
-                                                    handleOptionChange(option.name, choice.name, e.target.checked);
-
-                                                    // 옵션 추가 또는 제거 로직
-                                                    if (e.target.checked) {
-                                                        // 옵션을 주문 항목에 추가
-                                                        addOptionToItem(parseInt(menuId, 10), option.name, choice.name);
-                                                    } else {
-                                                        // 옵션에서 선택 해제
-                                                        removeOptionFromItem(parseInt(menuId, 10), option.name);
-                                                    }
-                                                }}
-
-                                            // checked={selectedOptions[choice.name] > 0} 추후 다중 choice를 위해 남겨둠
-                                            // onChange={(e) => handleOptionChange(choice.name, choice.extra || 0, e.target.checked)}
-                                            />
-                                            <label htmlFor={`${option.name}-${choice.name}`}>
-                                                {choice.name}
-                                                {choice.extra && (
-                                                    <span className='text-gray-400'>
-                                                        <KRW price={choice.extra} />
-                                                    </span>
-                                                )}
-                                            </label>
-                                        </div>
-
-                                    </fieldset>
-
-                                </div>
-                            ))}
-
-                        </div>
-                    ))
-                ) : (
-                    <NotFound />
-                )}
-
                 <button
                     className="fixed bottom-0 flex h-20 w-screen items-center justify-center bg-sky-500 hover:bg-sky-600 pb-4 text-lg text-white"
                     onClick={ConfirmOrder}
