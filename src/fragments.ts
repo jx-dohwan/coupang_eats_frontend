@@ -47,6 +47,8 @@ export const DISH_FRAGMENT = gql`
     price
     photo
     description
+    deliveryFee
+    minimumPrice
     options {
       name
       extra

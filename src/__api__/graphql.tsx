@@ -65,12 +65,12 @@ export type CreateAccountOutput = {
 };
 
 export type CreateDishInput = {
-  deliveryFee?: InputMaybe<Scalars['Int']['input']>;
+  deliveryFee: Scalars['Int']['input'];
   description: Scalars['String']['input'];
-  minimumPrice?: InputMaybe<Scalars['Int']['input']>;
+  minimumPrice: Scalars['Int']['input'];
   name: Scalars['String']['input'];
   options?: InputMaybe<Array<DishOptionInputType>>;
-  photo?: InputMaybe<Scalars['String']['input']>;
+  photo: Scalars['String']['input'];
   price: Scalars['Int']['input'];
   restaurantId: Scalars['Int']['input'];
 };
@@ -165,13 +165,13 @@ export type DeleteReviewOutput = {
 export type Dish = {
   __typename?: 'Dish';
   createdAt: Scalars['DateTime']['output'];
-  deliveryFee?: Maybe<Scalars['Int']['output']>;
+  deliveryFee: Scalars['Int']['output'];
   description: Scalars['String']['output'];
   id: Scalars['Float']['output'];
-  minimumPrice?: Maybe<Scalars['Int']['output']>;
+  minimumPrice: Scalars['Int']['output'];
   name: Scalars['String']['output'];
   options?: Maybe<Array<DishOption>>;
-  photo?: Maybe<Scalars['String']['output']>;
+  photo: Scalars['String']['output'];
   price: Scalars['Int']['output'];
   restaurant: Restaurant;
   updatedAt: Scalars['DateTime']['output'];
@@ -202,10 +202,13 @@ export type DishOptionInputType = {
 };
 
 export type EditDishInput = {
+  deliveryFee?: InputMaybe<Scalars['Int']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   dishId: Scalars['Int']['input'];
+  minimumPrice?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   options?: InputMaybe<Array<DishOptionInputType>>;
+  photo?: InputMaybe<Scalars['String']['input']>;
   price?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -700,7 +703,7 @@ export type RestaurantPartsFragment = { __typename?: 'Restaurant', id: number, n
 
 export type CategoryPartsFragment = { __typename?: 'Category', id: number, name: string, coverImg?: string | null, slug: string, restaurantCount: number };
 
-export type DishPartsFragment = { __typename?: 'Dish', id: number, name: string, price: number, photo?: string | null, description: string, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number | null, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number | null }> | null }> | null };
+export type DishPartsFragment = { __typename?: 'Dish', id: number, name: string, price: number, photo: string, description: string, deliveryFee: number, minimumPrice: number, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number | null, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number | null }> | null }> | null };
 
 export type OrderPartsFragment = { __typename?: 'Order', id: number, createdAt: any, total?: number | null };
 
@@ -723,7 +726,7 @@ export type RestaurantQueryVariables = Exact<{
 }>;
 
 
-export type RestaurantQuery = { __typename?: 'Query', restaurant: { __typename?: 'RestaurantOutput', ok: boolean, error?: string | null, restaurant?: { __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, menu: Array<{ __typename?: 'Dish', id: number, name: string, price: number, photo?: string | null, description: string, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number | null, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number | null }> | null }> | null }>, category?: { __typename?: 'Category', name: string } | null, reviews: Array<{ __typename?: 'Reviews', score: number, reviewText?: string | null, reviewImg?: Array<{ __typename?: 'ReviewImges', url: string }> | null }> } | null } };
+export type RestaurantQuery = { __typename?: 'Query', restaurant: { __typename?: 'RestaurantOutput', ok: boolean, error?: string | null, restaurant?: { __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, menu: Array<{ __typename?: 'Dish', id: number, name: string, price: number, photo: string, description: string, deliveryFee: number, minimumPrice: number, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number | null, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number | null }> | null }> | null }>, category?: { __typename?: 'Category', name: string } | null, reviews: Array<{ __typename?: 'Reviews', score: number, reviewText?: string | null, reviewImg?: Array<{ __typename?: 'ReviewImges', url: string }> | null }> } | null } };
 
 export type CreateOrderMutationVariables = Exact<{
   input: CreateOrderInput;
@@ -819,7 +822,21 @@ export type MyRestaurantQueryVariables = Exact<{
 }>;
 
 
-export type MyRestaurantQuery = { __typename?: 'Query', myRestaurant: { __typename?: 'MyRestaurantOutput', ok: boolean, error?: string | null, restaurant?: { __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, menu: Array<{ __typename?: 'Dish', id: number, name: string, price: number, photo?: string | null, description: string, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number | null, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number | null }> | null }> | null }>, orders: Array<{ __typename?: 'Order', id: number, createdAt: any, total?: number | null }>, category?: { __typename?: 'Category', name: string } | null, reviews: Array<{ __typename?: 'Reviews', score: number, reviewText?: string | null, reviewImg?: Array<{ __typename?: 'ReviewImges', url: string }> | null }> } | null } };
+export type MyRestaurantQuery = { __typename?: 'Query', myRestaurant: { __typename?: 'MyRestaurantOutput', ok: boolean, error?: string | null, restaurant?: { __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, menu: Array<{ __typename?: 'Dish', id: number, name: string, price: number, photo: string, description: string, deliveryFee: number, minimumPrice: number, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number | null, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number | null }> | null }> | null }>, orders: Array<{ __typename?: 'Order', id: number, createdAt: any, total?: number | null }>, category?: { __typename?: 'Category', name: string } | null, reviews: Array<{ __typename?: 'Reviews', score: number, reviewText?: string | null, reviewImg?: Array<{ __typename?: 'ReviewImges', url: string }> | null }> } | null } };
+
+export type EditDishMutationVariables = Exact<{
+  input: EditDishInput;
+}>;
+
+
+export type EditDishMutation = { __typename?: 'Mutation', editDish: { __typename?: 'EditDishOutput', ok: boolean, error?: string | null } };
+
+export type DeleteDishMutationVariables = Exact<{
+  input: DeleteDishInput;
+}>;
+
+
+export type DeleteDishMutation = { __typename?: 'Mutation', deleteDish: { __typename?: 'DeleteDishOutput', ok: boolean, error?: string | null } };
 
 export type MyRestaurantsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -886,6 +903,8 @@ export const DishPartsFragmentDoc = gql`
   price
   photo
   description
+  deliveryFee
+  minimumPrice
   options {
     name
     extra
@@ -1625,6 +1644,74 @@ export type MyRestaurantQueryHookResult = ReturnType<typeof useMyRestaurantQuery
 export type MyRestaurantLazyQueryHookResult = ReturnType<typeof useMyRestaurantLazyQuery>;
 export type MyRestaurantSuspenseQueryHookResult = ReturnType<typeof useMyRestaurantSuspenseQuery>;
 export type MyRestaurantQueryResult = Apollo.QueryResult<MyRestaurantQuery, MyRestaurantQueryVariables>;
+export const EditDishDocument = gql`
+    mutation editDish($input: EditDishInput!) {
+  editDish(input: $input) {
+    ok
+    error
+  }
+}
+    `;
+export type EditDishMutationFn = Apollo.MutationFunction<EditDishMutation, EditDishMutationVariables>;
+
+/**
+ * __useEditDishMutation__
+ *
+ * To run a mutation, you first call `useEditDishMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditDishMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editDishMutation, { data, loading, error }] = useEditDishMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useEditDishMutation(baseOptions?: Apollo.MutationHookOptions<EditDishMutation, EditDishMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditDishMutation, EditDishMutationVariables>(EditDishDocument, options);
+      }
+export type EditDishMutationHookResult = ReturnType<typeof useEditDishMutation>;
+export type EditDishMutationResult = Apollo.MutationResult<EditDishMutation>;
+export type EditDishMutationOptions = Apollo.BaseMutationOptions<EditDishMutation, EditDishMutationVariables>;
+export const DeleteDishDocument = gql`
+    mutation deleteDish($input: DeleteDishInput!) {
+  deleteDish(input: $input) {
+    ok
+    error
+  }
+}
+    `;
+export type DeleteDishMutationFn = Apollo.MutationFunction<DeleteDishMutation, DeleteDishMutationVariables>;
+
+/**
+ * __useDeleteDishMutation__
+ *
+ * To run a mutation, you first call `useDeleteDishMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteDishMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteDishMutation, { data, loading, error }] = useDeleteDishMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDeleteDishMutation(baseOptions?: Apollo.MutationHookOptions<DeleteDishMutation, DeleteDishMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteDishMutation, DeleteDishMutationVariables>(DeleteDishDocument, options);
+      }
+export type DeleteDishMutationHookResult = ReturnType<typeof useDeleteDishMutation>;
+export type DeleteDishMutationResult = Apollo.MutationResult<DeleteDishMutation>;
+export type DeleteDishMutationOptions = Apollo.BaseMutationOptions<DeleteDishMutation, DeleteDishMutationVariables>;
 export const MyRestaurantsDocument = gql`
     query myRestaurants {
   myRestaurants {

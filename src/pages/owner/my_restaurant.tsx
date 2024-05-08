@@ -48,7 +48,6 @@ export const MyRestaurant = () => {
             },
         }
     );
-    console.log('data', data)
 
     const { data: userData } = useMe()
 
@@ -124,6 +123,8 @@ export const MyRestaurant = () => {
                             {data?.myRestaurant.restaurant?.menu.map((dish, index) => (
                                 <Dish
                                     key={index}
+                                    restaurantId={+id}
+                                    id={dish.id}
                                     name={dish.name}
                                     description={dish.description}
                                     price={dish.price}

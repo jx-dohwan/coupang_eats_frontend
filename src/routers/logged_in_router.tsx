@@ -20,6 +20,7 @@ import { Order } from "../pages/order";
 import { DriverDashboard } from "../pages/driver/driver_dashboard";
 import { CreateReview } from "../pages/review/create-review";
 import { Reviews } from "../pages/review/reviews";
+import { EditRemoveDish } from "../pages/owner/edit_remove_dish";
 
 const clientRoutes = [
   { path: "/", element: <Restaurants /> },
@@ -49,6 +50,7 @@ const restaurantRoutes = [
   { path: "/", element: <MyRestaurants /> },
   { path: "/add-restaurant", element: <AddRestaurant /> },
   { path: "/restaurants/:id", element: <MyRestaurant /> },
+  { path: "/restaurants/:restaurantId/edit_remove_dish/:dishId", element: <EditRemoveDish /> },
   { path: "/restaurants/:restaurantId/add-dish", element: <AddDish /> },
 ];
 
