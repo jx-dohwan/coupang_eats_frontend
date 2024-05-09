@@ -160,6 +160,7 @@ export const Restaurants = () => {
                                     categoryName={restaurant.category?.name}
                                     averageScore={averageScore} // 평균 점수 문자열 형태로 변환
                                     reviewCount={reviewCount} // 리뷰 수 직접 전달
+                                    deliveryFee={restaurant.deliveryFee}
                                 />
                             );
                         })}

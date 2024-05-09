@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { StarsAndReviews } from "./stars_and_reviews";
+import KRW from "./currency_formatter";
 
 interface IRestaurantProps {
     id: string;
@@ -9,6 +10,7 @@ interface IRestaurantProps {
     categoryName?: string;
     averageScore?:number;
     reviewCount?:number;
+    deliveryFee?:number;
 }
 
 export const RestaurantView: React.FC<IRestaurantProps> = ({
@@ -17,7 +19,8 @@ export const RestaurantView: React.FC<IRestaurantProps> = ({
     name,
     categoryName,
     averageScore,
-    reviewCount
+    reviewCount,
+    deliveryFee,
 }) => (
     <Link to={`/restaurants/${id}`}>
         <div className="flex flex-col">
@@ -33,7 +36,7 @@ export const RestaurantView: React.FC<IRestaurantProps> = ({
                         rating={averageScore}
                         reviewCount={reviewCount}
                     />
-                    <span className="text-gray-500">배달비 3,500원</span>
+                    <span className="text-gray-500">배달비 <KRW price={deliveryFee}/></span>
                 </div>
             </div>
 

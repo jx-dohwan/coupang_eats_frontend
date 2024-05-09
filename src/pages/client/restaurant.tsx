@@ -47,7 +47,7 @@ export const Restaurant = () => {
     },
   }
   );
-
+  console.log('레스토란트', data)
   const [averageScore, setAverageScore] = useState<number>(0);
   const [reviewCount, setReviewCount] = useState<number>(0);
 
@@ -99,9 +99,9 @@ export const Restaurant = () => {
 
           <div className="grid grid-cols-4 gap-2 px-4 py-4 ml-5 text-gray-700 md:w-7/12 ">
             <div>배달비</div>
-            <div className="col-span-3">3500</div>
+            <div className="col-span-3"><KRW price={data?.restaurant.restaurant?.deliveryFee}/></div>
             <div>최소주문</div>
-            <div className="col-span-3">10000</div>
+            <div className="col-span-3"><KRW price={data?.restaurant.restaurant?.minimumPrice}/></div>
           </div>
 
         </div>
