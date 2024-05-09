@@ -98,9 +98,9 @@ export const Restaurant = () => {
         <div className="flex md:justify-center">
           <div className="grid grid-cols-4 gap-2 px-4 py-4 ml-5 text-gray-700 md:w-7/12 ">
             <div>배달비</div>
-            <div className="col-span-3"><KRW price={data?.restaurant.restaurant?.deliveryFee}/></div>
+            <div className="col-span-3"><KRW price={data?.restaurant.restaurant?.deliveryFee} /></div>
             <div>최소주문</div>
-            <div className="col-span-3"><KRW price={data?.restaurant.restaurant?.minimumPrice}/></div>
+            <div className="col-span-3"><KRW price={data?.restaurant.restaurant?.minimumPrice} /></div>
           </div>
 
         </div>
@@ -116,22 +116,29 @@ export const Restaurant = () => {
           <div className="grid gap-4">
             {data?.restaurant.restaurant?.menu.map((menu) => (
               // 여기에 MenuList를 만들기 -> MenuList에서 해당 메뉴를 클릭하면 menu.tsx로 이동할 수 있도록 해줘라
-              <div className="relative">
+              <div className="relative border-b border-b-gray-200 p-4 pb-8">
                 <Link className="grid grid-cols-3" to={`/restaurants/${id}/menu/${menu.id}`}>
-                  <div className="col-span-2">
+                  <div className={`${menu.photo ? "col-span-2" : "col-span-3"}`}>
                     <h3 className="text-lg font-bold">{menu.name}</h3>
                     <h4 className="text-lg">
                       <KRW price={menu.price} />
                     </h4>
                     <p className="text-sm">{menu.description}</p>
                   </div>
+                  {
+                    menu.photo ? (
+                      <div className="col-span-1 flex items-center justify-center">
+                        <img
+                          src={menu.photo}
+                          alt={menu.name}
+                          className="w-full h-auto object-cover rounded-lg max-w-xs md:max-w-sm max-h-48 md:max-h-64 aspect-video"
+                        />
+                      </div>
+                    ) : null
+                  }
                 </Link>
-                <div className="absolute right-0 top-0 flex h-full items-center">
-                  { }
-                </div>
               </div>
             ))}
-
           </div>
         </div>
       </div>
