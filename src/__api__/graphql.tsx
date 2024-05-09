@@ -65,9 +65,7 @@ export type CreateAccountOutput = {
 };
 
 export type CreateDishInput = {
-  deliveryFee: Scalars['Int']['input'];
   description: Scalars['String']['input'];
-  minimumPrice: Scalars['Int']['input'];
   name: Scalars['String']['input'];
   options?: InputMaybe<Array<DishOptionInputType>>;
   photo: Scalars['String']['input'];
@@ -112,6 +110,8 @@ export type CreateRestaurantInput = {
   address: Scalars['String']['input'];
   categoryName: Scalars['String']['input'];
   coverImg: Scalars['String']['input'];
+  deliveryFee: Scalars['Int']['input'];
+  minimumPrice: Scalars['Int']['input'];
   name: Scalars['String']['input'];
 };
 
@@ -165,10 +165,8 @@ export type DeleteReviewOutput = {
 export type Dish = {
   __typename?: 'Dish';
   createdAt: Scalars['DateTime']['output'];
-  deliveryFee: Scalars['Int']['output'];
   description: Scalars['String']['output'];
   id: Scalars['Float']['output'];
-  minimumPrice: Scalars['Int']['output'];
   name: Scalars['String']['output'];
   options?: Maybe<Array<DishOption>>;
   photo: Scalars['String']['output'];
@@ -202,10 +200,8 @@ export type DishOptionInputType = {
 };
 
 export type EditDishInput = {
-  deliveryFee?: InputMaybe<Scalars['Int']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   dishId: Scalars['Int']['input'];
-  minimumPrice?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   options?: InputMaybe<Array<DishOptionInputType>>;
   photo?: InputMaybe<Scalars['String']['input']>;
@@ -244,6 +240,8 @@ export type EditRestaurantInput = {
   address?: InputMaybe<Scalars['String']['input']>;
   categoryName?: InputMaybe<Scalars['String']['input']>;
   coverImg?: InputMaybe<Scalars['String']['input']>;
+  deliveryFee?: InputMaybe<Scalars['Int']['input']>;
+  minimumPrice?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   restaurantId: Scalars['Float']['input'];
 };
@@ -568,9 +566,11 @@ export type Restaurant = {
   category?: Maybe<Category>;
   coverImg: Scalars['String']['output'];
   createdAt: Scalars['DateTime']['output'];
+  deliveryFee: Scalars['Int']['output'];
   id: Scalars['Float']['output'];
   isPromoted: Scalars['Boolean']['output'];
   menu: Array<Dish>;
+  minimumPrice: Scalars['Int']['output'];
   name: Scalars['String']['output'];
   orders: Array<Order>;
   owner: User;
@@ -699,19 +699,15 @@ export type ReviewImgInputType = {
   url: Scalars['String']['input'];
 };
 
-export type RestaurantPartsFragment = { __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, category?: { __typename?: 'Category', name: string } | null, reviews: Array<{ __typename?: 'Reviews', score: number, reviewText?: string | null, reviewImg?: Array<{ __typename?: 'ReviewImges', url: string }> | null }> };
+export type RestaurantPartsFragment = { __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, deliveryFee: number, minimumPrice: number, category?: { __typename?: 'Category', name: string } | null, reviews: Array<{ __typename?: 'Reviews', score: number, reviewText?: string | null, reviewImg?: Array<{ __typename?: 'ReviewImges', url: string }> | null }> };
 
 export type CategoryPartsFragment = { __typename?: 'Category', id: number, name: string, coverImg?: string | null, slug: string, restaurantCount: number };
 
-export type DishPartsFragment = { __typename?: 'Dish', id: number, name: string, price: number, photo: string, description: string, deliveryFee: number, minimumPrice: number, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number | null, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number | null }> | null }> | null };
+export type DishPartsFragment = { __typename?: 'Dish', id: number, name: string, price: number, photo: string, description: string, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number | null, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number | null }> | null }> | null };
 
 export type OrderPartsFragment = { __typename?: 'Order', id: number, createdAt: any, total?: number | null };
 
 export type FullOrderPartsFragment = { __typename?: 'Order', id: number, status: OrderStatus, total?: number | null, driver?: { __typename?: 'User', email: string } | null, customer?: { __typename?: 'User', email: string } | null, restaurant?: { __typename?: 'Restaurant', name: string } | null };
-
-export type VerifiedUserFragment = { __typename?: 'User', verified: boolean };
-
-export type EditedUserFragment = { __typename?: 'User', verified: boolean, email: string };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -723,14 +719,14 @@ export type CategoryQueryVariables = Exact<{
 }>;
 
 
-export type CategoryQuery = { __typename?: 'Query', category: { __typename?: 'CategoryOutput', ok: boolean, error?: string | null, totalPages?: number | null, totalResults?: number | null, restaurants?: Array<{ __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, category?: { __typename?: 'Category', name: string } | null, reviews: Array<{ __typename?: 'Reviews', score: number, reviewText?: string | null, reviewImg?: Array<{ __typename?: 'ReviewImges', url: string }> | null }> }> | null, category?: { __typename?: 'Category', id: number, name: string, coverImg?: string | null, slug: string, restaurantCount: number } | null } };
+export type CategoryQuery = { __typename?: 'Query', category: { __typename?: 'CategoryOutput', ok: boolean, error?: string | null, totalPages?: number | null, totalResults?: number | null, restaurants?: Array<{ __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, deliveryFee: number, minimumPrice: number, category?: { __typename?: 'Category', name: string } | null, reviews: Array<{ __typename?: 'Reviews', score: number, reviewText?: string | null, reviewImg?: Array<{ __typename?: 'ReviewImges', url: string }> | null }> }> | null, category?: { __typename?: 'Category', id: number, name: string, coverImg?: string | null, slug: string, restaurantCount: number } | null } };
 
 export type RestaurantQueryVariables = Exact<{
   input: RestaurantInput;
 }>;
 
 
-export type RestaurantQuery = { __typename?: 'Query', restaurant: { __typename?: 'RestaurantOutput', ok: boolean, error?: string | null, restaurant?: { __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, menu: Array<{ __typename?: 'Dish', id: number, name: string, price: number, photo: string, description: string, deliveryFee: number, minimumPrice: number, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number | null, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number | null }> | null }> | null }>, category?: { __typename?: 'Category', name: string } | null, reviews: Array<{ __typename?: 'Reviews', score: number, reviewText?: string | null, reviewImg?: Array<{ __typename?: 'ReviewImges', url: string }> | null }> } | null } };
+export type RestaurantQuery = { __typename?: 'Query', restaurant: { __typename?: 'RestaurantOutput', ok: boolean, error?: string | null, restaurant?: { __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, deliveryFee: number, minimumPrice: number, menu: Array<{ __typename?: 'Dish', id: number, name: string, price: number, photo: string, description: string, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number | null, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number | null }> | null }> | null }>, category?: { __typename?: 'Category', name: string } | null, reviews: Array<{ __typename?: 'Reviews', score: number, reviewText?: string | null, reviewImg?: Array<{ __typename?: 'ReviewImges', url: string }> | null }> } | null } };
 
 export type CreateOrderMutationVariables = Exact<{
   input: CreateOrderInput;
@@ -751,14 +747,14 @@ export type RestaurantsPageQueryVariables = Exact<{
 }>;
 
 
-export type RestaurantsPageQuery = { __typename?: 'Query', allCategories: { __typename?: 'AllCategoriesOutput', ok: boolean, error?: string | null, categories?: Array<{ __typename?: 'Category', id: number, name: string, coverImg?: string | null, slug: string, restaurantCount: number }> | null }, restaurants: { __typename?: 'RestaurantsOutput', ok: boolean, error?: string | null, totalPages?: number | null, totalResults?: number | null, results?: Array<{ __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, category?: { __typename?: 'Category', name: string } | null, reviews: Array<{ __typename?: 'Reviews', score: number, reviewText?: string | null, reviewImg?: Array<{ __typename?: 'ReviewImges', url: string }> | null }> }> | null } };
+export type RestaurantsPageQuery = { __typename?: 'Query', allCategories: { __typename?: 'AllCategoriesOutput', ok: boolean, error?: string | null, categories?: Array<{ __typename?: 'Category', id: number, name: string, coverImg?: string | null, slug: string, restaurantCount: number }> | null }, restaurants: { __typename?: 'RestaurantsOutput', ok: boolean, error?: string | null, totalPages?: number | null, totalResults?: number | null, results?: Array<{ __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, deliveryFee: number, minimumPrice: number, category?: { __typename?: 'Category', name: string } | null, reviews: Array<{ __typename?: 'Reviews', score: number, reviewText?: string | null, reviewImg?: Array<{ __typename?: 'ReviewImges', url: string }> | null }> }> | null } };
 
 export type SearchRestaurantQueryVariables = Exact<{
   input: SearchRestaurantInput;
 }>;
 
 
-export type SearchRestaurantQuery = { __typename?: 'Query', searchRestaurant: { __typename?: 'SearchRestaurantOutput', ok: boolean, error?: string | null, totalPages?: number | null, totalResults?: number | null, restaurants?: Array<{ __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, category?: { __typename?: 'Category', name: string } | null, reviews: Array<{ __typename?: 'Reviews', score: number, reviewText?: string | null, reviewImg?: Array<{ __typename?: 'ReviewImges', url: string }> | null }> }> | null } };
+export type SearchRestaurantQuery = { __typename?: 'Query', searchRestaurant: { __typename?: 'SearchRestaurantOutput', ok: boolean, error?: string | null, totalPages?: number | null, totalResults?: number | null, restaurants?: Array<{ __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, deliveryFee: number, minimumPrice: number, category?: { __typename?: 'Category', name: string } | null, reviews: Array<{ __typename?: 'Reviews', score: number, reviewText?: string | null, reviewImg?: Array<{ __typename?: 'ReviewImges', url: string }> | null }> }> | null } };
 
 export type CreateAccountMutationVariables = Exact<{
   createAccountInput: CreateAccountInput;
@@ -826,7 +822,7 @@ export type MyRestaurantQueryVariables = Exact<{
 }>;
 
 
-export type MyRestaurantQuery = { __typename?: 'Query', myRestaurant: { __typename?: 'MyRestaurantOutput', ok: boolean, error?: string | null, restaurant?: { __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, menu: Array<{ __typename?: 'Dish', id: number, name: string, price: number, photo: string, description: string, deliveryFee: number, minimumPrice: number, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number | null, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number | null }> | null }> | null }>, orders: Array<{ __typename?: 'Order', id: number, createdAt: any, total?: number | null }>, category?: { __typename?: 'Category', name: string } | null, reviews: Array<{ __typename?: 'Reviews', score: number, reviewText?: string | null, reviewImg?: Array<{ __typename?: 'ReviewImges', url: string }> | null }> } | null } };
+export type MyRestaurantQuery = { __typename?: 'Query', myRestaurant: { __typename?: 'MyRestaurantOutput', ok: boolean, error?: string | null, restaurant?: { __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, deliveryFee: number, minimumPrice: number, menu: Array<{ __typename?: 'Dish', id: number, name: string, price: number, photo: string, description: string, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number | null, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number | null }> | null }> | null }>, orders: Array<{ __typename?: 'Order', id: number, createdAt: any, total?: number | null }>, category?: { __typename?: 'Category', name: string } | null, reviews: Array<{ __typename?: 'Reviews', score: number, reviewText?: string | null, reviewImg?: Array<{ __typename?: 'ReviewImges', url: string }> | null }> } | null } };
 
 export type EditDishMutationVariables = Exact<{
   input: EditDishInput;
@@ -845,7 +841,7 @@ export type DeleteDishMutation = { __typename?: 'Mutation', deleteDish: { __type
 export type MyRestaurantsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyRestaurantsQuery = { __typename?: 'Query', myRestaurants: { __typename?: 'MyRestaurantsOutput', ok: boolean, error?: string | null, restaurants: Array<{ __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, category?: { __typename?: 'Category', name: string } | null, reviews: Array<{ __typename?: 'Reviews', score: number, reviewText?: string | null, reviewImg?: Array<{ __typename?: 'ReviewImges', url: string }> | null }> }> } };
+export type MyRestaurantsQuery = { __typename?: 'Query', myRestaurants: { __typename?: 'MyRestaurantsOutput', ok: boolean, error?: string | null, restaurants: Array<{ __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, deliveryFee: number, minimumPrice: number, category?: { __typename?: 'Category', name: string } | null, reviews: Array<{ __typename?: 'Reviews', score: number, reviewText?: string | null, reviewImg?: Array<{ __typename?: 'ReviewImges', url: string }> | null }> }> } };
 
 export type CreateReviewMutationVariables = Exact<{
   input: CreateReviewInput;
@@ -861,12 +857,16 @@ export type VerifyEmailMutationVariables = Exact<{
 
 export type VerifyEmailMutation = { __typename?: 'Mutation', verifyEmail: { __typename?: 'VerifyEmailOutput', ok: boolean, error?: string | null } };
 
+export type VerifiedUserFragment = { __typename?: 'User', verified: boolean };
+
 export type EditProfileMutationVariables = Exact<{
   input: EditProfileInput;
 }>;
 
 
 export type EditProfileMutation = { __typename?: 'Mutation', editProfile: { __typename?: 'EditProfileOutput', ok: boolean, error?: string | null } };
+
+export type EditedUserFragment = { __typename?: 'User', verified: boolean, email: string };
 
 export const RestaurantPartsFragmentDoc = gql`
     fragment RestaurantParts on Restaurant {
@@ -878,6 +878,8 @@ export const RestaurantPartsFragmentDoc = gql`
   }
   address
   isPromoted
+  deliveryFee
+  minimumPrice
   reviews {
     score
     reviewText
@@ -903,8 +905,6 @@ export const DishPartsFragmentDoc = gql`
   price
   photo
   description
-  deliveryFee
-  minimumPrice
   options {
     name
     extra

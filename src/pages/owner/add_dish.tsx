@@ -25,8 +25,6 @@ interface IForm {
     name: string;
     price: string;
     description: string;
-    deliveryFee: string;
-    minimumPrice: string;
     file?: FileList;
 }
 
@@ -67,8 +65,8 @@ export const AddDish = () => {
 
     const onSubmit = async () => {
         try {
-            const { name, price, description, deliveryFee, minimumPrice, file, ...rest } = getValues();
-            console.log("폼 데이터:", { name, price, description, deliveryFee, minimumPrice, file, rest });
+            const { name, price, description, file, ...rest } = getValues();
+            console.log("폼 데이터:", { name, price, description, file, rest });
 
             let photo;
             if (file && file.length > 0) {
@@ -105,8 +103,6 @@ export const AddDish = () => {
                         price: +price,
                         description,
                         photo: photo,
-                        deliveryFee: +deliveryFee,
-                        minimumPrice: +minimumPrice,
                         restaurantId: +restaurantId,
                         options: optionsObject,
                     },
@@ -174,20 +170,7 @@ export const AddDish = () => {
                     min={0}
                     placeholder="가격"
                 />
-                <input
-                    {...register("deliveryFee", { required: "배달비는 필수입니다." })}
-                    className="input"
-                    type="text"
-                    name="deliveryFee"
-                    placeholder="배달비"
-                />
-                <input
-                    {...register("minimumPrice", { required: "최소주문금액은 필수입니다." })}
-                    className="input"
-                    type="text"
-                    name="minimumPrice"
-                    placeholder="최소 주문 금액"
-                />
+         
                 <input
                     {...register("description", { required: "설명은 필수입니다." })}
                     className="input"

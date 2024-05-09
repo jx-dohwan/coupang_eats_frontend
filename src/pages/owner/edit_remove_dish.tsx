@@ -63,8 +63,6 @@ interface IForm {
     name: string;
     price: string;
     description: string;
-    deliveryFee: string;
-    minimumPrice: string;
     file?: FileList;
 }
 
@@ -125,8 +123,6 @@ export const EditRemoveDish = () => {
             name: currentDish?.name || "",
             price: currentDish?.price.toString() || "",
             description: currentDish?.description || "",
-            deliveryFee: currentDish?.deliveryFee?.toString() || "",
-            minimumPrice: currentDish?.minimumPrice?.toString() || "",
         },
     });
 
@@ -138,8 +134,6 @@ export const EditRemoveDish = () => {
             setValue("name", currentDish.name);
             setValue("price", currentDish.price.toString());
             setValue("description", currentDish.description);
-            setValue("deliveryFee", currentDish.deliveryFee?.toString());
-            setValue("minimumPrice", currentDish.minimumPrice?.toString());
 
             const initialOptions = currentDish.options?.map((option, index) => index);
             setOptionsNumber(initialOptions!);
@@ -163,7 +157,7 @@ export const EditRemoveDish = () => {
 
     const onSubmit = async () => {
         try {
-            const { name, price, description, deliveryFee, minimumPrice, file, ...rest } = getValues();
+            const { name, price, description, file, ...rest } = getValues();
 
             let photo;
             if (file && file.length > 0) {
@@ -199,8 +193,6 @@ export const EditRemoveDish = () => {
                         price: +price,
                         description,
                         photo: photo || currentDish?.photo,
-                        deliveryFee: +deliveryFee,
-                        minimumPrice: +minimumPrice,
                         options: optionsObject,
                     },
                 },
@@ -284,20 +276,6 @@ export const EditRemoveDish = () => {
                     name="price"
                     min={0}
                     placeholder="가격"
-                />
-                <input
-                    {...register("deliveryFee", { required: "배달비는 필수입니다." })}
-                    className="input"
-                    type="text"
-                    name="deliveryFee"
-                    placeholder="배달비"
-                />
-                <input
-                    {...register("minimumPrice", { required: "최소 주문 금액은 필수입니다." })}
-                    className="input"
-                    type="text"
-                    name="minimumPrice"
-                    placeholder="최소 주문 금액"
                 />
                 <input
                     {...register("description", { required: "설명은 필수입니다." })}

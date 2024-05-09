@@ -20,6 +20,8 @@ export const RESTAURANT_FRAGMENT = gql`
     }
     address
     isPromoted
+    deliveryFee
+    minimumPrice
     reviews {
       score
       reviewText
@@ -47,8 +49,6 @@ export const DISH_FRAGMENT = gql`
     price
     photo
     description
-    deliveryFee
-    minimumPrice
     options {
       name
       extra

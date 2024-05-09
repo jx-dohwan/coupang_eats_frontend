@@ -26,6 +26,8 @@ interface IFormProps {
     name: string;          // 식당 이름
     address: string;       // 식당 주소
     categoryName: string;  // 카테고리 이름
+    deliveryFee: string;  // 카테고리 이름
+    minimumPrice: string;  // 카테고리 이름
     file: FileList;        // 파일 리스트, 이미지 파일 포함
 }
 
@@ -45,7 +47,7 @@ export const AddRestaurant = () => {
         // 뮤테이션 성공 시
         if (ok) {
             // 현재 폼 값 가져오기
-            const { name, categoryName, address } = getValues();
+            const { name, categoryName, address, minimumPrice, deliveryFee } = getValues();
             // 업로딩 상태를 false로 설정 (업로딩 완료)
             setUploading(false);
             // 현재 캐시된 쿼리 결과 가져오기
@@ -64,8 +66,10 @@ export const AddRestaurant = () => {
                                     __typename: "Category",
                                 },
                                 coverImg: imageUrl,
+                                deliveryFee:deliveryFee,
                                 id: restaurantId,
                                 isPromoted: false,
+                                minimumPrice:minimumPrice,
                                 name,
                                 __typename: "Restaurant",
                             },
@@ -85,6 +89,8 @@ export const AddRestaurant = () => {
     >(CREATE_RESTAURANT_MUTATION, {
         onCompleted,
     });
+    console.log("확인1 : ",createRestaurantMutation)
+    console.log("확인2 : ",data)
     // 폼 관리를 위한 useForm 훅 사용
     const { register, getValues, formState, handleSubmit } = useForm<IFormProps>({
         mode: "onChange",  // 입력 필드가 변경될 때마다 폼 상태를 다시 검증
@@ -97,7 +103,7 @@ export const AddRestaurant = () => {
             // 업로딩 시작
             setUploading(true);
             // 폼 데이터에서 파일 및 기타 필드 값 추출
-            const { file, name, categoryName, address } = getValues();
+            const { file, name, categoryName, address, minimumPrice, deliveryFee } = getValues();
             // 실제 파일 객체
             const actualFile = file[0];
             // FormData 객체 생성 및 파일 추가
@@ -120,6 +126,8 @@ export const AddRestaurant = () => {
                         categoryName,
                         address,
                         coverImg,
+                        minimumPrice: +minimumPrice,
+                        deliveryFee: +deliveryFee,
                     },
                 },
             });
@@ -158,6 +166,20 @@ export const AddRestaurant = () => {
                     type="text"
                     name="categoryName"
                     placeholder="카테고리 분류"
+                />
+                <input
+                    {...register("deliveryFee", { required: "배달비는 필수입니다." })}
+                    className="input"
+                    type="text"
+                    name="deliveryFee"
+                    placeholder="배달비"
+                />
+                <input
+                    {...register("minimumPrice", { required: "최소주문금액은 필수입니다." })}
+                    className="input"
+                    type="text"
+                    name="minimumPrice"
+                    placeholder="최소 주문 금액"
                 />
                 <div>
                     <input
