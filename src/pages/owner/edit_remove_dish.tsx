@@ -382,13 +382,14 @@ export const EditRemoveDish = () => {
                     canClick={formState.isValid}
                     actionText="음식 수정하기"
                 />
+                <button
+                    className="text-lg font-medium focus:outline-none text-white py-4 transition-colors bg-sky-500 hover:bg-sky-600"
+                    onClick={onDelete}
+                >
+                    음식 삭제하기
+                </button>
             </form>
-            <Button
-                loading={deleteLoading}
-                canClick={true}
-                actionText="음식 삭제하기"
-                // onClick={onDelete}
-            />
+
         </div>
     );
 };
