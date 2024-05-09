@@ -70,20 +70,14 @@ export const Menu = () => {
 
     const menu = data?.restaurant?.restaurant?.menu.find((m) => m.id === parseInt(menuId, 10));
 
+    console.log('menudata', data)
     const [orderCount, setOrderCount] = useState(1)
     const [selectedOptions, setSelectedOptions] = useState<SelectedOptions>({});
-    const [totalPrice, setTotalPrice] = useState<number>(menu?.price! * orderCount || 0);
-    const [orderStarted, setOrderStarted] = useState(false);
+    const [totalPrice, setTotalPrice] = useState<number>((menu?.price! + data?.restaurant.restaurant?.deliveryFee!) * orderCount || 0);
+    const [minimumPriceMet, setMinimumPriceMet] = useState(false);
     const [orderItems, setOrderItems] = useState<CreateOrderItemInput[]>([]);
 
 
-    // const handleOptionChange = (optionName: string, extra: number, isChecked: boolean) => { 추후 다중 choice를 위해 남겨둠
-    //     setSelectedOptions(prev => ({
-    //         ...prev,
-    //         [optionName]: isChecked ? extra : 0  // 선택되면 가격을 저장, 아니면 0
-    //     }));
-    // };
-    // 갯수 증감 및 옵션 추가에 의한 가격 변동
     const handleOptionChange = (optionName: string, choiceName: string, isChecked: boolean) => {
         setSelectedOptions(prev => ({
             ...prev,
@@ -101,12 +95,11 @@ export const Menu = () => {
                 extraTotal += choice.extra || 0;
             }
         }
-        setTotalPrice((menu?.price || 0) * orderCount + extraTotal);
+        const calculatedTotal = (menu?.price! + data?.restaurant.restaurant?.deliveryFee! || 0) * orderCount + extraTotal;
+        setTotalPrice(calculatedTotal);
+        setMinimumPriceMet(calculatedTotal >= data?.restaurant.restaurant?.minimumPrice!);
     }, [orderCount, menu?.price, selectedOptions]);
-    // useEffect(() => { 추후 다중 choice를 위해 남겨둠
-    //     const extraTotal = Object.values(selectedOptions).reduce((acc: number, value: number) => acc + value, 0);
-    //     setTotalPrice((menu?.price || 0) * orderCount + extraTotal);
-    // }, [orderCount, menu?.price, selectedOptions]);
+
 
 
     const decrementCount = () => {
@@ -256,6 +249,7 @@ export const Menu = () => {
                                     />
                                 </div>
                             </div>
+
                         </div>
 
 
@@ -300,13 +294,11 @@ export const Menu = () => {
                                                         }
                                                     }}
 
-                                                // checked={selectedOptions[choice.name] > 0} 추후 다중 choice를 위해 남겨둠
-                                                // onChange={(e) => handleOptionChange(choice.name, choice.extra || 0, e.target.checked)}
                                                 />
                                                 <label htmlFor={`${option.name}-${choice.name}`}>
                                                     {choice.name}
                                                     {choice.extra && (
-                                                        <span className='text-gray-400'>
+                                                        <span className='text-gray-400 ml-2'>
                                                             <KRW price={choice.extra} />
                                                         </span>
                                                     )}
@@ -325,7 +317,9 @@ export const Menu = () => {
                     )}
                 </div>
                 <button
-                    className="fixed bottom-0 flex h-20 w-screen items-center justify-center bg-sky-500 hover:bg-sky-600 pb-4 text-lg text-white"
+                    className={`fixed bottom-0 flex h-20 w-screen items-center justify-center pb-4 text-lg text-white
+                    ${minimumPriceMet ? "bg-sky-500 hover:bg-sky-600" : "bg-gray-300 pointer-events-none"}
+                    `}
                     onClick={ConfirmOrder}
                 >
                     결제하기

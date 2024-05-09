@@ -96,7 +96,6 @@ export const Restaurant = () => {
           </div>
         </div>
         <div className="flex md:justify-center">
-
           <div className="grid grid-cols-4 gap-2 px-4 py-4 ml-5 text-gray-700 md:w-7/12 ">
             <div>배달비</div>
             <div className="col-span-3"><KRW price={data?.restaurant.restaurant?.deliveryFee}/></div>
