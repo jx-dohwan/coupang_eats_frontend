@@ -131,7 +131,7 @@ export const Restaurant = () => {
                         <img
                           src={menu.photo}
                           alt={menu.name}
-                          className="w-full h-auto object-cover rounded-lg max-w-xs md:max-w-sm max-h-48 md:max-h-64 aspect-video"
+                          className="w-full h-auto object-cover max-w-xs md:max-w-sm md:max-h-64"
                         />
                       </div>
                     ) : null

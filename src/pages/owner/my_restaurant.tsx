@@ -128,7 +128,7 @@ export const MyRestaurant = () => {
                                     name={dish.name}
                                     description={dish.description}
                                     price={dish.price}
-                                    isCustomer={true}
+                                    isCustomer={false} // 옵션 안보여주는게 더 깔끔하다
                                     options={dish.options}
                                 />
                             ))}
