@@ -260,7 +260,7 @@ export const Menu = () => {
                             <div key={option.name}>
                                 <h3
                                     id={option.name}
-                                    className='flex items-center justify-between bg-gray-100 p4 font-bold'>
+                                    className='flex items-center justify-between bg-gray-100 p-4 font-bold'>
                                     <div>{option.name}</div>
                                     <div className='text-sm font-normal text-orange-600'>
                                         필수 사항
@@ -272,7 +272,7 @@ export const Menu = () => {
                                         <fieldset>
                                             <div
                                                 key={choice.name}
-                                                className='flex items-center gap-2 p-4'
+                                                className='flex items-center gap-2 p-4 ml-1'
                                             >
                                                 <input
                                                     id={`${option.name}-${choice.name}`}
@@ -299,7 +299,7 @@ export const Menu = () => {
                                                     {choice.name}
                                                     {choice.extra && (
                                                         <span className='text-gray-400 ml-2'>
-                                                            <KRW price={choice.extra} />
+                                                           (+ <KRW price={choice.extra} />)
                                                         </span>
                                                     )}
                                                 </label>
