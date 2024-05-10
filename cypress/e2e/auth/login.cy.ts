@@ -6,11 +6,11 @@ describe("Log In", () => {
     
     it("can see email / password validation errors", () => {
         user.visit("/");
-        user.findByPlaceholderText(/이메일/i).type("test@test");
-        user.findByPlaceholderText(/이메일/i).clear();
-        user.findByPlaceholderText(/이메일/i).type("test10@test.com");
+        user.findByPlaceholderText("이메일").type("test@test");
+        user.findByPlaceholderText("이메일").clear();
+        user.findByPlaceholderText("이메일").type("test10@test.com");
         user
-        .findByPlaceholderText(/비밀번호/i)
+        .findByPlaceholderText("비밀번호")
         .type("a")
         .clear();
     })

@@ -59,8 +59,8 @@ Cypress.Commands.add("login", (email, password) => {
     // @ts-ignore
     cy.assertLoggedOut();
     cy.title().should("eq", "로그인 | Coupang Eats");
-    cy.findByPlaceholderText(/이메일/i).type(email);
-    cy.findByPlaceholderText(/비밀번호/i).type(password);
+    cy.findByPlaceholderText("이메일").type(email);
+    cy.findByPlaceholderText("비밀번호").type(password);
     cy.findByRole("button")
         .should("not.have.class", "pointer-events-none")
         .click();

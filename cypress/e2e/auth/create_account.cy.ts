@@ -3,11 +3,11 @@ describe("Create Account", () => {
     const user = cy;
     it("should see email / password validation errors", () => {
       user.visit("/");
-      user.findByText(/계정 만들기/i).click();
-      user.findByPlaceholderText(/이메일/i).type("test10@test.com");
-      user.findByPlaceholderText(/이메일/i).clear();
-      user.findByPlaceholderText(/이메일/i).type("test10@test.com");
-      user.findByPlaceholderText(/비밀번호/i).type("a").clear();
+      user.findByText("계정 만들기").click();
+      user.findByPlaceholderText("이메일").type("test10@test.com");
+      user.findByPlaceholderText("이메일").clear();
+      user.findByPlaceholderText("이메일").type("test10@test.com");
+      user.findByPlaceholderText("비밀번호").type("a").clear();
     });
   
     it("should be able to create account and login", () => {
@@ -29,8 +29,8 @@ describe("Create Account", () => {
         }
       });
       user.visit("/create-account");
-      user.findByPlaceholderText(/이메일/i).type("test11@test.com");
-      user.findByPlaceholderText(/비밀번호/i).type("12345");
+      user.findByPlaceholderText("이메일").type("test11@test.com");
+      user.findByPlaceholderText("비밀번호").type("12345");
       user.findByRole("button").click();
       user.wait(1000);
       // @ts-ignore
