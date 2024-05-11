@@ -58,7 +58,6 @@ export const Restaurants = () => {
         },
     });
 
-    console.log("data", data)
     // 다음 페이지 이동 함수
     const onNextPageClick = () => setPage((current) => current + 1);
 
@@ -150,7 +149,6 @@ export const Restaurants = () => {
                             // 리뷰 관련 데이터 직접 처리
                             const averageScore = calculateAverageScore(restaurant.reviews);
                             const reviewCount = countReviews(restaurant.reviews);
-                            console.log(averageScore)
                             return (
                                 <RestaurantView
                                     key={restaurant.id}

@@ -81,7 +81,6 @@ export const EditRemoveDish = () => {
             },
         },
     });
-    console.log("editdish", data)
 
     const [editDishMutation, { loading: editLoading }] = useMutation<EditDishMutation, EditDishMutationVariables>(
         EDIT_DISH_MUTATION,

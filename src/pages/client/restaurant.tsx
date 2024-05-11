@@ -47,7 +47,6 @@ export const Restaurant = () => {
     },
   }
   );
-  console.log('레스토란트', data)
   const [averageScore, setAverageScore] = useState<number>(0);
   const [reviewCount, setReviewCount] = useState<number>(0);
 

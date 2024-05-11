@@ -89,8 +89,6 @@ export const AddRestaurant = () => {
     >(CREATE_RESTAURANT_MUTATION, {
         onCompleted,
     });
-    console.log("확인1 : ",createRestaurantMutation)
-    console.log("확인2 : ",data)
     // 폼 관리를 위한 useForm 훅 사용
     const { register, getValues, formState, handleSubmit } = useForm<IFormProps>({
         mode: "onChange",  // 입력 필드가 변경될 때마다 폼 상태를 다시 검증

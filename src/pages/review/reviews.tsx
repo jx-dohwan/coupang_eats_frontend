@@ -45,7 +45,6 @@ export const Reviews = () => {
     const [reviewCount, setReviewCount] = useState<number>(0);
 
     useEffect(() => {
-        console.log("reviews Data : ", data)
         if (data && data.restaurant && data.restaurant.restaurant && data.restaurant.restaurant.reviews) {
             const averageScore = calculateAverageScore(data.restaurant.restaurant.reviews);
             const reviewCount = countReviews(data.restaurant.restaurant.reviews)

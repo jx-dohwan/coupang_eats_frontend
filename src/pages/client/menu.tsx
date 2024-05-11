@@ -70,7 +70,6 @@ export const Menu = () => {
 
     const menu = data?.restaurant?.restaurant?.menu.find((m) => m.id === parseInt(menuId, 10));
 
-    console.log('menudata', data)
     const [orderCount, setOrderCount] = useState(1)
     const [selectedOptions, setSelectedOptions] = useState<SelectedOptions>({});
     const [totalPrice, setTotalPrice] = useState<number>((menu?.price! + data?.restaurant.restaurant?.deliveryFee!) * orderCount || 0);

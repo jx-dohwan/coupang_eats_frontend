@@ -66,7 +66,6 @@ export const AddDish = () => {
     const onSubmit = async () => {
         try {
             const { name, price, description, file, ...rest } = getValues();
-            console.log("폼 데이터:", { name, price, description, file, rest });
 
             let photo;
             if (file && file.length > 0) {
