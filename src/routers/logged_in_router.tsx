@@ -30,11 +30,6 @@ const clientRoutes = [
   { path: "/restaurants/:restaurantId/menu/:menuId", element: <Menu /> },
   { path: "/order-history", element: <OrderHistory /> },
   { path: "/create-review/:id", element: <CreateReview /> },
-
-  { path: "/ordering/:id", element: <React.Fragment /> },
-  { path: "/cart/:id", element: <React.Fragment /> },
-  { path: "/delivery-details/:id", element: <React.Fragment /> },
-
 ];
 
 const commonRoutes = [
