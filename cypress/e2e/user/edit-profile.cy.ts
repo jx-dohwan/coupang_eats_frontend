@@ -10,7 +10,7 @@ describe("Edit Profile", () => {
     });
 
     it("can change email", () => {
-        user.intercept("POST", "http://localhost:4000/graphql", (req) => {
+        user.intercept("POST", "https://coupang-eats-backend.onrender.com/graphql", (req) => {
             if (req.body?.operationName === "editProfile") {
                 // @ts-ignore
                 req.body?.variables?.input?.email = "admin3@admin.com";

@@ -12,7 +12,7 @@ describe("Create Account", () => {
   
     it("should be able to create account and login", () => {
       //DB에도 존재하는척 하는 것임
-      user.intercept("http://localhost:4000/graphql", (req) => {
+      user.intercept("https://coupang-eats-backend.onrender.com/graphql", (req) => {
         const { operationName } = req.body;
         if (operationName && operationName === "createAccountMutation") {
           req.reply((res) => {

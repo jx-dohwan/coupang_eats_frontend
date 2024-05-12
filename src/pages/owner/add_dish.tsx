@@ -73,7 +73,7 @@ export const AddDish = () => {
                 const formBody = new FormData();
                 formBody.append("file", actualFile);
 
-                const response = await fetch("http://localhost:4000/uploads/", {
+                const response = await fetch("https://coupang-eats-backend.onrender.com/uploads/", {
                     method: "POST",
                     body: formBody,
                 });

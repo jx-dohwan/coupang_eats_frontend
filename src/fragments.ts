@@ -2,14 +2,6 @@ import { isLoggedInVar } from './apollo';
 import { gql } from "@apollo/client";
 
 
-// export const REVIEWS_FRAGMENT = gql`
-//   fragment ReviewsParts on Reviews {
-//     id
-//     score
-//     reviewText
-//   }
-// `
-
 export const RESTAURANT_FRAGMENT = gql`
   fragment RestaurantParts on Restaurant {
     id

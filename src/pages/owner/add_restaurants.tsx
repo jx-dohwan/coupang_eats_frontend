@@ -109,7 +109,7 @@ export const AddRestaurant = () => {
             formBody.append("file", actualFile);
             // 이미지 업로드 요청 및 응답에서 이미지 URL 추출
             const { url: coverImg } = await (
-                await fetch("http://localhost:4000/uploads/", {
+                await fetch("https://coupang-eats-backend.onrender.com/uploads/", {
                     method: "POST",
                     body: formBody,
                 })

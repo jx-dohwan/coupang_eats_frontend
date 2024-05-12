@@ -89,7 +89,7 @@ export const CreateReview = () => {
                         const formData = new FormData();
                         formData.append("file", fileItem);
 
-                        const response = await fetch("http://localhost:4000/uploads/", {
+                        const response = await fetch("https://coupang-eats-backend.onrender.com/uploads/", {
                             method: "POST",
                             body: formData,
                         });

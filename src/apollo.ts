@@ -17,7 +17,7 @@ export const authTokenVar = makeVar(token);
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: "ws://localhost:4000/graphql",
+    url: "ws://coupang-eats-backend.onrender.com/graphql",
     connectionParams: {
       "x-jwt": authTokenVar() || "",
     },
@@ -25,7 +25,7 @@ const wsLink = new GraphQLWsLink(
 );
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000/graphql",
+  uri: "https://coupang-eats-backend.onrender.com/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
