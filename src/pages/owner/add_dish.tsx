@@ -194,72 +194,75 @@ export const AddDish = () => {
                     </label>
                 </div>
                 <div className="my-10">
-                    <button
+                    <span
                         onClick={onAddOptionClick}
                         className="cursor-pointer text-white bg-sky-500 hover:bg-sky-600 py-1 px-3 rounded-md mb-5"
                     >
                         옵션 카테고리 추가
-                    </button>
-                    <div
-                        className="space-y-6 max-h-96 overflow-y-auto border border-gray-300 rounded-lg p-4 bg-white shadow-sm"
-                    >
-                        {optionsNumber.length !== 0 &&
-                            optionsNumber.map((categoryId) => (
-                                <div
-                                    key={categoryId}
-                                    className="shadow-md rounded-lg p-5 space-y-3"
-                                >
-                                    <div className="flex items-center space-x-3">
-                                        <input
-                                            {...register(`${categoryId}-optionName`)}
-                                            className="py-2 px-3 focus:outline-none focus:border-sky-500 border-2 border-gray-300 rounded-md w-full"
-                                            type="text"
-                                            placeholder="옵션 카테고리 이름"
-                                        />
-                                        <button
-                                            onClick={() => onAddOptionDetailClick(categoryId)}
-                                            className="cursor-pointer text-white bg-sky-500 hover:bg-sky-600 py-2 px-4 rounded-md"
-                                        >
-                                            옵션 추가
-                                        </button>
-                                        <button
-                                            className="cursor-pointer text-white bg-red-700 hover:bg-red-800 py-2 px-4 rounded-md"
-                                            onClick={() => onDeleteClick(categoryId)}
-                                        >
-                                        분류 삭제
-                                        </button>
-                                    </div>
-                                    <div className="space-y-4">
-                                        {optionsDetails[categoryId]?.map((detailId) => (
-                                            <div
-                                                key={detailId}
-                                                className="flex items-center space-x-3"
+                    </span>
+                    {optionsNumber.length !== 0 && (
+                        <div
+                            className="space-y-6 max-h-96 overflow-y-auto border border-gray-300 rounded-lg p-4 bg-white shadow-sm"
+                        >
+                            {optionsNumber.length !== 0 &&
+                                optionsNumber.map((categoryId) => (
+                                    <div
+                                        key={categoryId}
+                                        className="shadow-md rounded-lg p-5 space-y-3"
+                                    >
+                                        <div className="flex items-center space-x-3">
+                                            <input
+                                                {...register(`${categoryId}-optionName`)}
+                                                className="py-2 px-3 focus:outline-none focus:border-sky-500 border-2 border-gray-300 rounded-md w-full"
+                                                type="text"
+                                                placeholder="옵션 카테고리 이름"
+                                            />
+                                            <span
+                                                onClick={() => onAddOptionDetailClick(categoryId)}
+                                                className="cursor-pointer text-white bg-sky-500 hover:bg-sky-600 py-2 px-4 rounded-md text-center"
                                             >
-                                                <input
-                                                    {...register(`${categoryId}-${detailId}-optionChoiceName`)}
-                                                    className="py-2 px-3 focus:outline-none focus:border-sky-500 border-2 border-gray-300 rounded-md w-full"
-                                                    type="text"
-                                                    placeholder="옵션 이름"
-                                                />
-                                                <input
-                                                    {...register(`${categoryId}-${detailId}-optionChoiceExtra`)}
-                                                    className="py-2 px-3 focus:outline-none focus:border-sky-500 border-2 border-gray-300 rounded-md w-32"
-                                                    type="number"
-                                                    min={0}
-                                                    placeholder="추가 비용"
-                                                />
-                                                <button
-                                                    className="cursor-pointer text-white bg-red-700 hover:bg-red-800 py-2 px-4 rounded-md"
-                                                    onClick={() => onDeleteDetailClick(categoryId, detailId)}
+                                                옵션 추가
+                                            </span>
+                                            <span
+                                                className="cursor-pointer text-white bg-red-700 hover:bg-red-800 py-2 px-4 rounded-md text-center"
+                                                onClick={() => onDeleteClick(categoryId)}
+                                            >
+                                                분류 삭제
+                                            </span>
+                                        </div>
+                                        <div className="space-y-4">
+                                            {optionsDetails[categoryId]?.map((detailId) => (
+                                                <div
+                                                    key={detailId}
+                                                    className="flex items-center space-x-3"
                                                 >
-                                                    옵션 삭제
-                                                </button>
-                                            </div>
-                                        ))}
+                                                    <input
+                                                        {...register(`${categoryId}-${detailId}-optionChoiceName`)}
+                                                        className="py-2 px-3 focus:outline-none focus:border-sky-500 border-2 border-gray-300 rounded-md w-full"
+                                                        type="text"
+                                                        placeholder="옵션 이름"
+                                                    />
+                                                    <input
+                                                        {...register(`${categoryId}-${detailId}-optionChoiceExtra`)}
+                                                        className="py-2 px-3 focus:outline-none focus:border-sky-500 border-2 border-gray-300 rounded-md w-32"
+                                                        type="number"
+                                                        min={0}
+                                                        placeholder="추가 비용"
+                                                    />
+                                                    <span
+                                                        className="cursor-pointer text-white bg-red-700 hover:bg-red-800 py-2 px-4 rounded-md text-center"
+                                                        onClick={() => onDeleteDetailClick(categoryId, detailId)}
+                                                    >
+                                                        옵션 삭제
+                                                    </span>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
-                    </div>
+                                ))}
+                        </div>
+                    )}
+
                 </div>
 
                 <Button

@@ -321,18 +321,18 @@ export const EditRemoveDish = () => {
                                             type="text"
                                             placeholder="옵션 카테고리 이름"
                                         />
-                                        <button
+                                        <span
                                             onClick={() => onAddOptionDetailClick(optionIndex)}
-                                            className="cursor-pointer text-white bg-sky-500 hover:bg-sky-600 py-2 px-4 rounded-md"
+                                            className="cursor-pointer text-white bg-sky-500 hover:bg-sky-600 py-2 px-4 rounded-md text-center"
                                         >
                                             옵션 추가
-                                        </button>
-                                        <button
-                                            className="cursor-pointer text-white bg-red-700 hover:bg-red-800 py-2 px-4 rounded-md"
+                                        </span>
+                                        <span
+                                            className="cursor-pointer text-white bg-red-700 hover:bg-red-800 py-2 px-4 rounded-md text-center"
                                             onClick={() => onDeleteClick(optionIndex)}
                                         >
                                             분류 삭제
-                                        </button>
+                                        </span>
                                     </div>
                                     <div className="space-y-4">
                                         {optionsDetails[optionIndex]?.map((detailIndex) => (
@@ -351,7 +351,7 @@ export const EditRemoveDish = () => {
                                                     placeholder="추가 비용"
                                                 />
                                                 <span
-                                                    className="cursor-pointer text-white bg-red-700 hover:bg-red-800 py-2 px-4 rounded-md"
+                                                    className="cursor-pointer text-white bg-red-700 hover:bg-red-800 py-2 px-4 rounded-md text-center"
                                                     onClick={() => onDeleteDetailClick(optionIndex, detailIndex)}
                                                 >
                                                     옵션 삭제

@@ -66,10 +66,10 @@ export const AddRestaurant = () => {
                                     __typename: "Category",
                                 },
                                 coverImg: imageUrl,
-                                deliveryFee:deliveryFee,
+                                deliveryFee: deliveryFee,
                                 id: restaurantId,
                                 isPromoted: false,
-                                minimumPrice:minimumPrice,
+                                minimumPrice: minimumPrice,
                                 name,
                                 __typename: "Restaurant",
                             },
@@ -183,16 +183,18 @@ export const AddRestaurant = () => {
                     <input
                         {...register("file", { required: true })}
                         type="file"
+                        id="file"
                         name="file"
                         accept="image/*"
+                        className="hidden"
                     />
-                    {/* <label
+                    <label
                         htmlFor='file' // 수정된 부분
                         className='flex flex-col items-center justify-center border border-gray-400 p-2 text-sm'
                     >
                         <BsCamera className='text-3xl' />
                         사진 추가
-                    </label> */}
+                    </label>
                 </div>
                 <Button
                     loading={uploading}
