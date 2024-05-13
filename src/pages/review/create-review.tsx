@@ -151,7 +151,7 @@ export const CreateReview = () => {
                                 음식 평가
                             </h2>
                             <div className='text-lg'>
-                                매장 이름
+                             
                                 <div className='pt-1 text-lg text-yellow-400'>
                                     <Controller
                                         control={control}

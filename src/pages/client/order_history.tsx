@@ -53,12 +53,13 @@ export const OrderHistory = () => {
         }
     );
 
+    console.log('확인용 data', data)
     const matchingOrders = data?.getOrders?.orders?.filter(order => order.customerId === myData.data?.me.id);
 
     return (
         <div className="max-w-screen-2xl pb-20 mx-auto mt-8">
             <div className="flex flex-row border-b-8 border-b-gray-100 p-4">
-                
+
             </div>
             {/* map으로 감싸줘야함 */}
             <div className="grid gap-2 p-4">
@@ -70,28 +71,34 @@ export const OrderHistory = () => {
                                     <div className="flex flex-row pb-2">
                                         <div className="flex flex-grow flex-col">
                                             <div className="text-ellipsis text-xl font-bold">
-                                                매장 : {order.restaurant?.name}
+                                                {order.restaurant?.name}
                                             </div>
                                             <div className="pb-1 text-sm text-gray-500">
-                                                주문 일자 :  <FormattedDate dateString={order.createdAt} />
+                                                <FormattedDate dateString={order.createdAt} />
                                             </div>
-                                            <div>주문 상태 : 배달 완료</div>
+                                            <div>배달 완료</div>
+                                        </div>
+                                        <div>
+
                                         </div>
                                     </div>
                                     <div className="grid gap-2 pl-2">
-                                        <span className="align-center inline-block h-6 w-60 rounded-full bg-gray-200 text-center">
-                                            주문 번호 : #{order.id}
-                                        </span>
-                                        {order.items.map((item, index) => (
+                                        <div className="flex items-center">
+                                            <span className="align-center inline-block h-6 w-6 rounded-full bg-gray-200 text-center">
+                                                {order.id}
+                                            </span>
+                                            <span className="ml-2"> {order.items[0]?.dishName}</span>
+                                        </div>
+                                        {/* {order.items.map((item, index) => ( 옵션 보여주기 기능(필요시 주석 삭제)
                                             <div key={index}>
-                                                <div>메뉴: {item.dishName}</div>
+                                                <div> &nbsp;{item.dishName}</div>
                                                 {item && item.options?.map((option, optIndex) => (
                                                     <div key={optIndex} className="pl-4 pt-1">
                                                         <span>추가 옵션: {option.name} - {option.choice}</span>
                                                     </div>
                                                 ))}
                                             </div>
-                                        ))}
+                                        ))} */}
 
                                     </div>
                                     <div className="pb-4 pt-2">합계 : <KRW price={order.total!} /></div>
