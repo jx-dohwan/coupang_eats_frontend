@@ -1,5 +1,17 @@
-# Coupang Eats Frontend
+## 💡프로젝트 소개
 
+```
+1️⃣ 주제 :  
+2️⃣ 목표 : KoBART로 학습한 한국어 대화문 요약 모델을 Flask를 통해서 웹 서비스로 배포
+3️⃣ 설명 : 기존의 Aiffel에서 진행한 대화문 생성요약 프로젝트를 베이스로 하여 KoBART 모델을 개선 및 서빙을 진행할 것 
+```
+
+<img src="img/result_v1.png"/>
+
+### 해당 프로젝트에 관한 자세한 설명은 블로그에 정리해 놓았다.<br>
+- [쿠팡이츠 클론코딩 프론트엔드](https://velog.io/@jx7789/%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%86%A1-%EB%8C%80%ED%99%94-%EC%9A%94%EC%95%BD-%EC%84%9C%EB%B9%84%EC%8A%A4-pepkrzfe)<br>](https://velog.io/@jx7789/series/%EC%BF%A0%ED%8C%A1%EC%9D%B4%EC%B8%A0-%ED%81%B4%EB%A1%A0%EC%BD%94%EB%94%A9ft.%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C)<br>
+
+---
 ## SetUp
 ### 1. Create React App을 타입스크립트로 시작하기
 
