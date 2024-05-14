@@ -135,7 +135,7 @@ export const AddRestaurant = () => {
     };
 
     return (
-        <div className="container flex flex-col items-center mt-52">
+        <div className="container flex flex-col items-center mt-32">
             <Helmet>
                 <title>매장 만들기 | Coupang Eats</title>
             </Helmet>
