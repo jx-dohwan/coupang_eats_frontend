@@ -22,6 +22,7 @@ const ORDER_HISTORY_QUERY = gql`
                 customerId
                 status
                 total
+                totalCount
                 createdAt
                 restaurant {
                     id
@@ -92,6 +93,7 @@ export const OrderHistory = () => {
                                                 {order.id}
                                             </span>
                                             <span className="ml-2"> {order.items[0]?.dishName}</span>
+                                            {order.totalCount && `${order.totalCount}개`}
                                         </div>
                                         {/* {order.items.map((item, index) => ( 옵션 보여주기 기능(필요시 주석 삭제)
                                             <div key={index}>

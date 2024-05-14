@@ -78,12 +78,12 @@ export const Reviews = () => {
 
                 <div className="w-full md:py-20 py-10 flex flex-col items-center justify-center">
                     {data?.restaurant.restaurant?.reviews ? (
-                        data.restaurant.restaurant.reviews.map((review) => (
-                            <div className="p-4 w-full max-w-7xl mx-auto">
+                        data.restaurant.restaurant.reviews.map((review, index) => (
+                            <div key={index} className="p-4 w-full max-w-7xl mx-auto">
                                 <div className="bg-white shadow-lg rounded-lg overflow-hidden mb-5">
                                     <div className="md:flex">
-                                        {review.reviewImg && review.reviewImg.map((img) => (
-                                            <div className="md:w-1/2">
+                                        {review.reviewImg && review.reviewImg.map((img, imgIndex) => (
+                                            <div key={imgIndex} className="md:w-1/2">
                                                 <img src={img.url} alt="Review Image" key={img.url} className="object-cover w-full h-full" />
                                             </div>
                                         ))}

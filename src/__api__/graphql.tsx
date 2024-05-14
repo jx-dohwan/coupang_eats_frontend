@@ -82,6 +82,7 @@ export type CreateDishOutput = {
 export type CreateOrderInput = {
   items: Array<CreateOrderItemInput>;
   restaurantId: Scalars['Int']['input'];
+  totalCount: Scalars['Int']['input'];
 };
 
 export type CreateOrderItemInput = {
@@ -452,6 +453,7 @@ export type Order = {
   restaurant?: Maybe<Restaurant>;
   status: OrderStatus;
   total?: Maybe<Scalars['Float']['output']>;
+  totalCount?: Maybe<Scalars['Int']['output']>;
   updatedAt: Scalars['DateTime']['output'];
 };
 
@@ -707,11 +709,7 @@ export type DishPartsFragment = { __typename?: 'Dish', id: number, name: string,
 
 export type OrderPartsFragment = { __typename?: 'Order', id: number, createdAt: any, total?: number | null };
 
-export type FullOrderPartsFragment = { __typename?: 'Order', id: number, status: OrderStatus, total?: number | null, driver?: { __typename?: 'User', email: string } | null, customer?: { __typename?: 'User', email: string } | null, restaurant?: { __typename?: 'Restaurant', name: string } | null };
-
-export type VerifiedUserFragment = { __typename?: 'User', verified: boolean };
-
-export type EditedUserFragment = { __typename?: 'User', verified: boolean, email: string };
+export type FullOrderPartsFragment = { __typename?: 'Order', id: number, status: OrderStatus, total?: number | null, totalCount?: number | null, driver?: { __typename?: 'User', email: string } | null, customer?: { __typename?: 'User', email: string } | null, restaurant?: { __typename?: 'Restaurant', name: string } | null };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -744,7 +742,7 @@ export type GetOrdersQueryVariables = Exact<{
 }>;
 
 
-export type GetOrdersQuery = { __typename?: 'Query', getOrders: { __typename?: 'GetOrdersOutput', ok: boolean, error?: string | null, orders?: Array<{ __typename?: 'Order', id: number, customerId: number, status: OrderStatus, total?: number | null, createdAt: any, restaurant?: { __typename?: 'Restaurant', id: number, name: string } | null, items: Array<{ __typename?: 'OrderItem', dishName?: string | null, options?: Array<{ __typename?: 'OrderItemOption', name: string, choice?: string | null }> | null }> }> | null } };
+export type GetOrdersQuery = { __typename?: 'Query', getOrders: { __typename?: 'GetOrdersOutput', ok: boolean, error?: string | null, orders?: Array<{ __typename?: 'Order', id: number, customerId: number, status: OrderStatus, total?: number | null, totalCount?: number | null, createdAt: any, restaurant?: { __typename?: 'Restaurant', id: number, name: string } | null, items: Array<{ __typename?: 'OrderItem', dishName?: string | null, options?: Array<{ __typename?: 'OrderItemOption', name: string, choice?: string | null }> | null }> }> | null } };
 
 export type RestaurantsPageQueryVariables = Exact<{
   input: RestaurantsInput;
@@ -770,7 +768,7 @@ export type CreateAccountMutation = { __typename?: 'Mutation', createAccount: { 
 export type CoockedOrdersSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CoockedOrdersSubscription = { __typename?: 'Subscription', cookedOrders: { __typename?: 'Order', id: number, status: OrderStatus, total?: number | null, driver?: { __typename?: 'User', email: string } | null, customer?: { __typename?: 'User', email: string } | null, restaurant?: { __typename?: 'Restaurant', name: string } | null } };
+export type CoockedOrdersSubscription = { __typename?: 'Subscription', cookedOrders: { __typename?: 'Order', id: number, status: OrderStatus, total?: number | null, totalCount?: number | null, driver?: { __typename?: 'User', email: string } | null, customer?: { __typename?: 'User', email: string } | null, restaurant?: { __typename?: 'Restaurant', name: string } | null } };
 
 export type TakeOrderMutationVariables = Exact<{
   input: TakeOrderInput;
@@ -791,14 +789,14 @@ export type GetOrderQueryVariables = Exact<{
 }>;
 
 
-export type GetOrderQuery = { __typename?: 'Query', getOrder: { __typename?: 'GetOrderOutput', ok: boolean, error?: string | null, order?: { __typename?: 'Order', id: number, status: OrderStatus, total?: number | null, driver?: { __typename?: 'User', email: string } | null, customer?: { __typename?: 'User', email: string } | null, restaurant?: { __typename?: 'Restaurant', name: string } | null } | null } };
+export type GetOrderQuery = { __typename?: 'Query', getOrder: { __typename?: 'GetOrderOutput', ok: boolean, error?: string | null, order?: { __typename?: 'Order', id: number, status: OrderStatus, total?: number | null, totalCount?: number | null, driver?: { __typename?: 'User', email: string } | null, customer?: { __typename?: 'User', email: string } | null, restaurant?: { __typename?: 'Restaurant', name: string } | null } | null } };
 
 export type OrderUpdatesSubscriptionVariables = Exact<{
   input: OrderUpdatesInput;
 }>;
 
 
-export type OrderUpdatesSubscription = { __typename?: 'Subscription', orderUpdates: { __typename?: 'Order', id: number, status: OrderStatus, total?: number | null, driver?: { __typename?: 'User', email: string } | null, customer?: { __typename?: 'User', email: string } | null, restaurant?: { __typename?: 'Restaurant', name: string } | null } };
+export type OrderUpdatesSubscription = { __typename?: 'Subscription', orderUpdates: { __typename?: 'Order', id: number, status: OrderStatus, total?: number | null, totalCount?: number | null, driver?: { __typename?: 'User', email: string } | null, customer?: { __typename?: 'User', email: string } | null, restaurant?: { __typename?: 'Restaurant', name: string } | null } };
 
 export type EditOrderMutationVariables = Exact<{
   input: EditOrderInput;
@@ -861,12 +859,16 @@ export type VerifyEmailMutationVariables = Exact<{
 
 export type VerifyEmailMutation = { __typename?: 'Mutation', verifyEmail: { __typename?: 'VerifyEmailOutput', ok: boolean, error?: string | null } };
 
+export type VerifiedUserFragment = { __typename?: 'User', verified: boolean };
+
 export type EditProfileMutationVariables = Exact<{
   input: EditProfileInput;
 }>;
 
 
 export type EditProfileMutation = { __typename?: 'Mutation', editProfile: { __typename?: 'EditProfileOutput', ok: boolean, error?: string | null } };
+
+export type EditedUserFragment = { __typename?: 'User', verified: boolean, email: string };
 
 export const RestaurantPartsFragmentDoc = gql`
     fragment RestaurantParts on Restaurant {
@@ -927,6 +929,7 @@ export const FullOrderPartsFragmentDoc = gql`
   id
   status
   total
+  totalCount
   driver {
     email
   }
@@ -1134,6 +1137,7 @@ export const GetOrdersDocument = gql`
       customerId
       status
       total
+      totalCount
       createdAt
       restaurant {
         id

@@ -65,6 +65,7 @@ export const FULL_ORDER_FRAGMENT = gql`
     id
     status
     total
+    totalCount
     driver {
       email
     }

@@ -43,9 +43,6 @@ type TMenuParams = {
     menuId: string;
 };
 
-// type SelectedOptions = { 추후 다중 choice를 위해 남겨둠
-//     [key: string]: number;
-// };
 type SelectedOptions = {
     [optionName: string]: string | null;
 };
@@ -72,7 +69,7 @@ export const Menu = () => {
 
     const [orderCount, setOrderCount] = useState(1)
     const [selectedOptions, setSelectedOptions] = useState<SelectedOptions>({});
-    const [totalPrice, setTotalPrice] = useState<number>((menu?.price! + data?.restaurant.restaurant?.deliveryFee!) * orderCount || 0);
+    const [totalPrice, setTotalPrice] = useState<number>((menu?.price! + data?.restaurant.restaurant?.deliveryFee! ) || 0);
     const [minimumPriceMet, setMinimumPriceMet] = useState(false);
     const [orderItems, setOrderItems] = useState<CreateOrderItemInput[]>([]);
 
@@ -94,7 +91,7 @@ export const Menu = () => {
                 extraTotal += choice.extra || 0;
             }
         }
-        const calculatedTotal = (menu?.price! + data?.restaurant.restaurant?.deliveryFee! || 0) * orderCount + extraTotal;
+        const calculatedTotal = (menu?.price! * orderCount || 0)  + extraTotal + data?.restaurant.restaurant?.deliveryFee!;
         setTotalPrice(calculatedTotal);
         setMinimumPriceMet(calculatedTotal >= data?.restaurant.restaurant?.minimumPrice!);
     }, [orderCount, menu?.price, selectedOptions]);
@@ -109,7 +106,6 @@ export const Menu = () => {
     }
 
     // 주문 상태 관리
-
     const getItem = (dishId: number) => {
         return orderItems.find((order) => order.dishId === dishId)
     }
@@ -185,7 +181,6 @@ export const Menu = () => {
             navigate(`/order/${orderId}`)
         }
     }
-
     const [createOrderMutation, { loading: placingOrder }] = useMutation<
         CreateOrderMutation, CreateOrderMutationVariables
     >(CREATE_ORDER_MUTATION, {
@@ -202,7 +197,9 @@ export const Menu = () => {
                 variables: {
                     input: {
                         restaurantId: +restaurantId,
+                        totalCount: orderCount,
                         items: orderItems,
+                        
                     }
                 }
             })
@@ -262,7 +259,7 @@ export const Menu = () => {
                                     className='flex items-center justify-between bg-gray-100 p-4 font-bold'>
                                     <div>{option.name}</div>
                                     <div className='text-sm font-normal text-orange-600'>
-                                        필수 사항
+                                        선택 사항
                                     </div>
                                 </h3>
 
