@@ -303,7 +303,7 @@ export const EditRemoveDish = () => {
                 <div className="my-10">
                     <span
                         onClick={onAddOptionClick}
-                        className="cursor-pointer text-white bg-sky-500 hover:bg-sky-600 py-1 px-2 mt-5"
+                        className="cursor-pointer text-white bg-sky-500 hover:bg-sky-600 py-1 px-3 rounded-md mb-5"
                     >
                         옵션 카테고리 추가
                     </span>
