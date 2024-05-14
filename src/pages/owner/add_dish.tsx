@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Button } from "../../components/button";
 import { BsCamera } from "react-icons/bs";
+import { CiCircleMinus, CiCirclePlus } from "react-icons/ci";
 
 const CREATE_DISH_MUTATION = gql`
   mutation createDish($input: CreateDishInput!) {
@@ -217,18 +218,14 @@ export const AddDish = () => {
                                                 type="text"
                                                 placeholder="옵션 카테고리 이름"
                                             />
-                                            <span
+                                            <CiCirclePlus
                                                 onClick={() => onAddOptionDetailClick(categoryId)}
-                                                className="cursor-pointer text-white bg-sky-500 hover:bg-sky-600 py-2 px-4 rounded-md text-center"
-                                            >
-                                                옵션 추가
-                                            </span>
-                                            <span
-                                                className="cursor-pointer text-white bg-red-700 hover:bg-red-800 py-2 px-4 rounded-md text-center"
+                                                className="text-4xl text-gray-400"
+                                            />
+                                            <CiCircleMinus
+                                                className="text-4xl text-gray-400"
                                                 onClick={() => onDeleteClick(categoryId)}
-                                            >
-                                                분류 삭제
-                                            </span>
+                                            />
                                         </div>
                                         <div className="space-y-4">
                                             {optionsDetails[categoryId]?.map((detailId) => (
@@ -249,12 +246,10 @@ export const AddDish = () => {
                                                         min={0}
                                                         placeholder="추가 비용"
                                                     />
-                                                    <span
-                                                        className="cursor-pointer text-white bg-red-700 hover:bg-red-800 py-2 px-4 rounded-md text-center"
+                                                    <CiCircleMinus
+                                                        className="text-4xl text-gray-400"
                                                         onClick={() => onDeleteDetailClick(categoryId, detailId)}
-                                                    >
-                                                        옵션 삭제
-                                                    </span>
+                                                    />
                                                 </div>
                                             ))}
                                         </div>
