@@ -53,7 +53,6 @@ export const OrderHistory = () => {
         }
     );
 
-    console.log('확인용 data', data)
     const matchingOrders = data?.getOrders?.orders?.filter(order => order.customerId === myData.data?.me.id);
     const sortedOrders = matchingOrders ? [...matchingOrders].sort((a, b) => {
         const dateA = new Date(a.createdAt).getTime();
