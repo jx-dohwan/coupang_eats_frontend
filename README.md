@@ -1,5 +1,17 @@
-# Coupang Eats Frontend
+## 💡프로젝트 소개
 
+```
+1️⃣ 주제 : 쿠팡이츠 클론코딩 프론트엔드
+2️⃣ 목표 : 쿠팡이츠와 유사한 프로젝트를 완성
+3️⃣ 설명 : TypeScript, React.js, GraphQL, Apollo, TailwindCSS를 활용하여 프로젝트 진행
+```
+
+
+
+### 해당 프로젝트에 관한 자세한 설명은 블로그에 정리<br>
+- [쿠팡이츠 클론코딩 프론트엔드](https://velog.io/@jx7789/series/%EC%BF%A0%ED%8C%A1%EC%9D%B4%EC%B8%A0-%ED%81%B4%EB%A1%A0%EC%BD%94%EB%94%A9ft.%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C)<br>
+- [쿠팡이츠 클론코딩 백엔드](https://velog.io/@jx7789/series/%EC%BF%A0%ED%8C%A1%EC%9D%B4%EC%B8%A0-%ED%81%B4%EB%A1%A0%EC%BD%94%EB%94%A9-%EB%B0%B1%EC%97%94%EB%93%9C)<br>
+---
 ## SetUp
 ### 1. Create React App을 타입스크립트로 시작하기
 
