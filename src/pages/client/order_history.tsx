@@ -55,6 +55,11 @@ export const OrderHistory = () => {
 
     console.log('확인용 data', data)
     const matchingOrders = data?.getOrders?.orders?.filter(order => order.customerId === myData.data?.me.id);
+    const sortedOrders = matchingOrders ? [...matchingOrders].sort((a, b) => {
+        const dateA = new Date(a.createdAt).getTime();
+        const dateB = new Date(b.createdAt).getTime();
+        return dateB - dateA;
+    }) : [];
 
     return (
         <div className="max-w-screen-2xl pb-20 mx-auto mt-8">
@@ -64,8 +69,8 @@ export const OrderHistory = () => {
             {/* map으로 감싸줘야함 */}
             <div className="grid gap-2 p-4">
                 {
-                    matchingOrders && matchingOrders.length > 0 ? (
-                        matchingOrders.map((order) => (
+                    sortedOrders && sortedOrders.length > 0 ? (
+                        sortedOrders.map((order) => (
                             <div key={order.id}>
                                 <div className="rounded-lg border border-gray-200 g-4 p-4">
                                     <div className="flex flex-row pb-2">
