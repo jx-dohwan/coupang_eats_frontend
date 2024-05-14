@@ -65,6 +65,7 @@ export const Search = () => {
                                     coverImg={restaurant.coverImg}
                                     name={restaurant.name}
                                     categoryName={restaurant.category?.name}
+                                    deliveryFee={restaurant.deliveryFee}
                                 />
                             ))
                         ) : (

@@ -58,6 +58,7 @@ export const Category = () => {
                                 coverImg={restaurant.coverImg}
                                 name={restaurant.name}
                                 categoryName={restaurant.category?.name}
+                                deliveryFee={restaurant.deliveryFee}
                             />
                         ))}
                     </div>
