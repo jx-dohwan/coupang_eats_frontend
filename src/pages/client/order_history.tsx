@@ -121,16 +121,6 @@ export const OrderHistory = () => {
                         <></>
                     )
                 }
-
-
-
-
-
-                <div className="grid place-items-center rounded-lg border border-sky-500 hover:border-sky-600 py-2 font-bold text-sky-500">
-                    <Link to="/edit-profile"> {/*여기에 바로 edit을 만들지 말고, 주문내역 및 리뷰달기를 할 수 있도록 추가 즉 주문내역리스트에 각각의 내역에 리뷰달기 및 맨 마지막에 edit으로 이동하기를 해야한다 */}
-                        <FontAwesomeIcon icon={faUser} className="text-3xl" />
-                    </Link>
-                </div>
             </div>
         </div>
 

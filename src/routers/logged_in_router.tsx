@@ -41,7 +41,6 @@ const commonRoutes = [
 ];
 
 const restaurantRoutes = [
-  // 2024.04.19
   { path: "/", element: <MyRestaurants /> },
   { path: "/add-restaurant", element: <AddRestaurant /> },
   { path: "/restaurants/:id", element: <MyRestaurant /> },
