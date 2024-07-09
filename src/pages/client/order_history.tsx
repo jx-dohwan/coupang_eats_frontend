@@ -70,7 +70,7 @@ export const OrderHistory = () => {
             <div className="grid gap-2 p-4">
                 {
                     sortedOrders && sortedOrders.length > 0 ? (
-                        sortedOrders.map((order) => (
+                        sortedOrders.map((order) => ( // 이 부분도 컴포넌트로 만들어야 되는데
                             <div key={order.id}>
                                 <div className="rounded-lg border border-gray-200 g-4 p-4">
                                     <div className="flex flex-row pb-2">

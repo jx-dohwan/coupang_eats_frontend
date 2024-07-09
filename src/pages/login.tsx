@@ -50,7 +50,7 @@ export const Login = () => {
         // 로그인 성공 및 토큰이 있는 경우
         if (ok && token) {
             // alert("로그인을 했습니다.");  // 사용자에게 로그인 성공 알림
-            localStorage.setItem(LOCALSTORAGE_TOKEN, token);  // 로컬 스토리지에 토큰 저장
+            sessionStorage.setItem(LOCALSTORAGE_TOKEN, token);  // 로컬 스토리지에 토큰 저장 -> 세션 스토리지로 변경
             authTokenVar(token);  // Apollo local state에 토큰 저장 (Reactive Variable)
             isLoggedInVar(true);  // 로그인 상태를 true로 설정 (Reactive Variable)
         }

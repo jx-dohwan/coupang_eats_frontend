@@ -252,7 +252,7 @@ export const Menu = () => {
                     </div>
 
                     {menu?.options ? (
-                        menu?.options?.map((option, index) => (
+                        menu?.options?.map((option, index) => ( // 이 부분 컴포넌트로 만들어야 되는데
                             <div key={option.name}>
                                 <h3
                                     id={option.name}

@@ -3,9 +3,8 @@ import { BsCamera, BsCheckCircleFill } from 'react-icons/bs'
 import { StarRatingInput } from '../../components/star_rating_input'
 import { gql, useMutation } from '@apollo/client';
 import { useNavigate, useParams } from 'react-router-dom';
-import { CreateReviewInput, CreateReviewMutation, CreateReviewMutationVariables } from '../../__api__/graphql';
+import { CreateReviewMutation, CreateReviewMutationVariables } from '../../__api__/graphql';
 import { Controller, useForm } from 'react-hook-form';
-import { MY_RESTAURANT_QUERY } from '../owner/my_restaurant';
 import { useMe } from '../../hooks/useMe';
 import { RESTAURANTS_QUERY } from '../client/restaurants';
 import { Helmet } from 'react-helmet';
@@ -41,9 +40,7 @@ interface ReviewImges {
 export const CreateReview = () => {
     const navigate = useNavigate();
     const { id } = useParams() as unknown as TCreateReviewProps;;
-    const [rating, setRating] = useState(5)
     const [uploading, setUploading] = useState(false);
-    const [imageUrlTemp, setImageUrlTemp] = useState("");  // For preview only
 
 
     const [createReviewMutation, { loading }] = useMutation<
@@ -67,7 +64,6 @@ export const CreateReview = () => {
         handleSubmit,
         formState: { errors },
         getValues,
-        setValue,
         control,
     } = useForm<FormInput>({
         mode: "onChange",
