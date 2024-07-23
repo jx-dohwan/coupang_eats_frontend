@@ -26,9 +26,10 @@ export const Header: React.FC = () => {
     sessionStorage.removeItem(LOCALSTORAGE_TOKEN);
     authTokenVar(null);
     isLoggedInVar(false);
+    navigate("/");
     await client.cache.reset(); 
     closeMenu();
-    navigate("/");
+   
   };
   return (
     <>
